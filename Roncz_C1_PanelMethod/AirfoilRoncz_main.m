@@ -5,7 +5,7 @@ clear; close all; clc;
 % angles: CL(alpha) de -20 a 20 graus
 % casos: Cp minimo, estagnacao aproximada e linhas de corrente a 0, 5 e 20 graus
 
-filename = 'lednicerdatfile.txt';
+filename = '../airfoil-points.txt';
 V_inf_modul = 1;
 N_final = 260; % atualizar depois do estudo de convergencia
 
