@@ -7,6 +7,8 @@ clc;
 scriptDir = fileparts(mfilename('fullpath'));
 filename = fullfile(scriptDir, '..', 'airfoil-points.txt');
 outputFile = fullfile(scriptDir, 'results.csv');
+figDir = fullfile(scriptDir, 'figures');
+showLiftCurve = false; % Grafico individual opcional, para diagnostico.
 
 N = 1000;
 N_test = [50 100 200 500 1000 2000 5000 10000];
@@ -106,43 +108,33 @@ try
 	fprintf('%-27s : %s\n', 'Perfil', strtrim(name));
 	printResult(fid_out, 'upper_points', numel(xu), '1', 'Pontos do extradorso', '%d');
 	printResult(fid_out, 'lower_points', numel(xl), '1', 'Pontos do intradorso', '%d');
-	printResult(fid_out, 'upper_original', zu, '1', '', '', xu);
-	printResult(fid_out, 'lower_original', zl, '1', '', '', xl);
 
 	fprintf('\n[2] Linha media\n');
 	printResult(fid_out, 'N', N, '1', 'Pontos de interpolacao', '%d');
-	printResult(fid_out, 'camber_max', max(data.zc), '1', 'Curvatura maxima zc/c', '%+.4f');
-	printResult(fid_out, 'camber_min', min(data.zc), '1', 'Curvatura minima zc/c', '%+.4f');
+	printResult(fid_out, 'camber_max', max(data.zc), '1', 'Linha media maxima zc/c', '%+.4f');
+	printResult(fid_out, 'camber_min', min(data.zc), '1', 'Linha media minima zc/c', '%+.4f');
 	printResult(fid_out, 'thickness_max', max(data.thickness), '1', 'Espessura maxima e/c', '%.4f');
-	printResult(fid_out, 'upper_surface', data.zu_interp, '1', '', '', data.x);
-	printResult(fid_out, 'lower_surface', data.zl_interp, '1', '', '', data.x);
-	printResult(fid_out, 'camber_line', data.zc, '1', '', '', data.x);
-	printResult(fid_out, 'thickness_distribution', data.thickness, '1', '', '', data.x);
 
 	fprintf('\n[3] Declive da linha media\n');
-	printResult(fid_out, 'slope_max', max(data.dzdx), '1', 'Declive maximo', '%+.4f');
-	printResult(fid_out, 'slope_min', min(data.dzdx), '1', 'Declive minimo', '%+.4f');
-	printResult(fid_out, 'slope_LE', data.dzdx(1), '1', 'Declive no BA (aprox.)', '%+.4f');
-	printResult(fid_out, 'slope_TE', data.dzdx(end), '1', 'Declive no BF (aprox.)', '%+.4f');
-	printResult(fid_out, 'camber_slope', data.dzdx, '1', '', '', data.x);
+	printResult([], 'slope_max', max(data.dzdx), '1', 'Declive maximo', '%+.4f');
+	printResult([], 'slope_min', min(data.dzdx), '1', 'Declive minimo', '%+.4f');
+	printResult([], 'slope_LE', data.dzdx(1), '1', 'Declive no BA (aprox.)', '%+.4f');
+	printResult([], 'slope_TE', data.dzdx(end), '1', 'Declive no BF (aprox.)', '%+.4f');
 
 	fprintf('\n[4] Mudanca de coordenadas\n');
-	printResult(fid_out, 'N_theta', numel(data.theta), '1', 'Pontos de integracao', '%d');
-	printResult(fid_out, 'camber_slope_theta', data.dzdx_theta, '1', '', '', data.theta);
+	printResult([], 'N_theta', numel(data.theta), '1', 'Pontos de integracao', '%d');
 
 	fprintf('\n[5] Coeficientes de Fourier\n');
 	printResult(fid_out, 'I0', I0, '1', 'I0', '%+.6f');
 	printResult(fid_out, 'A1', A1, '1', 'A1', '%+.6f');
-	printResult(fid_out, 'A0_alpha0', -I0, '1', 'A0 para alpha = 0', '%+.6f');
-	printResult(fid_out, 'A0_curve', data.A0, '1', '', '', alpha_deg);
+	printResult([], 'A0_alpha0', -I0, '1', 'A0 para alpha = 0', '%+.6f');
 
 	fprintf('\n[6] Resultados aerodinamicos\n');
-	printResult(fid_out, 'alpha_L0_rad', alpha_L0, 'rad', '', '%+.6f');
 	printResult(fid_out, 'alpha_L0_deg', rad2deg(alpha_L0), 'deg', 'Angulo sustentacao nula', '%+.4f');
 	printResult(fid_out, 'cl_alpha_rad', cl_alpha_rad, 'rad^-1', 'Declive da curva', '%.4f');
 	printResult(fid_out, 'cl_alpha_deg', cl_alpha_deg, 'deg^-1', 'Declive da curva', '%.4f');
-	printResult(fid_out, 'cl_0', cl(alpha_deg == 0), '1', 'cl a 0 graus', '%+.4f');
-	printResult(fid_out, 'cl_5', cl(alpha_deg == 5), '1', 'cl a 5 graus', '%+.4f');
+	printResult([], 'cl_0', cl(alpha_deg == 0), '1', 'cl a 0 graus', '%+.4f');
+	printResult([], 'cl_5', cl(alpha_deg == 5), '1', 'cl a 5 graus', '%+.4f');
 	printResult(fid_out, 'cl_curve', cl, '1', 'Curva de sustentacao', '', alpha_deg);
 
 	fprintf('\n[7] Estudo de convergencia\n');
@@ -155,16 +147,11 @@ try
 	printResult(fid_out, 'convergence_A1', A1_test, '1', '', '', N_test);
 	printResult(fid_out, 'convergence_alpha_L0', alpha_L0_test_deg, 'deg', '', '', N_test);
 	printResult(fid_out, 'convergence_cl_5', cl_5_test, '1', '', '', N_test);
-	printResult(fid_out, 'convergence_error_cl', error_cl, '1', '', '', N_test);
-	printResult(fid_out, 'convergence_error_alpha_L0', error_alpha_L0, 'deg', '', '', N_test);
-	printResult(fid_out, 'convergence_error_I0', error_I0, '1', '', '', N_test);
-	printResult(fid_out, 'convergence_error_A1', error_A1, '1', '', '', N_test);
 	printResult(fid_out, 'convergence_N_ref', N_test(end), '1', 'N de referencia', '%d');
 	printResult(fid_out, 'convergence_tol_cl', tol_cl, '1', 'Tolerancia cl', '%.4g');
 	printResult(fid_out, 'convergence_tol_alpha_deg', tol_alpha_deg, 'deg', 'Tolerancia alpha L0', '%.4g');
 	printResult(fid_out, 'convergence_error_cl_N', error_cl_N, '1', 'Erro cl a 5 graus (N)', '%.6g');
 	printResult(fid_out, 'convergence_error_alpha_N', error_alpha_N, 'deg', 'Erro alpha L0 (N)', '%.6g');
-	printResult(fid_out, 'convergence_pass_N', double(converged_N), '1', '', '%d');
 	if converged_N
 		fprintf('N = %d satisfaz ambas as tolerancias.\n', N);
 	else
@@ -173,7 +160,7 @@ try
 
 	fprintf('\n[8] Desempenho computacional\n');
 	printResult(fid_out, 'execution_time_s', execution_time, 's', 'Tempo de calculo', '%.8f');
-	printResult(fid_out, 'execution_time_ms', 1000*execution_time, 'ms', 'Tempo de calculo', '%.4f');
+	printResult([], 'execution_time_ms', 1000*execution_time, 'ms', 'Tempo de calculo', '%.4f');
 	printResult(fid_out, 'alpha_count', numel(alpha), '1', 'Angulos de ataque calculados', '%d');
 catch ME
 	fclose(fid_out);
@@ -182,49 +169,92 @@ end
 fclose(fid_out);
 fprintf('\nResultados guardados em:\n%s\n', outputFile);
 
-%% 6. Visualizacao (fora da medicao de tempo)
+%% 6. Visualizacao e exportacao vetorial (fora da medicao de tempo)
 
-figure('Name', 'Geometria', 'Color', 'w');
-plot(xu, zu, 'b.-', xl, zl, 'r.-');
-axis equal; grid on;
-xlabel('x/c'); ylabel('z/c');
-title(name, 'Interpreter', 'none');
-legend('Extradorso', 'Intradorso', 'Location', 'best');
+if ~isfolder(figDir)
+	mkdir(figDir);
+end
 
-figure('Name', 'Linha media', 'Color', 'w');
-hold on;
-plot(xu, zu, 'b.');
-plot(xl, zl, 'r.');
-plot(data.x, data.zu_interp, 'b-');
-plot(data.x, data.zl_interp, 'r-');
-plot(data.x, data.zc, 'k-', 'LineWidth', 2);
-yline(0, 'k--');
-axis equal; grid on;
-xlabel('x/c'); ylabel('z/c');
-title('Roncz - Linha media');
-legend('Pontos extradorso', 'Pontos intradorso', ...
-	'Extradorso interpolado', 'Intradorso interpolado', ...
-	'Linha media', 'Linha de corda', 'Location', 'best');
-hold off;
+% Geometria e declive com coordenada horizontal partilhada.
+figGeometry = figure('Name', 'Geometria e declive', ...
+	'Color', 'w', 'WindowStyle', 'docked');
+layout = tiledlayout(figGeometry, 2, 1, ...
+	'TileSpacing', 'compact', 'Padding', 'compact');
 
-figure('Name', 'Declive da linha media', 'Color', 'w');
-plot(data.x, data.dzdx, 'k-', 'LineWidth', 1.5);
-yline(0, 'k--'); grid on;
-xlabel('x/c'); ylabel('dz_c/dx');
-title('Roncz - Declive da linha media');
+axGeometry = nexttile(layout);
+hold(axGeometry, 'on');
+plot(axGeometry, data.x, data.zu_interp, 'b-', 'LineWidth', 1.2);
+plot(axGeometry, data.x, data.zl_interp, 'r-', 'LineWidth', 1.2);
+plot(axGeometry, xu, zu, 'b.', 'MarkerSize', 10);
+plot(axGeometry, xl, zl, 'r.', 'MarkerSize', 10);
+plot(axGeometry, data.x, data.zc, 'k-', 'LineWidth', 1.6);
+yline(axGeometry, 0, 'k--');
+hold(axGeometry, 'off');
+axis(axGeometry, 'equal');
+pbaspect(axGeometry, [5 1 1]);
+grid(axGeometry, 'on');
+xlim(axGeometry, [0 1]);
+ylim(axGeometry, 'auto');
+xlabel(axGeometry, 'x/c');
+ylabel(axGeometry, 'z/c');
+title(axGeometry, 'Geometria e linha media');
+legend(axGeometry, 'Extradorso interpolado', 'Intradorso interpolado', ...
+	'Pontos do extradorso', 'Pontos do intradorso', ...
+	'Linha media', 'Linha de corda', ...
+	'Location', 'northoutside', 'NumColumns', 3);
 
-figure('Name', 'Curva de sustentacao', 'Color', 'w');
-plot(alpha_deg, cl, 'b-', 'LineWidth', 1.5);
-xline(0, 'k--'); yline(0, 'k--'); grid on;
-xlabel('\alpha [deg]'); ylabel('c_l');
-title('Roncz - Teoria dos perfis delgados');
+axSlope = nexttile(layout);
+plot(axSlope, data.x, data.dzdx, 'k-', 'LineWidth', 1.5);
+yline(axSlope, 0, 'k--');
+grid(axSlope, 'on');
+xlim(axSlope, [0 1]);
+xlabel(axSlope, 'x/c');
+ylabel(axSlope, 'dz_c/dx');
+title(axSlope, 'Declive da linha media');
 
-figure('Name', 'Convergencia', 'Color', 'w');
-subplot(2, 1, 1);
-semilogx(N_test, cl_5_test, 'bo-', 'LineWidth', 1.5);
-grid on; xlabel('N'); ylabel('c_l a 5 graus');
-title('Convergencia da sustentacao');
-subplot(2, 1, 2);
-semilogx(N_test, alpha_L0_test_deg, 'ro-', 'LineWidth', 1.5);
-grid on; xlabel('N'); ylabel('\alpha_{L=0} [deg]');
-title('Convergencia do angulo de sustentacao nula');
+% Sincronizar apenas x: as escalas verticais sao independentes.
+linkaxes([axGeometry, axSlope], 'x');
+xlim(axGeometry, [0 1]);
+drawnow;
+exportgraphics(axGeometry, ...
+	fullfile(figDir, 'geometry.pdf'), ...
+	'ContentType', 'vector');
+exportgraphics(axSlope, ...
+	fullfile(figDir, 'camber_slope.pdf'), ...
+	'ContentType', 'vector');
+
+% A curva individual fica opcional. Os 81 pontos continuam no CSV.
+if showLiftCurve
+	figure('Name', 'Curva de sustentacao', 'Color', 'w');
+	plot(alpha_deg, cl, 'b-', 'LineWidth', 1.5);
+	xline(0, 'k--'); yline(0, 'k--'); grid on;
+	xlabel('\alpha [deg]'); ylabel('c_l');
+	title('Roncz - Teoria dos perfis delgados');
+end
+
+% Convergencia numerica.
+figConvergence = figure('Name', 'Convergencia', ...
+	'Color', 'w', 'WindowStyle', 'docked');
+layoutConv = tiledlayout(figConvergence, 2, 1, ...
+	'TileSpacing', 'compact', 'Padding', 'compact');
+axCl = nexttile(layoutConv);
+semilogx(axCl, N_test, cl_5_test, 'bo-', 'LineWidth', 1.5);
+grid(axCl, 'on');
+ylabel(axCl, 'c_l a 5 graus');
+title(axCl, 'Convergencia da sustentacao');
+axAlpha = nexttile(layoutConv);
+semilogx(axAlpha, N_test, alpha_L0_test_deg, 'ro-', 'LineWidth', 1.5);
+grid(axAlpha, 'on');
+xlabel(axCl, 'N');
+ylabel(axAlpha, '\alpha_{L=0} [deg]');
+title(axAlpha, 'Convergencia do angulo de sustentacao nula');
+linkaxes([axCl, axAlpha], 'x');
+drawnow;
+exportgraphics(axCl, ...
+    fullfile(figDir, 'convergence_cl.pdf'), ...
+    'ContentType', 'vector');
+exportgraphics(axAlpha, ...
+    fullfile(figDir, 'convergence_alpha_L0.pdf'), ...
+    'ContentType', 'vector');
+
+fprintf('\nGraficos guardados em:\n%s\n', figDir);
