@@ -1,0 +1,76 @@
+\documentclass{article}
+
+% ---------- Packages ----------
+\usepackage{graphicx} % Required for inserting images
+\usepackage[portuguese]{babel}
+\usepackage{lipsum}
+\usepackage{indentfirst}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{circuitikz}
+\usepackage{booktabs}
+
+% ---------- Metadata ----------
+\title{Formulário Aerodinâmica}
+\author{Samuel Fortunato}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Coeficientes}
+\paragraph{Coeficiente de sustentação}
+\begin{equation*}
+	c_l = \frac{l}{\frac{1}{2} \rho V^{2}_\infty c}
+\end{equation*}
+
+\paragraph{Coeficiente de arrasto}
+\begin{equation*}
+	c_d = \frac{d}{\frac{1}{2} \rho V^{2}_\infty c}
+\end{equation*}
+
+\paragraph{Coeficiente de momento}
+\begin{equation*}
+	c_m = \frac{m}{\frac{1}{2} \rho V^{2}_\infty c^2}
+\end{equation*}
+
+\paragraph{Coeficiente de pressão}
+\begin{equation*}
+	c_p = \frac{p - p_\infty}{\frac{1}{2} \rho V^{2}_\infty} = 1 - \left(\frac{V}{V_\infty}\right)^2
+\end{equation*}
+
+
+
+\section{Condições de fronteira}
+
+\paragraph{Condição de impermeabilidade}
+\begin{equation*}
+	\vec{V}\cdot \vec{n}=0
+\end{equation*}
+
+\paragraph{Condição de Kutta}
+\begin{equation*}
+	\vec{V}_{\text{extradorso}} = \vec{V}_{\text{intradorso}}
+\end{equation*}
+
+\paragraph{Teorema de Kelvin} Conservação da circulação
+\begin{equation*}
+	\frac{D\Gamma}{Dt} = 0
+\end{equation*}
+
+\section{Como a circulação produz sustentação}
+\paragraph{Teorema de Kutta-Joukowski}
+\begin{equation*}
+	l = \rho V_{\infty}\Gamma
+\end{equation*}
+o que dá um $c_{l}$:
+\begin{equation*}
+	c_l=\frac{2\Gamma}{V_{\infty} c}
+\end{equation*}
+
+
+
+\end{document}
