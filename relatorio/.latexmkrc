@@ -6,6 +6,10 @@ $lualatex = 'lualatex -synctex=1 -interaction=nonstopmode -file-line-error -halt
 
 # Keep generated files out of the source directory
 $out_dir = 'build';
+$aux_dir = 'build';
+
+$out2_dir = '.';
+@out2_exts = ('pdf');
 
 # Main document
 @default_files = ('main.tex');
