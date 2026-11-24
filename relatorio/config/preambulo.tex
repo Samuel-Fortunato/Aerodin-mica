@@ -4,18 +4,18 @@
 % No DOCX: Times New Roman (o LibreOffice do sistema usa Liberation Serif).
 % Liberation Serif é uma substituição metricamente compatível disponível em Linux.
 \IfFontExistsTF{Liberation Serif}{%
-  \setmainfont{Liberation Serif}%
+	\setmainfont{Liberation Serif}%
 }{%
-  \setmainfont{TeX Gyre Termes}%
+	\setmainfont{TeX Gyre Termes}%
 }
 \usepackage[portuguese]{babel}
 \usepackage{geometry}
 \geometry{
- a4paper,
- left=1.27cm,right=1.27cm,
- top=1.27cm,bottom=1.27cm,
- includehead,headheight=1.16cm,headsep=-0.17cm,
- footskip=0.75cm,
+	a4paper,
+	left=1.27cm,right=1.27cm,
+	top=1.27cm,bottom=1.27cm,
+	includehead,headheight=1.16cm,headsep=-0.17cm,
+	footskip=0.75cm,
 }
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -25,6 +25,10 @@
 \usepackage{amsmath}
 \usepackage{microtype}
 \microtypesetup{protrusion=false,expansion=false}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+\usepackage{caption}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
@@ -56,21 +60,18 @@
 
 % Título com sombreado cinzento e contorno preto, como no Word.
 \newcommand{\tituloEmCaixa}[1]{%
- \par\vspace*{-1pt}% Ajustado para compensar o espaço do cabeçalho em LaTeX
- \noindent\makebox[\linewidth][c]{%
- {\setlength{\fboxsep}{2pt}\setlength{\fboxrule}{0.5pt}%
-  \fcolorbox{black}{black!9}{%
-   \parbox[c][0.96cm][c]{\dimexpr\linewidth+0.30cm-2\fboxsep-2\fboxrule\relax}{%
-    \centering\bfseries\fontsize{25}{27}\selectfont #1}}}}%
- \par\vspace{-1pt}%
+	\par\vspace*{-1pt}% Ajustado para compensar o espaço do cabeçalho em LaTeX
+	\noindent\makebox[\linewidth][c]{%
+		{\setlength{\fboxsep}{2pt}\setlength{\fboxrule}{0.5pt}%
+				\fcolorbox{black}{black!9}{%
+					\parbox[c][0.96cm][c]{\dimexpr\linewidth+0.30cm-2\fboxsep-2\fboxrule\relax}{%
+						\centering\bfseries\fontsize{25}{27}\selectfont #1}}}}%
+	\par\vspace{-1pt}%
 }
 
 % O resumo é o único título de secção centrado no documento original.
 \newcommand{\tituloResumo}{%
- \par\vspace{0pt}%
- \noindent\makebox[\linewidth][c]{\bfseries\fontsize{20}{23}\selectfont Resumo}%
- \par\vspace{-4pt}%
+	\par\vspace{0pt}%
+	\noindent\makebox[\linewidth][c]{\bfseries\fontsize{20}{23}\selectfont Resumo}%
+	\par\vspace{-4pt}%
 }
-
-% Imagens e tabelas que o grupo adicionar mais tarde podem usar \label/\ref.
-\usepackage[hidelinks]{hyperref}

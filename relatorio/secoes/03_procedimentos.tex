@@ -11,17 +11,45 @@ Nesta secção devem apresentar-se os métodos utilizados para o estudo aerodin�
 
 \begin{itemize}[itemsep=3pt]
 
-\item Deve incluir-se um diagrama de blocos que permita identificar claramente as etapas a seguir para a aplicação do método dos perfis delgados. As etapas apresentadas neste diagrama devem servir de estrutura para a explicação do método nesta secção. Pode adicionar-se formulação matemática caso se considere necessário para explicar o procedimento seguido.
+	\item Deve incluir-se um diagrama de blocos que permita identificar claramente as etapas a seguir para a aplicação do método dos perfis delgados. As etapas apresentadas neste diagrama devem servir de estrutura para a explicação do método nesta secção. Pode adicionar-se formulação matemática caso se considere necessário para explicar o procedimento seguido.
 
-\item Deve incluir-se uma figura onde se mostre a geometria analisada e se identifique claramente a linha média ou de curvatura do perfil.
+	\item Deve incluir-se uma figura onde se mostre a geometria analisada e se identifique claramente a linha média ou de curvatura do perfil.
 
 \end{itemize}
+
+\begin{figure}[ht]
+	\centering
+
+	\def\blockwidth{45mm}
+	\begin{tikzpicture}[
+			>=Latex, font=\small,
+			block/.style={draw=black!75, rounded corners=1.5pt, fill=black!3,
+					align=center, inner sep=3mm, minimum height=23mm, text width=\blockwidth},
+			flow/.style={->, semithick, draw=black!80},
+			phase/.style={font=\small\bfseries, align=center}
+		]
+		\node[block] (b1) at (0,0) {\textbf{1. Geometria}\\ Coordenadas do extradorso e intradorso\\ $\longrightarrow (x_u,z_u),(x_l,z_l)$};
+		\node[block] (b2) at (5.9,0) {\textbf{2. Interpolação e linha média}\\ Entrada: superfícies, $N$\\ Saída: $z(x)=(z_u+z_l)/2$};
+		\node[block] (b3) at (11.8,0) {\textbf{3. Diferenciação numérica}\\ Entrada: $z(x)$\\ Saída: $dz/dx$};
+		\node[block] (b4) at (11.8,-3.6) {\textbf{4. Mudança de variável}\\ Entrada: $dz/dx$, $N$\\ Saída: $\left.\frac{dz}{dx}\right|_{x(\theta)}$, $\frac{x}{c}=\frac{1-\cos\theta}{2}$};
+		\node[block] (b5) at (5.9,-3.6) {\textbf{5. Coeficientes de Fourier}\\ Entrada: declive em $\theta$, $\alpha$\\ Saída: $A_0(\alpha), A_1$};
+		\node[block] (b6) at (0,-3.6) {\textbf{6. Resultados aerodinâmicos}\\ Entrada: $A_0,A_1$\\ Saída: $c_l(\alpha),\alpha_{L=0}, dc_l/d\alpha$};
+		\draw[flow] (b1) -- (b2);
+		\draw[flow] (b2) -- (b3);
+		\draw[flow] (b3) -- (b4);
+		\draw[flow] (b4) -- (b5);
+		\draw[flow] (b5) -- (b6);
+	\end{tikzpicture}
+
+	\caption{Diagrama de Blocos - Método dos perfís delgados}
+	\label{fig:block-diag-thin-foils}
+\end{figure}
 
 \subsection*{Método dos painéis}
 
 \begin{itemize}[itemsep=3pt]
 
-\item Deve incluir-se um diagrama de blocos que explique o procedimento seguido para a aplicação do método dos painéis. À semelhança do caso anterior, este diagrama deve servir de base para a explicação do método e, caso seja necessário, podem incluir-se no texto as equações consideradas relevantes para fundamentar a explicação.
+	\item Deve incluir-se um diagrama de blocos que explique o procedimento seguido para a aplicação do método dos painéis. À semelhança do caso anterior, este diagrama deve servir de base para a explicação do método e, caso seja necessário, podem incluir-se no texto as equações consideradas relevantes para fundamentar a explicação.
 
 \end{itemize}
 
@@ -29,6 +57,6 @@ Nesta secção devem apresentar-se os métodos utilizados para o estudo aerodin�
 
 \begin{itemize}[itemsep=3pt]
 
-\item Deve incluir-se, tal como nos métodos anteriores, a descrição do \textit{setup} utilizado, que explique o procedimento seguido para a realização da simulação CFD.
+	\item Deve incluir-se, tal como nos métodos anteriores, a descrição do \textit{setup} utilizado, que explique o procedimento seguido para a realização da simulação CFD.
 
 \end{itemize}
