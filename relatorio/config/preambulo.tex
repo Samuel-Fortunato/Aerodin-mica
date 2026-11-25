@@ -44,6 +44,13 @@
   titulo/.style={font=\footnotesize\bfseries, text=gray!60!black},
 }
 
+% Lista compacta para as etapas que acompanham os diagramas de blocos.
+\newlist{etapas}{enumerate}{1}
+\setlist[etapas]{label=\textbf{\arabic*.}, leftmargin=*, labelsep=0.3em,
+  topsep=0pt, itemsep=2pt, parsep=0pt,
+  before={\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}%
+          \setlength{\abovedisplayshortskip}{0pt}\setlength{\belowdisplayshortskip}{3pt}}}
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
 \linespread{1.0}
