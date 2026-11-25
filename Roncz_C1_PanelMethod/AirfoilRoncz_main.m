@@ -1,4 +1,5 @@
-clear; close all; clc;
+clearvars -except panelModeOverride;
+close all; clc;
 %% C1: escolha do modo
 % normal: analise original com 70 paineis
 % conver: convergencia de CL a 5 graus
@@ -15,7 +16,12 @@ fprintf('2 - Estudo de convergencia\n');
 fprintf('3 - CL vs angulo de ataque\n');
 fprintf('4 - Casos especificos\n');
 
-opcao = input('Selecione uma opcao (1-4): ');
+if exist('panelModeOverride', 'var')
+    opcao = panelModeOverride;
+    clear panelModeOverride;
+else
+    opcao = input('Selecione uma opcao (1-4): ');
+end
 
 switch opcao
     case 1
