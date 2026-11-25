@@ -18,6 +18,8 @@
 	footskip=0.75cm,
 }
 \usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float} % [H]: figuras e tabelas ficam exatamente onde aparecem no código
 \usepackage{xcolor}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -27,8 +29,20 @@
 \microtypesetup{protrusion=false,expansion=false}
 \usepackage[hidelinks]{hyperref}
 \usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc}
+\usepackage{amsmath,graphicx}
 \usetikzlibrary{arrows.meta, positioning, shapes.geometric}
 \usepackage{caption}
+
+% Estilos dos diagramas de blocos (secoes/03_procedimentos.tex).
+\tikzset{
+  etapa/.style={draw, rounded corners=2pt, fill=blue!6, align=center,
+                text width=5.6cm, minimum height=0.9cm, font=\small},
+  io/.style={align=flush left, text width=5.2cm, font=\footnotesize},
+  seta/.style={-{Stealth[length=2mm]}, thick},
+  setaio/.style={-{Stealth[length=1.6mm]}, gray!70!black},
+  titulo/.style={font=\footnotesize\bfseries, text=gray!60!black},
+}
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}

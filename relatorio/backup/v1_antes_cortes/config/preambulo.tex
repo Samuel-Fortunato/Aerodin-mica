@@ -1,0 +1,81 @@
+% Configuração de layout correspondente ao modelo DOCX
+\usepackage{newtxmath}
+\usepackage{fontspec}
+% No DOCX: Times New Roman (o LibreOffice do sistema usa Liberation Serif).
+% Liberation Serif é uma substituição metricamente compatível disponível em Linux.
+\IfFontExistsTF{Liberation Serif}{%
+	\setmainfont{Liberation Serif}%
+}{%
+	\setmainfont{TeX Gyre Termes}%
+}
+\usepackage[portuguese]{babel}
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	left=1.27cm,right=1.27cm,
+	top=1.27cm,bottom=1.27cm,
+	includehead,headheight=1.16cm,headsep=-0.17cm,
+	footskip=0.75cm,
+}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{float} % [H]: figuras e tabelas ficam exatamente onde aparecem no código
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{microtype}
+\microtypesetup{protrusion=false,expansion=false}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc}
+\usepackage{amsmath,graphicx}
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric}
+\usepackage{caption}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\linespread{1.0}
+\hyphenpenalty=9000
+\exhyphenpenalty=9000
+\emergencystretch=3em
+\frenchspacing
+
+% Cabeçalho com texto, logótipo do DEM/Universidade de Aveiro, e traço horizontal.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\raisebox{9pt}[0pt][0pt]{\fontsize{12}{14}\selectfont Licenciatura em Engenharia Aeroespacial. \textbf{Aerodinâmica}}}
+\fancyhead[R]{\raisebox{8pt}[0pt][0pt]{\includegraphics[width=4.08cm]{imagens/ua_dem_cortado.png}}}
+\fancyfoot[R]{\thepage\hspace*{0.50cm}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\headrule}{\vskip-8pt\hbox to\headwidth{\hspace*{-1.02cm}\rule{\dimexpr\headwidth+2.11cm\relax}{0.5pt}\hss}\vskip7.5pt}
+
+% Níveis do documento original (sem numeração de secções).
+\titleformat{\section}{\bfseries\fontsize{20}{23}\selectfont}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1pt}{1pt}
+\titleformat{\subsection}{\bfseries\fontsize{14}{16}\selectfont}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{1pt}{-3pt}
+
+% Níveis de listas do DOCX: ponto cheio, seguido do marcador 'o'.
+\setlist[itemize,1]{label=\textbullet,leftmargin=1.23cm,labelsep=0.36cm,labelwidth=0.25cm,topsep=1pt,partopsep=0pt,itemsep=5pt,parsep=0pt}
+\setlist[itemize,2]{label={\normalfont o},leftmargin=1.25cm,labelsep=0.36cm,labelwidth=0.25cm,topsep=5pt,partopsep=0pt,itemsep=5pt,parsep=0pt}
+
+% Título com sombreado cinzento e contorno preto, como no Word.
+\newcommand{\tituloEmCaixa}[1]{%
+	\par\vspace*{-1pt}% Ajustado para compensar o espaço do cabeçalho em LaTeX
+	\noindent\makebox[\linewidth][c]{%
+		{\setlength{\fboxsep}{2pt}\setlength{\fboxrule}{0.5pt}%
+				\fcolorbox{black}{black!9}{%
+					\parbox[c][0.96cm][c]{\dimexpr\linewidth+0.30cm-2\fboxsep-2\fboxrule\relax}{%
+						\centering\bfseries\fontsize{25}{27}\selectfont #1}}}}%
+	\par\vspace{-1pt}%
+}
+
+% O resumo é o único título de secção centrado no documento original.
+\newcommand{\tituloResumo}{%
+	\par\vspace{0pt}%
+	\noindent\makebox[\linewidth][c]{\bfseries\fontsize{20}{23}\selectfont Resumo}%
+	\par\vspace{-4pt}%
+}

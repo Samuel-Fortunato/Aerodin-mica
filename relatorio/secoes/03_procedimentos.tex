@@ -1,62 +1,143 @@
 \section*{Procedimentos}
-
-Nesta secção devem apresentar-se os métodos utilizados para o estudo aerodinâmico do perfil. Neste trabalho, os métodos que os autores devem empregar são: método dos perfis delgados, método dos painéis e simulação CFD.
-
-% Quebra de página explícita presente no ficheiro DOCX original.
-
-\newpage
-\enlargethispage{-35pt} % Ajuste da paginação da página 2 da template original
+% Estilos dos diagramas (etapa, io, seta, ...) definidos em config/preambulo.tex.
 
 \subsection*{Método dos perfis delgados}
 
-\begin{itemize}[itemsep=3pt]
+O procedimento, implementado em MATLAB, está esquematizado na
+Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saídas
+à direita.
 
-	\item Deve incluir-se um diagrama de blocos que permita identificar claramente as etapas a seguir para a aplicação do método dos perfis delgados. As etapas apresentadas neste diagrama devem servir de estrutura para a explicação do método nesta secção. Pode adicionar-se formulação matemática caso se considere necessário para explicar o procedimento seguido.
-
-	\item Deve incluir-se uma figura onde se mostre a geometria analisada e se identifique claramente a linha média ou de curvatura do perfil.
-
-\end{itemize}
-
-\begin{figure}[ht]
-	\centering
-
-	\def\blockwidth{45mm}
-	\begin{tikzpicture}[
-			>=Latex, font=\small,
-			block/.style={draw=black!75, rounded corners=1.5pt, fill=black!3,
-					align=center, inner sep=3mm, minimum height=23mm, text width=\blockwidth},
-			flow/.style={->, semithick, draw=black!80},
-			phase/.style={font=\small\bfseries, align=center}
-		]
-		\node[block] (b1) at (0,0) {\textbf{1. Geometria}\\ Coordenadas do extradorso e intradorso\\ $\longrightarrow (x_u,z_u),(x_l,z_l)$};
-		\node[block] (b2) at (5.9,0) {\textbf{2. Interpolação e linha média}\\ Entrada: superfícies, $N$\\ Saída: $z(x)=(z_u+z_l)/2$};
-		\node[block] (b3) at (11.8,0) {\textbf{3. Diferenciação numérica}\\ Entrada: $z(x)$\\ Saída: $dz/dx$};
-		\node[block] (b4) at (11.8,-3.6) {\textbf{4. Mudança de variável}\\ Entrada: $dz/dx$, $N$\\ Saída: $\left.\frac{dz}{dx}\right|_{x(\theta)}$, $\frac{x}{c}=\frac{1-\cos\theta}{2}$};
-		\node[block] (b5) at (5.9,-3.6) {\textbf{5. Coeficientes de Fourier}\\ Entrada: declive em $\theta$, $\alpha$\\ Saída: $A_0(\alpha), A_1$};
-		\node[block] (b6) at (0,-3.6) {\textbf{6. Resultados aerodinâmicos}\\ Entrada: $A_0,A_1$\\ Saída: $c_l(\alpha),\alpha_{L=0}, dc_l/d\alpha$};
-		\draw[flow] (b1) -- (b2);
-		\draw[flow] (b2) -- (b3);
-		\draw[flow] (b3) -- (b4);
-		\draw[flow] (b4) -- (b5);
-		\draw[flow] (b5) -- (b6);
-	\end{tikzpicture}
-
-	\caption{Diagrama de Blocos - Método dos perfís delgados}
-	\label{fig:block-diag-thin-foils}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=0.45cm]
+  % etapas
+  \node[etapa] (e1) {\textbf{1.} Importação da geometria};
+  \node[etapa, below=of e1] (e2) {\textbf{2.} Interpolação e linha média};
+  \node[etapa, below=of e2] (e3) {\textbf{3.} Declive e mudança de variável $x \rightarrow \theta$};
+  \node[etapa, below=of e3] (e4) {\textbf{4.} Coeficientes de Fourier};
+  \node[etapa, below=of e4] (e5) {\textbf{5.} Coeficientes aerodinâmicos};
+  \node[etapa, below=of e5] (e6) {\textbf{6.} Estudo de convergência em $N$};
+  \foreach \a/\b in {e1/e2,e2/e3,e3/e4,e4/e5,e5/e6}
+    \draw[seta] (\a) -- (\b);
+  % entradas
+  \node[io, left=0.5cm of e1, align=flush right] (i1) {Ficheiro de coordenadas (formato Lednicer): 36 pontos no extradorso e 36 no intradorso};
+  \node[io, left=0.5cm of e2, align=flush right] (i2) {$(x_u,z_u)$, $(x_l,z_l)$; $N = 1000$ pontos};
+  \node[io, left=0.5cm of e3, align=flush right] (i3) {$z_c(x)$; $x = \tfrac{1}{2}(1-\cos\theta)$};
+  \node[io, left=0.5cm of e4, align=flush right] (i4) {$dz_c/dx\,(\theta)$, $\theta \in [0,\pi]$};
+  \node[io, left=0.5cm of e5, align=flush right] (i5) {$I_0$, $A_1$; $\alpha \in [-20^\circ, 20^\circ]$, passo $0{,}5^\circ$};
+  \node[io, left=0.5cm of e6, align=flush right] (i6) {$N \in \{50,\dots,10\,000\}$; tolerâncias $\Delta c_l = 10^{-3}$, $\Delta\alpha_{L=0} = 0{,}01^\circ$};
+  % saídas
+  \node[io, right=0.5cm of e1] (o1) {$(x_u,z_u)$, $(x_l,z_l)$, normalizados pela corda};
+  \node[io, right=0.5cm of e2] (o2) {$z_c = \tfrac{1}{2}(z_u+z_l)$; espessura $z_u - z_l$};
+  \node[io, right=0.5cm of e3] (o3) {$dz_c/dx\,(\theta)$};
+  \node[io, right=0.5cm of e4] (o4) {$I_0$, $A_1$ (regra dos trapézios)};
+  \node[io, right=0.5cm of e5] (o5) {$\alpha_{L=0}$, $c_l(\alpha)$, $dc_l/d\alpha = 2\pi$};
+  \node[io, right=0.5cm of e6] (o6) {$N$ que cumpre as tolerâncias; erros de $c_l(5^\circ)$ e $\alpha_{L=0}$};
+  \foreach \k in {1,...,6} {
+    \draw[setaio] (i\k) -- (e\k);
+    \draw[setaio] (e\k) -- (o\k);
+  }
+  \path (e1.north) ++(0,0.6) coordinate (topo);
+  \node[titulo] at (i1 |- topo) {Entradas};
+  \node[titulo] at (o1 |- topo) {Saídas};
+\end{tikzpicture}
+\caption{Diagrama de blocos do método dos perfis delgados.}
+\label{fig:diag_thin}
 \end{figure}
+
+As superfícies do perfil são interpoladas (\emph{pchip} em $\sqrt{x}$, que
+acompanha melhor o bordo de ataque) em $N$ pontos, obtendo-se a linha média
+$z_c = (z_u + z_l)/2$ (Figura~\ref{fig:geom}). O seu declive, calculado por
+diferenças finitas, é reinterpolado na variável $\theta$, com
+$x = \frac{c}{2}(1-\cos\theta)$, e os integrais
+\[
+  I_0 = \frac{1}{\pi}\int_0^{\pi} \frac{dz_c}{dx}\,d\theta, \qquad
+  A_1 = \frac{2}{\pi}\int_0^{\pi} \frac{dz_c}{dx}\cos\theta\,d\theta
+\]
+são calculados pela regra dos trapézios. Daqui resultam
+\[
+  \alpha_{L=0} = I_0 - \frac{A_1}{2}, \qquad
+  c_l = 2\pi\,(\alpha - \alpha_{L=0}),
+\]
+com declive $dc_l/d\alpha = 2\pi$~rad$^{-1}$, independente da geometria. Com
+$N = 1000$, $c_l(5^\circ)$ e $\alpha_{L=0}$ variam menos de $10^{-3}$ e
+$0{,}01^\circ$, respetivamente, em relação a $N = 10\,000$.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{imagens/geometry.pdf}
+  \caption{Perfil Roncz/Marske-7 e respetiva linha média.}
+  \label{fig:geom}
+\end{figure}
+
 
 \subsection*{Método dos painéis}
 
-\begin{itemize}[itemsep=3pt]
+Utilizou-se o método dos painéis de vórtices com intensidade linear
+{ref: Katz \& Plotkin}, implementado em MATLAB e esquematizado na
+Figura~\ref{fig:diag_paineis}.
 
-	\item Deve incluir-se um diagrama de blocos que explique o procedimento seguido para a aplicação do método dos painéis. À semelhança do caso anterior, este diagrama deve servir de base para a explicação do método e, caso seja necessário, podem incluir-se no texto as equações consideradas relevantes para fundamentar a explicação.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=0.45cm]
+  \node[etapa] (p1) {\textbf{1.} Painelização do perfil};
+  \node[etapa, below=of p1] (p2) {\textbf{2.} Coeficientes de influência};
+  \node[etapa, below=of p2] (p3) {\textbf{3.} Condições de fronteira};
+  \node[etapa, below=of p3] (p4) {\textbf{4.} Resolução do sistema linear};
+  \node[etapa, below=of p4] (p5) {\textbf{5.} Velocidade tangencial e $C_p$};
+  \node[etapa, below=of p5] (p6) {\textbf{6.} Coeficientes de força};
+  \node[etapa, below=of p6] (p7) {\textbf{7.} Pós-processamento};
+  \foreach \a/\b in {p1/p2,p2/p3,p3/p4,p4/p5,p5/p6,p6/p7}
+    \draw[seta] (\a) -- (\b);
+  % ciclo de convergência
+  \draw[seta, dashed] (p6.east) -- ++(0.3,0) |- (p1.east);
+  % entradas
+  \node[io, left=0.5cm of p1, align=flush right] (j1) {Ficheiro de coordenadas; número de painéis $N$};
+  \node[io, left=0.5cm of p2, align=flush right] (j2) {Nós $(x_j,z_j)$; pontos de controlo $(x_i,z_i)$};
+  \node[io, left=0.5cm of p3, align=flush right] (j3) {$V_\infty$, $\alpha$; normais $\mathbf{n}_i$};
+  \node[io, left=0.5cm of p4, align=flush right] (j4) {Matriz $\mathbf{A}$, vetor $\mathbf{b}$};
+  \node[io, left=0.5cm of p5, align=flush right] (j5) {$\gamma_j$; influências; tangentes $\mathbf{t}_i$};
+  \node[io, left=0.5cm of p6, align=flush right] (j6) {$C_{p,i}$, $\mathbf{n}_i$, $\Delta s_i$, $\alpha$};
+  \node[io, left=0.5cm of p7, align=flush right] (j7) {$\gamma_j$, $V_{t,i}$, $C_{p,i}$; malha de pontos em redor do perfil};
+  % saídas
+  \node[io, right=0.75cm of p1] (q1) {Nós, pontos de controlo, $\mathbf{t}_i$, $\mathbf{n}_i$, $\Delta s_i$};
+  \node[io, right=0.75cm of p2] (q2) {Matriz $\mathbf{A}$, $(N{+}1)\times(N{+}1)$};
+  \node[io, right=0.75cm of p3] (q3) {Vetor $\mathbf{b}$; condição de Kutta $\gamma_1 + \gamma_{N+1} = 0$};
+  \node[io, right=0.75cm of p4] (q4) {Intensidades $\gamma_j$ nos $N+1$ nós};
+  \node[io, right=0.75cm of p5] (q5) {$V_{t,i}$, $C_{p,i}$; verificação $V_{n,i} \approx 0$};
+  \node[io, right=0.75cm of p6] (q6) {$C_x$, $C_z$ $\rightarrow$ $c_l$, $c_{d,p}$; ciclo em $N$ até variação de $c_l(5^\circ) < 0{,}5\,\%$};
+  \node[io, right=0.75cm of p7] (q7) {Linhas de corrente, ponto de estagnação, $C_{p,\min}$};
+  \foreach \k in {1,...,7} {
+    \draw[setaio] (j\k) -- (p\k);
+    \draw[setaio] (p\k) -- (q\k);
+  }
+  \path (p1.north) ++(0,0.6) coordinate (topo);
+  \node[titulo] at (j1 |- topo) {Entradas};
+  \node[titulo] at (q1 |- topo) {Saídas};
+\end{tikzpicture}
+\caption{Diagrama de blocos do método dos painéis. A seta a tracejado
+representa o estudo de convergência em $N$.}
+\label{fig:diag_paineis}
+\end{figure}
 
-\end{itemize}
-
-\subsection*{Simulação CFD}
-
-\begin{itemize}[itemsep=3pt]
-
-	\item Deve incluir-se, tal como nos métodos anteriores, a descrição do \textit{setup} utilizado, que explique o procedimento seguido para a realização da simulação CFD.
-
-\end{itemize}
+O contorno é dividido em $N$ painéis de igual comprimento de arco, percorridos
+no sentido anti-horário a partir do bordo de fuga. Em cada painel a intensidade
+dos vórtices varia linearmente entre os valores nodais $\gamma_j$, e os
+coeficientes de influência $a_{ij}$ obtêm-se analiticamente num referencial
+local do painel. Impõe-se velocidade normal nula em cada ponto de controlo,
+\[
+  \sum_{j=1}^{N+1} a_{ij}\,\gamma_j = -\mathbf{V}_\infty \cdot \mathbf{n}_i ,
+  \qquad i = 1,\dots,N ,
+\]
+fechando o sistema com a condição de Kutta $\gamma_1 + \gamma_{N+1} = 0$
+(aproximada, dado que o bordo de fuga tem espessura finita). Da velocidade
+tangencial resulta $C_{p,i} = 1 - (V_{t,i}/V_\infty)^2$, e integrando a pressão
+ao longo do contorno,
+\[
+  C_x = -\sum_i C_{p,i}\, n_{x,i}\,\Delta s_i , \quad
+  C_z = -\sum_i C_{p,i}\, n_{z,i}\,\Delta s_i , \quad
+  c_l = -C_x \sin\alpha + C_z \cos\alpha , \quad
+  c_{d,p} = C_x \cos\alpha + C_z \sin\alpha .
+\]
+As intensidades $\gamma_j$ permitem ainda calcular as linhas de corrente, o
+ponto de estagnação (mudança de sinal de $V_t$) e o $C_p$ mínimo.

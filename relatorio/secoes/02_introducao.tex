@@ -1,25 +1,60 @@
 \section*{Introdução}
 
-O documento a desenvolver deve cumprir os seguintes requisitos:
+A aeronave estudada neste trabalho é o Cirrus SR22, um avião ligeiro de asa baixa
+com quatro a cinco lugares, fabricado pela Cirrus Aircraft (EUA) e utilizado
+sobretudo em viagens privadas e na formação de pilotos. Deriva do SR20, que
+realizou o primeiro voo a 21 de março de 1995, e é produzido desde 2001. Em
+Portugal é operado sobretudo por proprietários privados; existe também um centro
+certificado de formação e manutenção Cirrus, a Nortávia (Maia, Porto), que opera
+o SR20.
 
-\begin{itemize}
+A forma em planta da asa apresenta-se na Figura~\ref{fig:sr22} e as principais
+dimensões na Tabela~\ref{tab:sr22}. A asa é afilada e tem alongamento elevado
+($AR \approx 10{,}1$). Segundo o \emph{Incomplete Guide to Airfoil Usage}, a asa
+usa na raiz e na ponta um perfil Roncz, desenhado por John Roncz especificamente
+para a Cirrus, cujas coordenadas não estão publicadas. Como indicado no
+enunciado, utiliza-se o perfil da raiz como referência.
 
-\item O documento \textbf{não pode ter mais de 15 páginas}, incluindo tabelas, figuras, referências, equações ou anexos. Caso se exceda o limite de páginas, a nota será penalizada.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.4\textwidth]{imagens/blueprint.png}
+  \caption{Três vistas do Cirrus SR22. Fonte: [ref].}
+  \label{fig:sr22}
+\end{figure}
 
-\item O documento deve conter as seguintes secções:
+\begin{table}[H]
+  \centering
+  \caption{Principais características do Cirrus SR22 (números de série 3915 e
+  seguintes).}
+  \label{tab:sr22}
+  \begin{tabular}{lc}
+    \toprule
+    Parâmetro & Valor \\
+    \midrule
+    Envergadura $b$ [m]                         & 11,67 \\
+    Área alar $S$ [m$^2$]                       & 13,46 \\
+    Alongamento $AR = b^2/S$                    & 10,1 \\
+    Corda na raiz / na ponta [m]                & $\approx 1{,}49$ / $0{,}89$ \\
+    Enflechamento (1/4 da corda) [$^\circ$]     & $\approx 0$ \\
+    Massa máxima à descolagem [kg]              & 1\,633 \\
+    Velocidade de voo de referência [km/h]      & 340 \\
+    Número de Mach                              & 0,28 \\
+    Perfil na raiz / na ponta                   & Roncz / Roncz \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-\begin{itemize}
+Na ausência das coordenadas do perfil do SR22, utilizou-se o perfil
+Roncz/Marske-7 da base de dados da UIUC, também associado a Roncz. Tem espessura
+máxima de 12,1\,\% da corda em $x/c = $~[TODO] e curvatura máxima de 2,8\,\% em
+$x/c = $~[TODO], com \emph{reflex} junto ao bordo de fuga (ordenada mínima da
+linha média $-0{,}5\,\%$ em $x/c = $~[TODO]), característico dos perfis de asa
+voadora. O perfil é estudado pela teoria dos perfis delgados, pelo método dos
+painéis e por simulação CFD (OpenFOAM), métodos de complexidade e custo
+crescentes.
 
-\item \textbf{Resumo}: não pode ultrapassar as 250 palavras e deve conter os aspetos mais relevantes que os autores pretendem destacar sobre o trabalho. Por exemplo, os autores podem utilizar o resumo para indicar brevemente os procedimentos utilizados e os resultados mais relevantes, tais como o erro relativo ao comparar os resultados obtidos por diferentes métodos.
-
-\item \textbf{Introdução}: na secção de introdução deve identificar-se a aeronave escolhida, contextualizar a aeronave e a sua utilização, e identificar os perfis aerodinâmicos que constituem a asa. Caso a asa disponha de diferentes perfis ao longo da envergadura, utilizar-se-á o perfil correspondente à raiz da asa como caso de referência.
-
-\item \textbf{Procedimentos}: nesta secção devem explicar-se os procedimentos ou métodos seguidos para o estudo aerodinâmico do perfil que constitui a asa (método dos perfis delgados, método dos painéis, simulação CFD). Informação adicional sobre esta secção é apresentada no ponto correspondente.
-
-\item \textbf{Resultados}: devem apresentar-se e explicar-se os resultados obtidos através dos três métodos. Os autores devem demonstrar que compreendem as vantagens e desvantagens de cada método, bem como o seu alcance. Os resultados solicitados são especificados no ponto correspondente.
-
-\item \textbf{Conclusões}: nesta secção os estudantes devem expor as conclusões que consideram mais relevantes do trabalho.
-
-\end{itemize}
-
-\end{itemize}
+A velocidade de voo de referência é $V_\infty = 340$~km/h ($\approx 94{,}4$~m/s),
+ou seja $M_\infty \approx 0{,}28 < 0{,}3$, pelo que o escoamento pode ser
+considerado incompressível. Com a atmosfera padrão ao nível do mar
+($\rho_\infty = 1{,}225$~kg/m$^3$, $\mu_\infty = 1{,}789\times10^{-5}$~Pa\,s) e a
+corda na raiz, $Re = \rho_\infty V_\infty c_r/\mu_\infty \approx 9{,}6\times10^{6}$.
