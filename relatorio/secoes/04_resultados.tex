@@ -1,60 +1,260 @@
 \section*{Resultados}
+% ESTRUTURA PROVISÓRIA. Tudo o que está a vermelho (\tbd, \placeholder) é para
+% substituir. Os valores numéricos sem \tbd vêm dos results.csv de cada pasta.
+% Análise de resultados e explicações físicas: escrever SEM IA (regra da UC).
 
-Nesta secção serão apresentados os resultados obtidos. Estes resultados devem conter (pelo menos) as seguintes subsecções:
+Nesta secção apresentam-se primeiro os estudos de convergência do método dos
+painéis e da simulação CFD, e depois a comparação dos três métodos em termos de
+$c_l$, ângulo de sustentação nula, declive, custo, linhas de corrente e $C_p$.
+\tbd{reescrever}
 
+% ---------------------------------------------------------------------------
 \subsection*{Estudo de convergência do método dos painéis}
-% Movido de Procedimentos: N entre 20 e 800 painéis a alpha = 5 graus;
-% escolheu-se N = 260, a partir do qual o erro de c_l em relação a N = 800 é < 0,5 %.
+% Critério: gráfico c_l(N) a 5° + figura da painelização escolhida.
+% Dados: N entre 20 e 800 a alpha = 5°; N = 260 dá erro < 0,5 % face a N = 800.
 
-\begin{itemize}[itemsep=3pt]
+A Figura~\ref{fig:conv_paineis} mostra a evolução de $c_l$ com o número de
+painéis $N$, para $\alpha = 5^\circ$. \tbd{descrever o comportamento para $N$
+pequeno e porquê}. Adotou-se como critério um erro de $c_l$ inferior a
+\tbd{0,5}\,\% em relação ao valor para $N = 800$, cumprido a partir de
+$N = \tbd{260}$, valor usado nos restantes cálculos.
 
-\item Para um ângulo de ataque de \(5^\circ\), deve realizar-se uma análise que indique como varia o coeficiente de sustentação, \(c_l\), previsto pelo método dos painéis em função do número de painéis \(N\) utilizado. O resultado desta análise deve ser uma estimativa do número mínimo de painéis necessário para considerar que o parâmetro \(N\) já não afeta a solução.
+\begin{figure}[H]
+  \centering
+  \placeholder[0.6\linewidth]{5cm}{Figura: $c_l(5^\circ)$ em função de $N$, com
+  o $N$ escolhido assinalado}
+  \caption{Coeficiente de sustentação previsto pelo método dos painéis em
+  função do número de painéis $N$, para $\alpha = 5^\circ$.}
+  \label{fig:conv_paineis}
+\end{figure}
 
-\item Este estudo deve ser acompanhado por, pelo menos, um gráfico que mostre a evolução do coeficiente de sustentação em função do número de painéis.
+A Figura~\ref{fig:painelizacao} mostra a painelização final, com
+$N = \tbd{260}$ painéis, e os vetores normais e tangentes de cada painel.
+\tbd{comentar a distribuição dos painéis junto aos bordos}
 
-\item Deve incluir-se uma imagem da painelização realizada após a escolha do número de painéis \(N\)
+\begin{figure}[H]
+  \centering
+  \placeholder[0.8\linewidth]{3.5cm}{Figura: painelização com $N$ escolhido,
+  normais e tangentes (\texttt{graficar\_panelizationVectors\_Roncz.m})}
+  \caption{Painelização final do perfil Roncz/Marske-7, com os vetores normais
+  \tbd{cor} e tangentes \tbd{cor}.}
+  \label{fig:painelizacao}
+\end{figure}
 
-\end{itemize}
-
+% ---------------------------------------------------------------------------
 \subsection*{Estudo de convergência da simulação CFD}
+% Critério: convergência de malha + independência da solução, justificar a malha.
 
-\begin{itemize}[itemsep=3pt]
+O estudo de independência de malha foi feito a $\alpha = \tbd{5}^\circ$,
+refinando a malha até a variação de $c_l$ entre malhas consecutivas ser
+inferior a \tbd{1}\,\%. A Tabela~\ref{tab:malhas} resume as malhas testadas.
+\tbd{justificar a malha escolhida: precisão vs. custo}
 
-\item Deve realizar-se um estudo de convergência de malha e de independência da solução. Deve justificar a escolha da malha que considerou “ideal” para a realização da simulação. 
+\begin{table}[H]
+  \centering
+  \caption{Estudo de independência de malha a $\alpha = \tbd{5}^\circ$.}
+  \label{tab:malhas}
+  \begin{tabular}{lccc}
+    \toprule
+    Malha & N.º de células & $c_l$ & Variação de $c_l$ [\%] \\
+    \midrule
+    Grosseira & \tbd{} & \tbd{} & --- \\
+    Média     & \tbd{} & \tbd{} & \tbd{} \\
+    Fina      & \tbd{} & \tbd{} & \tbd{} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-\end{itemize}
+A convergência iterativa avaliou-se pelos resíduos e pela estabilização de
+$c_l$ (Figura~\ref{fig:residuos}), e a resolução da camada limite pelo $y^+$ ao
+longo do perfil (Figura~\ref{fig:yplus}). \tbd{valores finais dos resíduos e
+n.º de iterações; o que acontece a $20^\circ$}. \tbd{valor máximo de $y^+$ e
+onde ocorre}
 
+\begin{figure}[H]
+  \centering
+  \placeholder[0.45\linewidth]{4.5cm}{Resíduos a $5^\circ$}\hfill
+  \placeholder[0.45\linewidth]{4.5cm}{Resíduos a $20^\circ$}
+  \caption{Evolução dos resíduos para $\alpha = 5^\circ$ (esquerda) e
+  $\alpha = 20^\circ$ (direita).}
+  \label{fig:residuos}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \placeholder[0.6\linewidth]{4.5cm}{$y^+$ ao longo do perfil a $0^\circ$,
+  $5^\circ$ e $20^\circ$}
+  \caption{$y^+$ ao longo do perfil para $\alpha = 0^\circ$, $5^\circ$ e
+  $20^\circ$.}
+  \label{fig:yplus}
+\end{figure}
+
+% ---------------------------------------------------------------------------
 \subsection*{Comparação de métodos}
 
-\begin{itemize}[itemsep=7pt]
+\paragraph{Coeficiente de sustentação.}
+A Figura~\ref{fig:cl_alpha} sobrepõe os $c_l$ previstos pelos três métodos:
+perfis delgados de $-20^\circ$ a $20^\circ$ com passo de $0{,}5^\circ$, painéis
+de $-20^\circ$ a $20^\circ$ com passo de $5^\circ$, e CFD de $0^\circ$ a
+$20^\circ$ com passo de $5^\circ$. A Tabela~\ref{tab:cl} dá os valores nos
+ângulos comuns.
 
-\item Devem comparar-se os coeficientes de sustentação obtidos em função do ângulo de ataque utilizando os diferentes métodos. Para tal, deve fornecer-se, no mínimo, uma figura onde se sobreponham os coeficientes de sustentação previstos por cada um dos procedimentos.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth]{../Comparison/figures/lift_comparison.pdf}
+  \caption{Coeficiente de sustentação em função do ângulo de ataque pelos três
+  métodos.}
+  \label{fig:cl_alpha}
+\end{figure}
 
-\item Para o método dos perfis delgados, o ângulo de ataque deve variar entre \(-20^\circ\) e \(20^\circ\) com incrementos de \(0{,}5^\circ\), de modo a obter-se uma curva "contínua".
+\begin{table}[H]
+  \centering
+  \caption{Coeficiente de sustentação previsto por cada método.}
+  \label{tab:cl}
+  \begin{tabular}{lccccc}
+    \toprule
+    Método & $0^\circ$ & $5^\circ$ & $10^\circ$ & $15^\circ$ & $20^\circ$ \\
+    \midrule
+    Perfis delgados & 0,01 & 0,56 & 1,11 & 1,66 & 2,21 \\
+    Painéis         & 0,05 & 0,64 & 1,23 & 1,81 & 2,37 \\
+    CFD             & 0,06 & 0,64 & 1,16 & 1,34 & 1,05 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-\item Para o método dos painéis, o ângulo deve variar entre \(-20^\circ\) e \(20^\circ\) com intervalos de \(5^\circ\).
+\tbd{Análise (escrever sem IA): diferenças entre métodos na zona linear e
+porquê (espessura, viscosidade); comportamento do CFD acima de $10^\circ$;
+porque é que os métodos potenciais continuam lineares.}
 
-\item Para a simulação CFD, devem analisar-se, no mínimo, os ângulos \(0^\circ\), \(5^\circ\), \(10^\circ\), \(15^\circ\) e \(20^\circ\).
+\paragraph{Ângulo de sustentação nula e declive.}
+A Tabela~\ref{tab:alpha0} apresenta o ângulo de sustentação nula e o declive da
+curva $c_l$--$\alpha$ na zona linear, obtidos por regressão linear entre
+\tbd{$0^\circ$ e $10^\circ$} \tbd{confirmar gama usada em \texttt{Comparison/main.m}}.
 
-\item Deve analisar-se a diferença entre os diferentes métodos com base nos resultados de \(c_l\). A análise dos vários procedimentos deve também ser feita em termos do tempo de cálculo e dos recursos necessários para cada um.
+\begin{table}[H]
+  \centering
+  \caption{Ângulo de sustentação nula e declive da curva de sustentação na zona
+  linear.}
+  \label{tab:alpha0}
+  \begin{tabular}{lcc}
+    \toprule
+    Método & $\alpha_{L=0}$ [$^\circ$] & $dc_l/d\alpha$ [rad$^{-1}$] \\
+    \midrule
+    Perfis delgados & $-0{,}13$ & 6,28 \\
+    Painéis         & $-0{,}39$ & 6,78 \\
+    CFD             & $-0{,}67$ & 6,26 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-\item Deve identificar-se o ângulo de sustentação nula e o declive da curva de sustentação na zona linear previstos pelos três métodos.
+\tbd{Análise (sem IA): porque é que $\alpha_{L=0}$ é pequeno (reflex) e
+diferente entre métodos; porque é que o declive é maior/menor que $2\pi$. No
+CFD, $\alpha_{L=0}$ é extrapolado (não há ângulos negativos).}
 
-% No início da terceira página, aproxima-se o espaçamento dos itens ao DOCX.
-\setlength{\itemsep}{4pt}
-\item Deve concluir-se quais as vantagens e desvantagens apresentadas por cada método e, com base nisso, explicar em que gama de ângulos de ataque ou para que aplicação se deveria empregar cada método.
+\paragraph{Tempo de cálculo e recursos.}
+A Tabela~\ref{tab:custo} compara o custo de cada método, num computador com
+\tbd{CPU, RAM}.
 
-\item Para os ângulos de \(0^\circ\), \(5^\circ\) e \(20^\circ\), devem apresentar-se as linhas de corrente previstas pelo método dos painéis e as linhas de corrente previstas pela simulação CFD.
+\begin{table}[H]
+  \centering
+  \caption{Custo computacional de cada método.}
+  \label{tab:custo}
+  \begin{tabular}{lccc}
+    \toprule
+    Método & Software & N.º de ângulos & Tempo de cálculo \\
+    \midrule
+    Perfis delgados & MATLAB   & 81 & $\approx 0{,}1$~ms (total) \\
+    Painéis         & MATLAB   & 9  & $\approx 1{,}5$~s (total) \\
+    CFD             & OpenFOAM & 5  & \tbd{} por ângulo \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-\item Para os casos de \(0^\circ\), \(5^\circ\) e \(20^\circ\), deve apresentar-se uma comparação dos resultados previstos pelo método dos painéis e pela análise CFD, indicando e explicando as semelhanças e as diferenças. Para os diferentes ângulos, devem também identificar-se a posição do ponto de estagnação e o coeficiente de pressão mínimo previsto quer pelo método dos painéis, quer pela simulação CFD.
+\tbd{Comentar também o tempo de preparação: geometria, malha e configuração do
+caso no CFD vs. apenas um script nos métodos potenciais.}
 
-\item Com base nos resultados apresentados, deve indicar-se a gama de ângulos positivos na qual o perfil aerodinâmico apresenta um comportamento linear.
-% Movido da Introdução — ponto de funcionamento em cruzeiro (usa W, S, V da Tabela 1):
-% \[
-%   c_l = \frac{W}{\tfrac{1}{2}\rho_\infty V_\infty^2 S}
-%       = \frac{1633 \times 9{,}81}{\tfrac{1}{2}\times 1{,}225 \times 94{,}4^2 \times 13{,}46}
-%       \approx 0{,}22 ,
-% \]
+\paragraph{Vantagens, desvantagens e gama de aplicação.}
+A Tabela~\ref{tab:vantagens} resume as vantagens e desvantagens de cada método
+e a gama de ângulos de ataque em que cada um se deve usar.
+
+\begin{table}[H]
+  \centering
+  \caption{Vantagens, desvantagens e gama de aplicação de cada método.}
+  \label{tab:vantagens}
+  \small
+  \begin{tabular}{p{2.4cm}p{4.6cm}p{4.6cm}p{3.6cm}}
+    \toprule
+    Método & Vantagens & Desvantagens & Gama de $\alpha$ / aplicação \\
+    \midrule
+    Perfis delgados & \tbd{} & \tbd{} & \tbd{} \\
+    Painéis         & \tbd{} & \tbd{} & \tbd{} \\
+    CFD             & \tbd{} & \tbd{} & \tbd{} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Linhas de corrente.}
+A Figura~\ref{fig:linhas} apresenta as linhas de corrente previstas pelo método
+dos painéis e pela simulação CFD para $\alpha = 0^\circ$, $5^\circ$ e
+$20^\circ$.
+
+\begin{figure}[H]
+  \centering
+  \placeholder[0.45\linewidth]{3cm}{Painéis, $0^\circ$}\hfill
+  \placeholder[0.45\linewidth]{3cm}{CFD, $0^\circ$}\\[4pt]
+  \placeholder[0.45\linewidth]{3cm}{Painéis, $5^\circ$}\hfill
+  \placeholder[0.45\linewidth]{3cm}{CFD, $5^\circ$}\\[4pt]
+  \placeholder[0.45\linewidth]{3cm}{Painéis, $20^\circ$}\hfill
+  \placeholder[0.45\linewidth]{3cm}{CFD, $20^\circ$}
+  \caption{Linhas de corrente previstas pelo método dos painéis (esquerda) e
+  pela simulação CFD (direita) para $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$,
+  de cima para baixo.}
+  \label{fig:linhas}
+\end{figure}
+
+\tbd{Análise (sem IA): semelhanças a $0^\circ$ e $5^\circ$ (estagnação,
+aceleração no extradorso, saída no bordo de fuga); diferenças a $20^\circ$
+(descolamento, recirculação vs. condição de Kutta).}
+
+\paragraph{Coeficiente de pressão.}
+A Figura~\ref{fig:cp} compara as distribuições de $C_p$ previstas pelos dois
+métodos, e a Tabela~\ref{tab:estagnacao} apresenta a posição do ponto de
+estagnação e o $C_p$ mínimo.
+
+\begin{figure}[H]
+  \centering
+  \placeholder[0.32\linewidth]{4cm}{$C_p$, $0^\circ$\\painéis + CFD}\hfill
+  \placeholder[0.32\linewidth]{4cm}{$C_p$, $5^\circ$\\painéis + CFD}\hfill
+  \placeholder[0.32\linewidth]{4cm}{$C_p$, $20^\circ$\\painéis + CFD}
+  \caption{Coeficiente de pressão ao longo do perfil previsto pelo método dos
+  painéis e pela simulação CFD para $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$.}
+  \label{fig:cp}
+\end{figure}
+
+\begin{table}[H]
+  \centering
+  \caption{Posição do ponto de estagnação e coeficiente de pressão mínimo.}
+  \label{tab:estagnacao}
+  \begin{tabular}{ccccc}
+    \toprule
+    & \multicolumn{2}{c}{Ponto de estagnação, $x/c$} & \multicolumn{2}{c}{$C_{p,\min}$ ($x/c$)} \\
+    $\alpha$ & Painéis & CFD & Painéis & CFD \\
+    \midrule
+    $0^\circ$  & \tbd{} & \tbd{} & \tbd{} & \tbd{} \\
+    $5^\circ$  & \tbd{} & \tbd{} & \tbd{} & \tbd{} \\
+    $20^\circ$ & \tbd{} & \tbd{} & \tbd{} & \tbd{} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\tbd{Análise (sem IA): deslocamento do ponto de estagnação para o intradorso
+com $\alpha$; pico de sucção maior nos painéis; patamar de $C_p$ no CFD a
+$20^\circ$ (escoamento descolado).}
+
+\paragraph{Gama linear.}
+Como os métodos potenciais são lineares por construção, a gama linear do perfil
+identifica-se pelo CFD. \tbd{a partir de que ângulo o $c_l$ do CFD se afasta da
+reta, e quanto; gama linear: $0^\circ$ a $\approx\tbd{10}^\circ$.}
+% Movido da Introdução — ponto de funcionamento em cruzeiro:
+% c_l = W / (1/2 rho V^2 S) = 1633*9,81 / (0,5*1,225*94,4^2*13,46) ≈ 0,22
 % Comparar com a zona linear: a que alpha corresponde em cada método?
-
-\end{itemize}

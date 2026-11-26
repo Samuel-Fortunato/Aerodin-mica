@@ -1,5 +1,6 @@
 % Configuração de layout correspondente ao modelo DOCX
 \usepackage{newtxmath}
+\usepackage{siunitx}
 \usepackage{fontspec}
 % No DOCX: Times New Roman (o LibreOffice do sistema usa Liberation Serif).
 % Liberation Serif é uma substituição metricamente compatível disponível em Linux.
@@ -28,6 +29,8 @@
 \usepackage{microtype}
 \microtypesetup{protrusion=false,expansion=false}
 \usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+\usepackage{xurl} % quebra de linha em URLs longos na bibliografia
 \usepackage{tikz}
 \usetikzlibrary{positioning,arrows.meta,calc}
 \usepackage{amsmath,graphicx}
@@ -44,10 +47,16 @@
   titulo/.style={font=\footnotesize\bfseries, text=gray!60!black},
 }
 
+% Placeholders (remover antes de entregar): \tbd{texto} a vermelho no texto;
+% \placeholder[largura]{altura}{descrição} no lugar de uma figura.
+\newcommand{\tbd}[1]{\textcolor{red}{[#1]}}
+\newcommand{\placeholder}[3][0.9\linewidth]{%
+  \fcolorbox{red}{red!4}{\parbox[c][#2][c]{#1}{\centering\small\color{red}#3}}}
+
 % Lista compacta para as etapas que acompanham os diagramas de blocos.
 \newlist{etapas}{enumerate}{1}
 \setlist[etapas]{label=\textbf{\arabic*.}, leftmargin=*, labelsep=0.3em,
-  topsep=0pt, itemsep=2pt, parsep=0pt,
+  topsep=0pt, itemsep=2pt, parsep=6pt,
   before={\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}%
           \setlength{\abovedisplayshortskip}{0pt}\setlength{\belowdisplayshortskip}{3pt}}}
 
