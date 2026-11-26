@@ -65,6 +65,10 @@ switch lower(modo)
 			'VariableNames',{'N','CL','Variacao_pct','ErroNormalRel','Tempo_s'}));
 
 
+		if exist('panelExportOnly', 'var') && panelExportOnly
+			return
+		end
+
 		%--------------------------------------
 
 		figure('Name','Erro relativo de convergencia','Color','w');
@@ -164,8 +168,25 @@ switch lower(modo)
 		fprintf('Alpha de sustentacao nula (ajuste) = %.3f graus\n',-p(2)/p(1));
 		return
 	case 'casos'
-		for a0=[0 5 20]
-			r=resolver_paineis_C1(filename,N_final,a0,V_inf_modul);
+		caseResults = struct([]);
+
+		for a0 = [0 5 20]
+			r = resolver_paineis_C1(filename,N_final,a0,V_inf_modul);
+
+			if exist('panelExportOnly', 'var') && panelExportOnly
+
+				r.alpha_deg = a0;
+				r.V_inf = V_inf_modul;
+
+				if isempty(caseResults)
+					caseResults = r;
+				else
+					caseResults(end+1,1) = r;
+				end
+
+				continue
+			end
+
 			%---------
 
 			fprintf(['AoA=%g deg: CL=%.6f, Cp_min=%.6f, ' ...

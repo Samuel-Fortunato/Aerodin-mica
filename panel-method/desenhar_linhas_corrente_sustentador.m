@@ -1,4 +1,4 @@
-function fig = desenhar_linhas_corrente_sustentador(gamma, x_start, z_start, x_end, z_end, V_inf_modul, AoA_rad)
+function fig = desenhar_linhas_corrente_sustentador(gamma, x_start, z_start, x_end, z_end, V_inf_modul, AoA_rad, ax)
 % DESENHAR_LINHAS_CORRENTE_SUSTENTADOR Calcula o campo de velocidades e representa
 % graficamente as linhas de corrente em redor de um perfil (problema sustentador).
 %
@@ -14,6 +14,7 @@ function fig = desenhar_linhas_corrente_sustentador(gamma, x_start, z_start, x_e
 %   z_end       - Coordenadas z do ponto final de cada painel [N x 1]
 %   V_inf_modul - (Opcional) Módulo da velocidade do escoamento incidente (por defeito: 1 m/s)
 %   AoA_rad     - (Opcional) Ângulo de ataque em radianos (por defeito: 0 rad)
+%   ax          - (Opcional) Eixos existentes para desenhar as linhas de corrente
 %
 % PARÂMETROS DE SAÍDA:
 %   fig         - Identificador (handle) da figura gerada
@@ -88,24 +89,30 @@ function fig = desenhar_linhas_corrente_sustentador(gamma, x_start, z_start, x_e
     % =====================================================================
     % PASSO 4: GERAÇÃO E CONFIGURAÇÃO DA FIGURA GRÁFICA
     % =====================================================================
-    fig = figure('Name', 'Linhas de Corrente (Sustentador)', 'Position', [200, 200, 800, 450]);
-    hold on;
+    if nargin < 8 || isempty(ax)
+        fig = figure('Name', 'Linhas de Corrente (Sustentador)', ...
+            'Position', [200, 200, 800, 450]);
+        ax = axes(fig);
+    else
+        fig = ancestor(ax, 'figure');
+    end
+    hold(ax, 'on');
 
-    h = streamslice(x_grid, z_grid, U', W'); 
+    h = streamslice(ax, x_grid, z_grid, U', W');
     set(h, 'Color', 'k');
 
-    fill(x_contorno, z_contorno, [0.8 0.8 0.8], 'EdgeColor', 'k', 'LineWidth', 1.5);
+    fill(ax, x_contorno, z_contorno, [0.8 0.8 0.8], ...
+        'EdgeColor', 'k', 'LineWidth', 1.5);
 
-    axis equal;
-    xlim([-0.4, 1.4]);
-    ylim([-0.5, 0.5]);
-    grid on; 
-    box on;
+    axis(ax, 'equal');
+    xlim(ax, [-0.4, 1.4]);
+    ylim(ax, [-0.5, 0.5]);
+    grid(ax, 'on');
+    box(ax, 'on');
 
-    % title(sprintf('Linhas de Corrente - Sustentador (\\alpha = %.1f^\\circ)', AoA_rad * 180 / pi));
-    xlabel('x');
-    ylabel('z');
+    xlabel(ax, 'x');
+    ylabel(ax, 'z');
 
-    hold off;
+    hold(ax, 'off');
     disp('Linhas de corrente geradas com sucesso.');
 end
