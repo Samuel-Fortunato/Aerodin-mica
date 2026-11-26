@@ -13,20 +13,36 @@ $c_l$, ângulo de sustentação nula, declive, custo, linhas de corrente e $C_p$
 % Critério: gráfico c_l(N) a 5° + figura da painelização escolhida.
 % Dados: N entre 20 e 800 a alpha = 5°; N = 260 dá erro < 0,5 % face a N = 800.
 
-A Figura~\ref{fig:conv_paineis} apresenta a evolução do coeficiente de sustentação em função do número de painéis, para $\alpha=5^\circ$.Para a discretização de referência, constituída por
+A Figura~\ref{fig:conv_paineis} apresenta a evolução do coeficiente de sustentação em função do número de painéis, para $\alpha=5^\circ$. Para a discretização de referência, constituída por
 800 painéis, obteve-se $c_l=0{,}64329$. Com 230 painéis,
 o erro relativo foi de $0{,}593\%$, enquanto com 260
-painéis foi de $0{,}468\%$, obtendo-se
-$c_l=0{,}64028$.
+painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
 
-\begin{figure}[H]
-  \centering
-  \placeholder[0.6\linewidth]{5cm}{Figura: $c_l(5^\circ)$ em função de $N$, com
-  o $N$ escolhido assinalado}
-  \caption{Coeficiente de sustentação previsto pelo método dos painéis em
-  função do número de painéis $N$, para $\alpha = 5^\circ$.}
-  \label{fig:conv_paineis}
+
+\begin{figure}[htbp]
+    \centering
+
+    \begin{subfigure}[t]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {../Comparison/figures/panel_convergence_cl.pdf}
+        \caption{Coeficiente de sustentação.}
+        \label{fig:convergencia_cl}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]
+        {../Comparison/figures/panel_convergence_error.pdf}
+        \caption{Erro relativo percentual.}
+        \label{fig:convergencia_erro}
+    \end{subfigure}
+
+    \caption{Estudo de convergência do método dos
+    painéis para $\alpha=5^\circ$.}
+    \label{fig:convergencia_paineis}
 \end{figure}
+
 
 A Figura~\ref{fig:painelizacao} mostra a painelização final, com
 $N = \tbd{260}$ painéis, e os vetores normais e tangentes de cada painel.
