@@ -1,0 +1,110 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                  |
+|   \\  /    A nd           |                                                 |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSolution;
+}
+
+// ************************************************************************* //
+
+solvers
+{
+    // Pressure solver
+    p
+    {
+        solver                  GAMG;
+        tolerance               1e-7;
+        relTol                  0.005;
+
+        smoother DICGaussSeidel;
+        nPreSweeps              0;
+        nPostSweeps             2;
+
+        cacheAgglomeration      on;
+        agglomerator            faceAreaPair;
+        nCellsInCoarsestLevel 10;
+        mergeLevels             1;
+    }
+
+    pFinal
+    {
+        $p;
+        relTol                  0;
+        tolerance               1e-8;
+    }
+
+    // Velocity and turbulence solvers
+    "(U|k|omega)"
+    {
+        solver                  PBiCGStab;
+        preconditioner          DILU;
+
+        tolerance               1e-8;
+        relTol                  0.005;
+    }
+
+    "(U|k|omega)Final"
+    {
+        $U;
+        relTol                  0;
+    }
+
+    // Flux solver
+    Phi
+    {
+        $p;
+    }
+
+    PhiFinal
+    {
+        $p;
+        relTol                  0;
+    }
+}
+
+// Potential flow initialization
+potentialFlow
+{
+    nNonOrthogonalCorrectors   30;
+
+    PhiRefCell                 0;
+    PhiRefValue                0;
+}
+
+// PIMPLE algorithm
+PIMPLE
+{
+    nOuterCorrectors           2;
+    nCorrectors                2;
+    nNonOrthogonalCorrectors   1;
+
+    consistent                 yes;
+}
+
+// Relaxation factors
+relaxationFactors
+{
+    fields
+    {
+        p                       0.3;
+    }
+
+    equations
+    {
+        U                       0.7;
+        k                       0.7;
+        omega                   0.7;
+    }
+}
+
+// ************************************************************************* //
