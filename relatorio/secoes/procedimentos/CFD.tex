@@ -93,19 +93,30 @@ estudo de convergência de malha.}
 
   Foi considerado um $\mathrm{Re}\approx5.31\cdot10^6$, calculado com a \cref{eq:y+}.
 
-  \item \textbf{Resolução.} Algoritmo SIMPLE (\texttt{simpleFoam}) até os
-  resíduos descerem abaixo de [TODO] e $c_l$ estabilizar.
-  \item \textbf{Coeficientes de força.} Integrando a pressão e as tensões
-  viscosas no perfil (\texttt{forceCoeffs}),
-  \[
-    C_p = \frac{\bar{p} - \bar{p}_\infty}{\tfrac{1}{2}V_\infty^2}, \qquad
-    c_l = \frac{L'}{\tfrac{1}{2}\rho_\infty V_\infty^2 c}, \qquad
-    c_d = \frac{D'}{\tfrac{1}{2}\rho_\infty V_\infty^2 c}.
-  \]
-  Repete-se com malhas sucessivamente mais finas até $c_l$ deixar de variar
-  (seta a tracejado); a escolha da malha justifica-se nos Resultados.
-  \item \textbf{Pós-processamento.} Para $\alpha = 0^\circ, 5^\circ, \dots,
-  20^\circ$: linhas de corrente, $C_p$ ao longo do perfil, ponto de estagnação e
-  $C_{p,\min}$.
+  %\item \textbf{Resolução.} Algoritmo SIMPLE (\texttt{simpleFoam}) até os
+  %resíduos descerem abaixo de [TODO] e $c_l$ estabilizar.
+  %\item \textbf{Coeficientes de força.} Integrando a pressão e as tensões
+  %viscosas no perfil (\texttt{forceCoeffs}),
+  %\[
+  %  C_p = \frac{\bar{p} - \bar{p}_\infty}{\tfrac{1}{2}V_\infty^2}, \qquad
+  %  c_l = \frac{L'}{\tfrac{1}{2}\rho_\infty V_\infty^2 c}, \qquad
+  %  c_d = \frac{D'}{\tfrac{1}{2}\rho_\infty V_\infty^2 c}.
+  %\]
+  %Repete-se com malhas sucessivamente mais finas até $c_l$ deixar de variar
+  %(seta a tracejado); a escolha da malha justifica-se nos Resultados.
+    
+  \item \textbf{Resolução numérica.} A resolução numérica foi realizada através do solver \texttt{simpleFoam} (\textit{steady-state} e incompressível). Foi utilizado o algoritomo SIMPLEC (\textit{Semi-Inplicit Method for Pressure-Linked Equations - Consistent}) para acoplar os campos de pressão e velocidade, de forma a obter uma solução em regime estacionário.
+  
+  No \texttt{fvSchemes}, foi definida a utilização de segunda ordem de discretização para a velocidade e termos de primeira ordem para os termos de turbulência ($k$ e $\omega$), algo que se considerou aceitável tendo em conta a natureza difusiva do fenómeno de turbulência.
+  
+  Por sua vez, no ficheiro \texttt{fvSolution} foi definido o critério de convergência (todos os resíduos inferiores a $10^{-7}$), os métodos de resolução dos sistemas de equações e respetivas tolerâncias, e os fatores de relaxamento (0.3 para pressão e 0.7 para os restantes - velocidade, $k$ e $\omega$).
+
+  A convergência das simulações foi avaliada através da monitorização da estabilização dos coeficientes aerodinâmicos $C_l$ e $C_d$, além da convergência dos resíduos e do critério de convergência definido no \texttt{fvSolution}.
+
+  %\item \textbf{Pós-processamento.} Para $\alpha = 0^\circ, 5^\circ, \dots,
+  %20^\circ$: linhas de corrente, $C_p$ ao longo do perfil, ponto de estagnação e
+  %$C_{p,\min}$.
+  
+  \item \textbf{Pós-processamento.} O pós processamento foi realizado com recurso aos ficheiros \texttt{log} produzidos pelas ferramentas do \texttt{OpenFOAM} e com recurso ao Paraview para analisar graficamente os resultados obtidos.
 \end{etapas}
 
