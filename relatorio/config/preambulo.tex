@@ -28,6 +28,7 @@
 \usepackage{microtype}
 \microtypesetup{protrusion=false,expansion=false}
 \usepackage[hidelinks]{hyperref}
+\usepackage{xurl} % quebra de linha em URLs longos na bibliografia
 \usepackage{tikz}
 \usetikzlibrary{positioning,arrows.meta,calc}
 \usepackage{amsmath,graphicx}
@@ -43,6 +44,12 @@
   setaio/.style={-{Stealth[length=1.6mm]}, gray!70!black},
   titulo/.style={font=\footnotesize\bfseries, text=gray!60!black},
 }
+
+% Placeholders (remover antes de entregar): \tbd{texto} a vermelho no texto;
+% \placeholder[largura]{altura}{descrição} no lugar de uma figura.
+\newcommand{\tbd}[1]{\textcolor{red}{[#1]}}
+\newcommand{\placeholder}[3][0.9\linewidth]{%
+  \fcolorbox{red}{red!4}{\parbox[c][#2][c]{#1}{\centering\small\color{red}#3}}}
 
 % Lista compacta para as etapas que acompanham os diagramas de blocos.
 \newlist{etapas}{enumerate}{1}

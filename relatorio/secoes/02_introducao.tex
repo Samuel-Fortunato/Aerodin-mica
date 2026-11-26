@@ -3,49 +3,34 @@
 A aeronave estudada neste trabalho é o Cirrus SR22, um avião ligeiro de asa baixa
 com quatro a cinco lugares, fabricado pela Cirrus Aircraft (EUA) e utilizado
 sobretudo em viagens privadas e na formação de pilotos. Deriva do SR20, que
-realizou o primeiro voo a 21 de março de 1995, e é produzido desde 2001. Em
-Portugal é operado sobretudo por proprietários privados. Além disso, existe também um centro
-certificado de formação e manutenção Cirrus, a Nortávia (Maia, Porto), que opera
-o SR20.
+realizou o primeiro voo a 21 de março de 1995~\cite{wiki_sr20}. Em Portugal, a Nortávia (Maia, Porto) é um centro
+certificado de formação e manutenção Cirrus, com formação de transição e
+recorrente dirigida a proprietários e pilotos destes
+aviões~\cite{afm_nortavia}.
 
-A forma em planta da asa apresenta-se na Figura~\ref{fig:sr22} e as principais
-dimensões na Tabela~\ref{tab:sr22}. A asa é afilada e tem alongamento elevado
-(aspect ratio $AR \approx 10{,}1$). Segundo o \emph{Incomplete Guide to Airfoil Usage}, a asa
-usa na raiz e na ponta um perfil Roncz, desenhado por John Roncz especificamente
-para a Cirrus, cujas coordenadas não estão publicadas. Como indicado no
-enunciado, utiliza-se o perfil da raiz como referência.
+A Figura~\ref{fig:sr22} mostra as três vistas do SR22. Na vista em planta
+observa-se a asa afilada, e na vista de frente a asa baixa com diedro. A asa tem
+uma envergadura de 11,67~m e uma área alar de 13,46~m$^2$~\cite{easa_tcds}, o
+que dá um alongamento de cerca de 10, e a corda varia de cerca de 1,49~m na raiz
+para 0,89~m na ponta. % TODO: fonte das cordas
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{imagens/blueprint.png}
-  \caption{Três vistas do Cirrus SR22. Fonte: [ref].}
+  \caption{Três vistas do Cirrus SR22. Fonte:~\cite{blueprint_sr22}.}
   \label{fig:sr22}
 \end{figure}
 
-\begin{table}[H]
-  \centering
-  \caption{Principais características do Cirrus SR22. $Re$ calculado com a corda
-  na raiz e a atmosfera padrão ao nível do mar.}
-  \label{tab:sr22}
-  \begin{tabular}{lc}
-    \toprule
-    Parâmetro & Valor \\
-    \midrule
-    Envergadura $b$ [m]                         & 11,67 \\
-    Área alar $S$ [m$^2$]                       & 13,46 \\
-    Alongamento $AR = b^2/S$                    & 10,1 \\
-    Corda na raiz / na ponta [m]                & $\approx 1{,}49$ / $0{,}89$ \\
-    Massa máxima à descolagem $W/g$ [kg]        & 1\,633 \\
-    Velocidade de voo de referência $V_\infty$ [km/h] & 340 \\
-    Número de Mach $M_\infty$                   & 0,28 \\
-    Número de Reynolds $Re = \rho_\infty V_\infty c_r/\mu_\infty$ & $9{,}6\times10^{6}$ \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+O enunciado pede o perfil da raiz. Segundo o \emph{Incomplete Guide to Airfoil
+Usage}~\cite{uiuc}, a asa usa na raiz e na ponta um perfil desenhado por John
+Roncz especificamente para a Cirrus, cujas coordenadas não estão publicadas. Por
+isso, utilizou-se em sua substituição o perfil Roncz/Marske-7, também associado a Roncz,
+da base de dados da UIUC, descrito como um perfil de baixo
+arrasto para asa voadora, com a linha média a descer abaixo da corda junto ao
+bordo de fuga. Sendo um substituto, poderá não representar fielmente o perfil
+real do SR22.
 
-Na ausência das coordenadas do perfil do SR22, utilizou-se o perfil
-Roncz/Marske-7 da base de dados da UIUC, também associado a Roncz. A base de
-dados descreve-o como um perfil de baixo arrasto para asa voadora, pelo que
-poderá não ser representativo do perfil real do SR22. Como
-$M_\infty \approx 0{,}28 < 0{,}3$, o escoamento pode ser considerado
-incompressível.
+Considerou-se a velocidade de cruzeiro
+de 340~km/h (94~m/s)~\cite{airplaneslist}, a que corresponde um número de Mach
+$M_\infty \approx 0{,}28$. Como $M_\infty < 0{,}3$, o escoamento pode ser
+considerado incompressível~\cite{anderson}.

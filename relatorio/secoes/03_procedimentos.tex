@@ -1,9 +1,30 @@
 \section*{Procedimentos}
 % Estilos dos diagramas (etapa, io, seta, ...) definidos em config/preambulo.tex.
 
+Nesta secção descrevem-se os três métodos usados: a teoria dos perfis delgados,
+o método dos painéis e a simulação CFD. Para cada um apresenta-se um diagrama de
+blocos com as entradas e as saídas de cada etapa, que serve de estrutura à
+explicação. \tbd{reescrever}
+
 \subsection*{Método dos perfis delgados}
 
-O procedimento, implementado em MATLAB, está esquematizado na
+A teoria dos perfis delgados~\cite{anderson} admite escoamento potencial e
+incompressível, e perfil com espessura, curvatura e ângulo de ataque pequenos.
+O perfil é substituído pela sua linha média, sobre a qual se distribui uma folha
+de vórtices de intensidade $\gamma$. Impondo que a linha média seja uma linha de
+corrente e a condição de Kutta no bordo de fuga, $\gamma(\pi) = 0$, obtém-se,
+com a mudança de variável $x = \tfrac{c}{2}(1-\cos\theta)$, a solução em série
+de Fourier
+\[
+  \gamma(\theta) = 2V_\infty\left[A_0\,\frac{1+\cos\theta}{\sin\theta}
+  + \sum_{n=1}^{\infty} A_n \sin n\theta\right],
+\]
+cujos coeficientes dependem apenas do declive da linha média, $dz_c/dx$. Para o
+coeficiente de sustentação bastam os dois primeiros, $A_0$ e $A_1$; o perfil é
+então representado só pela linha média, e a espessura e a viscosidade são
+ignoradas.
+
+A aplicação do método, implementada em MATLAB, está esquematizada na
 Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saídas
 à direita.
 
@@ -25,10 +46,10 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
   \node[io, left=0.5cm of e3, align=flush right] (i3) {$z_c(x)$; $x = \tfrac{1}{2}(1-\cos\theta)$};
   \node[io, left=0.5cm of e4, align=flush right] (i4) {$dz_c/dx\,(\theta)$, $\theta \in [0,\pi]$};
   \node[io, left=0.5cm of e5, align=flush right] (i5) {$I_0$, $A_1$; $\alpha \in [-20^\circ, 20^\circ]$, passo $0{,}5^\circ$};
-  \node[io, left=0.5cm of e6, align=flush right] (i6) {$N \in \{50,\dots,10\,000\}$; tolerâncias $\Delta c_l = 10^{-3}$, $\Delta\alpha_{L=0} = 0{,}01^\circ$};
+  \node[io, left=0.5cm of e6, align=flush right] (i6) {8 valores de $N$ entre 50 e $10\,000$ (referência: $N = 10\,000$); tolerâncias $\Delta c_l = 10^{-3}$, $\Delta\alpha_{L=0} = 0{,}01^\circ$};
   % saídas
   \node[io, right=0.5cm of e1] (o1) {$(x_u,z_u)$, $(x_l,z_l)$, normalizados pela corda};
-  \node[io, right=0.5cm of e2] (o2) {$z_c = \tfrac{1}{2}(z_u+z_l)$; espessura $z_u - z_l$};
+  \node[io, right=0.5cm of e2] (o2) {$z_c(x) = \tfrac{1}{2}(z_u+z_l)$};
   \node[io, right=0.5cm of e3] (o3) {$dz_c/dx\,(\theta)$};
   \node[io, right=0.5cm of e4] (o4) {$I_0$, $A_1$ (regra dos trapézios)};
   \node[io, right=0.5cm of e5] (o5) {$\alpha_{L=0}$, $c_l(\alpha)$, $dc_l/d\alpha = 2\pi$};
@@ -46,19 +67,17 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
 \end{figure}
 
 \begin{etapas}
-  \item \textbf{Importação da geometria.} Coordenadas da base de dados da UIUC
-  (formato Lednicer), 36 pontos por superfície, já normalizadas pela corda.
-  \item \textbf{Interpolação e linha média.} As superfícies são interpoladas em
-  $N$ pontos (\emph{pchip} em $\sqrt{x}$, que acompanha melhor o bordo de
-  ataque), obtendo-se
+  \item \textbf{Importação da geometria.} Usaram-se as coordenadas da base de
+  dados da UIUC (formato Lednicer), com 36 pontos por superfície, já
+  normalizadas pela corda.
+  \item \textbf{Interpolação e linha média.} Como o ficheiro não dá a linha
+  média, e o extradorso e o intradorso não estão definidos nos mesmos $x$,
+  interpolaram-se as duas superfícies nos mesmos $N$ pontos e calculou-se a
+  linha média como a média das duas~\cite{anderson}:
   \[
-    z_c(x) = \frac{z_u(x) + z_l(x)}{2}, \qquad t(x) = z_u(x) - z_l(x).
+    z_c(x) = \frac{z_u(x) + z_l(x)}{2}.
   \]
-  A Figura~\ref{fig:geom} sobrepõe as superfícies interpoladas aos pontos
-  originais e mostra a linha média resultante. A espessura máxima é de
-  12,1\,\% da corda em $x/c = 0{,}43$ e a curvatura máxima de 2,8\,\% em
-  $x/c = 0{,}39$; a linha média tem \emph{reflex} junto ao bordo de fuga
-  (mínimo de $-0{,}5\,\%$ em $x/c = 0{,}90$).
+  A Figura~\ref{fig:geom} mostra o perfil e a linha média obtida.
 \end{etapas}
 
 \begin{figure}[H]
@@ -69,26 +88,33 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
 \end{figure}
 
 \begin{etapas}[resume]
-  \item \textbf{Declive e mudança de variável.} $dz_c/dx$ calcula-se por
-  diferenças finitas centradas e é reinterpolado numa malha uniforme em
+  \item \textbf{Declive e mudança de variável.} O declive $dz_c/dx$ foi
+  calculado por diferenças finitas centradas e reinterpolado numa malha
+  uniforme em $\theta$, através de
   \[
-    x = \frac{c}{2}\,(1 - \cos\theta), \qquad 0 \le \theta \le \pi .
+    x = \frac{c}{2}\,(1 - \cos\theta), \qquad 0 \le \theta \le \pi ,
   \]
-  \item \textbf{Coeficientes de Fourier.} Pela regra dos trapézios, com
-  $A_0 = \alpha - I_0$,
+  em que $\theta = 0$ é o bordo de ataque e $\theta = \pi$ o bordo de fuga. Uma
+  malha uniforme em $\theta$ concentra os pontos junto aos dois bordos.
+  \item \textbf{Coeficientes de Fourier.} Os integrais foram calculados pela
+  regra dos trapézios:
   \[
+    A_0 = \alpha - I_0, \qquad
     I_0 = \frac{1}{\pi}\int_0^{\pi} \frac{dz_c}{dx}\,d\theta, \qquad
     A_1 = \frac{2}{\pi}\int_0^{\pi} \frac{dz_c}{dx}\cos\theta\,d\theta .
   \]
+  $I_0$ e $A_1$ dependem só da geometria, pelo que se calculam uma única vez;
+  só $A_0$ varia com $\alpha$.
   \item \textbf{Coeficientes aerodinâmicos.} Para $\alpha$ entre $-20^\circ$ e
-  $20^\circ$ (passo $0{,}5^\circ$),
+  $20^\circ$, com passo de $0{,}5^\circ$, o coeficiente de sustentação é
   \[
     c_l = 2\pi\left(A_0 + \frac{A_1}{2}\right) = 2\pi\,(\alpha - \alpha_{L=0}),
-    \qquad \alpha_{L=0} = I_0 - \frac{A_1}{2},
+    \qquad \alpha_{L=0} = I_0 - \frac{A_1}{2}.
   \]
-  com $dc_l/d\alpha = 2\pi$~rad$^{-1}$, independente da geometria.
-  \item \textbf{Convergência.} Repete-se o cálculo para $N$ entre 50 e
-  $10\,000$ e comparam-se $c_l(5^\circ)$ e $\alpha_{L=0}$ com os valores para
+  O declive é $dc_l/d\alpha = 2\pi$~rad$^{-1}$ para qualquer perfil, e a
+  curvatura entra apenas no ângulo de sustentação nula, $\alpha_{L=0}$.
+  \item \textbf{Convergência.} Repete-se o cálculo para oito valores de $N$
+  entre 50 e $10\,000$ e comparam-se $c_l(5^\circ)$ e $\alpha_{L=0}$ com os valores para
   $N = 10\,000$. As tolerâncias ($10^{-3}$ e $0{,}01^\circ$) são cumpridas a
   partir de $N = 200$; com o valor usado, $N = 1000$, os erros são
   $7{,}2\times10^{-5}$ e $6{,}6\times10^{-4}$\,$^\circ$. Como o custo é desprezável
@@ -99,7 +125,7 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
 \subsection*{Método dos painéis}
 
 Utilizou-se o método dos painéis de vórtices com intensidade linear
-{ref: Katz \& Plotkin}, implementado em MATLAB e esquematizado na
+\cite{katz}, implementado em MATLAB e esquematizado na
 Figura~\ref{fig:diag_paineis}.
 
 \begin{figure}[H]
@@ -130,7 +156,7 @@ Figura~\ref{fig:diag_paineis}.
   \node[io, right=0.75cm of p3] (q3) {Vetor $\mathbf{b}$; condição de Kutta $\gamma_1 + \gamma_{N+1} = 0$};
   \node[io, right=0.75cm of p4] (q4) {Intensidades $\gamma_j$ nos $N+1$ nós};
   \node[io, right=0.75cm of p5] (q5) {$V_{t,i}$, $C_{p,i}$; verificação $V_{n,i} \approx 0$};
-  \node[io, right=0.75cm of p6] (q6) {$C_x$, $C_z$ $\rightarrow$ $c_l$, $c_{d,p}$; ciclo em $N$ até variação de $c_l(5^\circ) < 0{,}5\,\%$};
+  \node[io, right=0.75cm of p6] (q6) {$C_x$, $C_z$ $\rightarrow$ $c_l$, $c_{d,p}$; $c_l(5^\circ)$ para $N = 20, 50, \dots, 800$ e erro relativo a $N = 800$};
   \node[io, right=0.75cm of p7] (q7) {Linhas de corrente, ponto de estagnação, $C_{p,\min}$};
   \foreach \k in {1,...,7} {
     \draw[setaio] (j\k) -- (p\k);
@@ -147,7 +173,7 @@ representa o estudo de convergência em $N$.}
 
 \begin{etapas}
   \item \textbf{Painelização.} O contorno é percorrido no sentido anti-horário a
-  partir do bordo de fuga; cada superfície é reinterpolada (\emph{pchip}) em
+  partir do bordo de fuga; cada superfície é reinterpolada em
   $N/2$ painéis de igual comprimento de arco, com ponto de controlo no ponto
   médio, comprimento $\Delta s_i$, tangente $\mathbf{t}_i$ e normal exterior
   $\mathbf{n}_i$.
@@ -177,7 +203,8 @@ representa o estudo de convergência em $N$.}
     c_l = -C_x \sin\alpha + C_z \cos\alpha , \qquad
     c_{d,p} = C_x \cos\alpha + C_z \sin\alpha .
   \]
-  Repete-se para $N$ entre 20 e 800 a $\alpha = 5^\circ$ (seta a tracejado).
+  Repete-se a $\alpha = 5^\circ$ para $N = 20, 50, \dots, 800$ (passo 30),
+  comparando $c_l$ com o valor para $N = 800$ (seta a tracejado).
   \item \textbf{Pós-processamento.} Velocidade numa malha em redor do perfil
   (linhas de corrente), ponto de estagnação (mudança de sinal de $V_t$ junto ao
   bordo de ataque) e $C_{p,\min}$.
@@ -186,7 +213,7 @@ representa o estudo de convergência em $N$.}
 
 \subsection*{Simulação CFD}
 
-A simulação foi realizada no OpenFOAM, segundo o procedimento da
+A simulação foi realizada no OpenFOAM~\cite{openfoam}, segundo o procedimento da
 Figura~\ref{fig:diag_cfd}.
 
 \begin{figure}[H]
@@ -205,7 +232,7 @@ Figura~\ref{fig:diag_cfd}.
   % entradas
   \node[io, left=0.5cm of c1, align=flush right] (k1) {Coordenadas do perfil; dimensões do domínio [TODO]};
   \node[io, left=0.5cm of c2, align=flush right] (k2) {Domínio; número de células, $y^+$ pretendido, refinamento junto à parede [TODO]};
-  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 94{,}4$~m/s, $\alpha$, $\nu_\infty$; modelo de turbulência e intensidade turbulenta [TODO]};
+  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 100$~m/s, $\nu = 10^{-5}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta [TODO]};
   \node[io, left=0.5cm of c4, align=flush right] (k4) {Caso configurado; esquemas numéricos; critério de paragem dos resíduos [TODO]};
   \node[io, left=0.5cm of c5, align=flush right] (k5) {Campos $p$ e $\mathbf{U}$; $c$, $V_\infty$; direções de sustentação e arrasto};
   \node[io, left=0.5cm of c6, align=flush right] (k6) {Campos convergidos para $\alpha = 0^\circ, 5^\circ, \dots, 20^\circ$};
@@ -238,7 +265,9 @@ estudo de convergência de malha.}
   $V_\infty$ na entrada, pressão fixa na saída e não escorregamento no perfil;
   $\alpha$ imposto [TODO: rodando $\mathbf{V}_\infty$ ou o perfil]. Resolvem-se as
   equações RANS 2D, estacionárias e incompressíveis, com o modelo de turbulência
-  [TODO] ($Re \approx 9{,}6\times10^{6}$):
+  [TODO], com $Re = V_\infty c/\nu = 10^{7}$, próximo do valor em voo
+  ($Re \approx 9{,}6\times10^{6}$, com a corda na raiz e a atmosfera padrão
+  ao nível do mar):
   \[
     \nabla\cdot\overline{\mathbf{U}} = 0, \qquad
     (\overline{\mathbf{U}}\cdot\nabla)\,\overline{\mathbf{U}} =
