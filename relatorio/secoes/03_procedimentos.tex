@@ -213,7 +213,7 @@ representa o estudo de convergência em $N$.}
 
 \subsection*{Simulação CFD}
 
-A simulação foi realizada no OpenFOAM~\cite{openfoam}, segundo o procedimento da
+A simulação foi realizada no OpenFOAM v2606~\cite{openfoam}, segundo o procedimento da
 Figura~\ref{fig:diag_cfd}.
 
 \begin{figure}[H]
@@ -258,23 +258,54 @@ estudo de convergência de malha.}
 
 \begin{etapas}
   \item \textbf{Geometria e domínio.} O perfil é importado a partir das
-  coordenadas e envolvido por um domínio 2D de [TODO] cordas.
-  \item \textbf{Malha.} Malha [TODO] com [TODO] células, refinada junto à parede
-  para $y^+ \approx$~[TODO]; a qualidade verifica-se com \texttt{checkMesh}.
-  \item \textbf{Condições de fronteira e modelo físico.} Velocidade uniforme
-  $V_\infty$ na entrada, pressão fixa na saída e não escorregamento no perfil;
-  $\alpha$ imposto [TODO: rodando $\mathbf{V}_\infty$ ou o perfil]. Resolvem-se as
-  equações RANS 2D, estacionárias e incompressíveis, com o modelo de turbulência
-  [TODO], com $Re = V_\infty c/\nu = 10^{7}$, próximo do valor em voo
-  ($Re \approx 9{,}6\times10^{6}$, com a corda na raiz e a atmosfera padrão
-  ao nível do mar):
+      coordenadas e envolvido por um domínio 2D retangular, de dimensões $x\in[-2;6];\ y\in[-2;2]$, com o bordo de ataque do perfil centrado na origem $(0,0)$.
+  %\item \textbf{Malha.} Malha [TODO] com [TODO] células, refinada junto à parede
+  %para $y^+ \approx$~[TODO]; a qualidade verifica-se com \texttt{checkMesh}.
+
+  \item \textbf{Malha.} Foi usada uma malha hexaédrica, gerada com o \texttt{snappyHexMesh}, com \approx 65000 células. O primeiro passo foi determinar a altura da primeira \textit{inflation layer}, $h_{FL}$, necessário  para obter $y+\approx1$:
+  \begin{equation}
+      \mathrm{Re} = \frac{U_\infty \cdot c}{\nu}; \qquad C_f = \frac{0.027}{\mathrm{Re}^{1/7}}; \qquad u_t = U_\infty \cdot \sqrt{\frac{C_f}{2}}; \qquad h_{FL} = 2 \cdot \frac{y^+ \cdot \nu}{u_t}
+      \label{eq:y+}
+  \end{equation}
+
+  Para $c=1$, $U_\infty=\SI{95}{\meter\per\second}$ e $\nu=1.789\cdot10^{-5}\ \unit{\meter^2\per\second}$, foi obtido $h_{FL}\approx 1\cdot10^{-5}$. De forma a obter uma melhor malha junto à camada limite, foi usada uma $h_{FL} = 1.5\cdot10^{-5}$, que resulta num $y^+$ teóricco de $1.5$, pelo que ainda satisfaz a condição de $y^+<5$.
+
+  Foram utilizadas 20 \textit{inflation layers}, com uma taxa de expansão de 1.2, de forma a assegurar uma transição suave entre as \textit{inflation layers} e o restante domínio.
+
+  Foi utilizado uma célula exterior do domínio com $\SI{0.1}{\meter}$ de lado, tendo sido usado uma caixa de refinamento de nível 1 em $x\in[-1;5];\ y\in[-1;1]$. Foi também aplicado um refinamento local, junto à superfície do perfil, com nível de refinamento de 6 (ou 7 para zonas mais críticas).
+
+  A qualidade das malhas foi verificada com o \texttt{checkMesh}.
+
+  %\item \textbf{Condições de fronteira e modelo físico.} Velocidade uniforme
+  %$V_\infty$ na entrada, pressão fixa na saída e não escorregamento no perfil;
+  %$\alpha$ imposto [TODO]: rodando $\mathbf{V}_\infty$ ou o perfil]. Resolvem-se as
+  %equações RANS 2D, estacionárias e incompressíveis, com o modelo de turbulência
+  %[TODO], com $Re = V_\infty c/\nu = 10^{7}$, próximo do valor em voo
+  %($Re \approx 9{,}6\times10^{6}$, com a corda na raiz e a atmosfera padrão
+  %ao nível do mar):
+  %\[
+  %  \nabla\cdot\overline{\mathbf{U}} = 0, \qquad
+  %  (\overline{\mathbf{U}}\cdot\nabla)\,\overline{\mathbf{U}} =
+  %  -\nabla \bar{p} + \nabla\cdot\left[(\nu + \nu_t)
+  %  \left(\nabla\overline{\mathbf{U}} + \nabla\overline{\mathbf{U}}^{\mathsf{T}}\right)\right],
+  %\]
+  %onde $\bar{p}$ é a pressão cinemática (dividida por $\rho$).
+
+  \item \textbf{Condições de frontera e modelo físico.} Para realizar as simulações com diferentes ângulos de ataque (0\textdegree, 5\textdegree, 10\textdegree, 15\textdegree, 20\textdegree), decidiu-se vairar o ângulo do perfil, em vez do ângulo do fluxo na entrada. 
+
+  Desta forma, foi utilizada condição de velocidade uniforme $U_\infty = \SI{95}{\meter\per\second}$ na entrada, pressão fixa na saída e não escorregamento no perfil.
+
+  O fluxo aerodinâmico foi modelado recorrendo ao método \textit{Reynolds-averaged Navier-Stokes} (RANS), utilizando como modelo de turbulência o \textit{Shear Stress Transport} (SST) $\mathrm{k-}\omega$, governado pelas seguintes equações:
   \[
     \nabla\cdot\overline{\mathbf{U}} = 0, \qquad
     (\overline{\mathbf{U}}\cdot\nabla)\,\overline{\mathbf{U}} =
     -\nabla \bar{p} + \nabla\cdot\left[(\nu + \nu_t)
     \left(\nabla\overline{\mathbf{U}} + \nabla\overline{\mathbf{U}}^{\mathsf{T}}\right)\right],
   \]
-  onde $\bar{p}$ é a pressão cinemática (dividida por $\rho$).
+  Este modelo combina as vantagens do $\mathrm{k-}\omega$ junto à camada limite com as vantagens do $\mathrm{k-}\epsilon$ nas regiões distantes da camada limite.
+
+  Foi considerado um $\mathrm{Re}\approx5.31\cdot10^6$, calculado com a \cref{eq:y+},
+
   \item \textbf{Resolução.} Algoritmo SIMPLE (\texttt{simpleFoam}) até os
   resíduos descerem abaixo de [TODO] e $c_l$ estabilizar.
   \item \textbf{Coeficientes de força.} Integrando a pressão e as tensões
