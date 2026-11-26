@@ -383,13 +383,16 @@ for k = 1:numel(cases)
         r.V_inf, alpha, axStream, bounds);
 
     % Rodar linhas, setas e contorno sem alterar os resultados do solver.
-    for h = findobj(axStream, 'Type', 'line').'
+    % findall inclui linhas e setas com HandleVisibility='off'.
+    hLines = findall(axStream, 'Type', 'line');
+    assert(~isempty(hLines), 'Nenhuma linha de corrente encontrada.');
+    for h = hLines(:).'
         x = h.XData; z = h.YData;
         q = pivot + R*([x(:).'; z(:).']-pivot);
         h.XData = reshape(q(1,:),size(x));
         h.YData = reshape(q(2,:),size(z));
     end
-    for h = findobj(axStream, 'Type', 'patch').'
+    for h = findall(axStream, 'Type', 'patch').'
         x = h.XData; z = h.YData;
         q = pivot + R*([x(:).'; z(:).']-pivot);
         h.XData = reshape(q(1,:),size(x));
