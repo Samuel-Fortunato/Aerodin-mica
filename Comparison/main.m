@@ -357,18 +357,52 @@ for k = 1:numel(cases)
 
     axStream = nexttile(layoutStream);
 
+    % Referencial do escoamento livre: rotacao de -alpha em torno
+    % do meio da corda, apenas para representacao grafica.
+    alpha = deg2rad(r.alpha_deg);
+    R = [cos(alpha), sin(alpha); -sin(alpha), cos(alpha)];
+    pivot = [0.5; 0];
+    xView = [-0.4 1.4];
+    zView = [-0.5 0.5];
+
+    % Integrar num dominio suficientemente amplo para cobrir a janela
+    % depois da rotacao, evitando cortes nas linhas de corrente.
+    corners = [xView(1) xView(1) xView(2) xView(2); ...
+               zView(1) zView(2) zView(1) zView(2)];
+    originalCorners = pivot + R.'*(corners-pivot);
+    margin = 0.12;
+    bounds = [min(originalCorners(1,:))-margin, ...
+              max(originalCorners(1,:))+margin, ...
+              min(originalCorners(2,:))-margin, ...
+              max(originalCorners(2,:))+margin];
+
     desenhar_linhas_corrente_sustentador( ...
         r.gamma, ...
         r.x_start, r.z_start, ...
         r.x_end, r.z_end, ...
-        r.V_inf, deg2rad(r.alpha_deg), axStream);
+        r.V_inf, alpha, axStream, bounds);
+
+    % Rodar linhas, setas e contorno sem alterar os resultados do solver.
+    for h = findobj(axStream, 'Type', 'line').'
+        x = h.XData; z = h.YData;
+        q = pivot + R*([x(:).'; z(:).']-pivot);
+        h.XData = reshape(q(1,:),size(x));
+        h.YData = reshape(q(2,:),size(z));
+    end
+    for h = findobj(axStream, 'Type', 'patch').'
+        x = h.XData; z = h.YData;
+        q = pivot + R*([x(:).'; z(:).']-pivot);
+        h.XData = reshape(q(1,:),size(x));
+        h.YData = reshape(q(2,:),size(z));
+    end
 
     hold(axStream, 'on');
 
     % Ponto de estagnacao
     if isfinite(r.x_est) && isfinite(r.z_est)
 
-        hStag = plot(axStream, r.x_est, r.z_est, 'o', ...
+        qStag = pivot + R*([r.x_est; r.z_est]-pivot);
+        hStag = plot(axStream, qStag(1), qStag(2), 'o', ...
             'Color', colorPanel, ...
             'MarkerFaceColor', colorPanel, ...
             'MarkerSize', 6, ...
@@ -383,11 +417,11 @@ for k = 1:numel(cases)
 
     axis(axStream, 'equal');
 
-    xlim(axStream, [-0.4 1.4]);
-    ylim(axStream, [-0.5 0.5]);
+    xlim(axStream, xView);
+    ylim(axStream, zView);
 
-    xlabel(axStream, '$x/c$', 'Interpreter', 'latex');
-    ylabel(axStream, '$z/c$', 'Interpreter', 'latex');
+    xlabel(axStream, '$x''/c$', 'Interpreter', 'latex');
+    ylabel(axStream, '$z''/c$', 'Interpreter', 'latex');
 
     grid(axStream, 'on');
     box(axStream, 'on');

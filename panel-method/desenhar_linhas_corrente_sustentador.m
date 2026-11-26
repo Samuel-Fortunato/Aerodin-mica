@@ -1,4 +1,4 @@
-function fig = desenhar_linhas_corrente_sustentador(gamma, x_start, z_start, x_end, z_end, V_inf_modul, AoA_rad, ax)
+function fig = desenhar_linhas_corrente_sustentador(gamma, x_start, z_start, x_end, z_end, V_inf_modul, AoA_rad, ax, bounds)
 % DESENHAR_LINHAS_CORRENTE_SUSTENTADOR Integra o campo de velocidades e representa
 % graficamente as linhas de corrente em redor de um perfil (problema sustentador).
 %
@@ -15,6 +15,7 @@ function fig = desenhar_linhas_corrente_sustentador(gamma, x_start, z_start, x_e
 %   V_inf_modul - (Opcional) Módulo da velocidade do escoamento incidente (por defeito: 1 m/s)
 %   AoA_rad     - (Opcional) Ângulo de ataque em radianos (por defeito: 0 rad)
 %   ax          - (Opcional) Eixos existentes para desenhar as linhas de corrente
+%   bounds      - (Opcional) Dominio de integracao [xmin xmax zmin zmax]
 %
 % PARÂMETROS DE SAÍDA:
 %   fig         - Identificador (handle) da figura gerada
@@ -60,7 +61,9 @@ function fig = desenhar_linhas_corrente_sustentador(gamma, x_start, z_start, x_e
 
     distance = @(q) surfaceDistance(q,x_start,z_start,dx,dz,L, ...
         x_contorno,z_contorno);
-    bounds = [-0.5 1.5 -0.6 0.6];
+    if nargin < 9 || isempty(bounds)
+        bounds = [-0.5 1.5 -0.6 0.6];
+    end
     opts = odeset('RelTol',1e-7,'AbsTol',1e-9,'MaxStep',0.01, ...
         'Events',@(t,q) stopTrace(t,q,velocity,distance,bounds,V_inf_modul));
 
