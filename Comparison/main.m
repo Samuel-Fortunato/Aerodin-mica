@@ -15,6 +15,17 @@ colorThin  = [0 0.4470 0.7410];
 colorPanel = [0.8500 0.3250 0.0980];
 colorCFD   = [0.4660 0.6740 0.1880];
 
+%% 0.1. Atualizar automaticamente os resultados dos metodos
+
+thinDir = fullfile(rootDir, 'thin-airfoil');
+panelDir = fullfile(rootDir, 'panel-method');
+
+runThinAirfoil(thinDir);
+addpath(panelDir);
+exportResults("all");
+
+% Os resultados CFD sao importados das simulacoes externas.
+
 %% 1. Perfis delgados
 
 T = readtable(fullfile(rootDir, ...
@@ -189,3 +200,222 @@ disp(results);
 
 writetable(results, ...
     fullfile(scriptDir, 'results.csv'));
+
+
+
+%% 9. Estudo de convergencia dos paineis
+
+conv = readtable(fullfile(panelDir, 'convergence.csv'));
+
+N_final = 260;
+tolPanel = 0.5;
+
+figConv = figure('Name', 'Convergencia dos paineis', ...
+    'Color', 'w', 'WindowStyle', 'docked');
+
+layout = tiledlayout(figConv, 2, 1, ...
+    'TileSpacing', 'compact', ...
+    'Padding', 'compact');
+
+% Coeficiente de sustentacao
+
+axCl = nexttile(layout);
+
+plot(axCl, conv.N, conv.cl, '-o', ...
+    'Color', colorPanel, ...
+    'LineWidth', 1.5, ...
+    'MarkerSize', 5, ...
+    'MarkerFaceColor', 'w');
+
+xline(axCl, N_final, 'k--', ...
+    sprintf('N = %d', N_final));
+
+yline(axCl, conv.cl(end), 'k:', ...
+    'Referencia');
+
+xlabel(axCl, 'Número de painéis, N');
+ylabel(axCl, '$c_l$', 'Interpreter', 'latex');
+
+grid(axCl, 'on');
+box(axCl, 'on');
+
+axCl.FontSize = 12;
+axCl.GridAlpha = 0.12;
+
+% Erro relativo
+
+axError = nexttile(layout);
+
+plot(axError, conv.N, conv.relative_error_pct, '-o', ...
+    'Color', colorPanel, ...
+    'LineWidth', 1.5, ...
+    'MarkerSize', 5, ...
+    'MarkerFaceColor', 'w');
+
+yline(axError, tolPanel, 'k--', ...
+    sprintf('Tolerância = %.1f%%', tolPanel));
+
+xline(axError, N_final, 'k--', ...
+    sprintf('N = %d', N_final));
+
+xlabel(axError, 'Número de painéis, N');
+ylabel(axError, 'Erro relativo [%]');
+
+grid(axError, 'on');
+box(axError, 'on');
+
+axError.FontSize = 12;
+axError.GridAlpha = 0.12;
+
+linkaxes([axCl, axError], 'x');
+
+xlim(axCl, [0 820]);
+xticks(axCl, 0:100:800);
+xticks(axError, 0:100:800);
+
+% Exportacao individual
+
+exportgraphics(axCl, ...
+    fullfile(figDir, 'panel_convergence_cl.pdf'), ...
+    'ContentType', 'vector');
+
+exportgraphics(axError, ...
+    fullfile(figDir, 'panel_convergence_error.pdf'), ...
+    'ContentType', 'vector');
+
+
+%% 10. Painelizacao
+
+filename = fullfile(rootDir, 'airfoil-points.txt');
+
+[xs, zs, xe, ze, xc, zc] = ...
+    panelizationRoncz(filename, N_final, false);
+
+figPanel = figure('Name', 'Painelização', ...
+    'Color', 'w', 'WindowStyle', 'docked');
+
+axPanel = axes(figPanel);
+
+hold(axPanel, 'on');
+
+% Paineis e nos
+
+plot(axPanel, [xs; xe(end)], [zs; ze(end)], ...
+    'k-o', ...
+    'LineWidth', 1, ...
+    'MarkerSize', 2.5, ...
+    'MarkerFaceColor', 'w', ...
+    'DisplayName', 'Painéis e nós');
+
+% Pontos de controlo
+
+plot(axPanel, xc, zc, '.', ...
+    'Color', colorPanel, ...
+    'MarkerSize', 6, ...
+    'DisplayName', 'Pontos de controlo');
+
+axis(axPanel, 'equal');
+
+xlim(axPanel, [-0.05 1.05]);
+ylim(axPanel, [min([zs; ze])-0.03, ...
+               max([zs; ze])+0.03]);
+
+xlabel(axPanel, '$x/c$', 'Interpreter', 'latex');
+ylabel(axPanel, '$z/c$', 'Interpreter', 'latex');
+
+grid(axPanel, 'on');
+box(axPanel, 'on');
+
+axPanel.FontSize = 12;
+axPanel.GridAlpha = 0.12;
+
+legend(axPanel, 'Location', 'best', 'Box', 'off');
+
+hold(axPanel, 'off');
+
+exportgraphics(axPanel, ...
+    fullfile(figDir, 'panelization.pdf'), ...
+    'ContentType', 'vector');
+
+
+
+%% 11. Linhas de corrente - Metodo dos paineis
+
+data = load(fullfile(panelDir, 'cases.mat'));
+cases = data.cases;
+
+for k = 1:numel(cases)
+
+    r = cases(k);
+
+    figStream = figure('Name', sprintf( ...
+        'Linhas de corrente - %g graus', r.alpha_deg), ...
+        'Color', 'w', 'WindowStyle', 'docked');
+
+    layoutStream = tiledlayout(figStream, 1, 1, ...
+        'Padding', 'loose', 'TileSpacing', 'loose');
+
+    axStream = nexttile(layoutStream);
+
+    desenhar_linhas_corrente_sustentador( ...
+        r.gamma, ...
+        r.x_start, r.z_start, ...
+        r.x_end, r.z_end, ...
+        r.V_inf, deg2rad(r.alpha_deg), axStream);
+
+    hold(axStream, 'on');
+
+    % Ponto de estagnacao
+    if isfinite(r.x_est) && isfinite(r.z_est)
+
+        hStag = plot(axStream, r.x_est, r.z_est, 'o', ...
+            'Color', colorPanel, ...
+            'MarkerFaceColor', colorPanel, ...
+            'MarkerSize', 6, ...
+            'DisplayName', 'Ponto de estagnação');
+
+        lgd = legend(axStream, hStag, 'Box', 'off');
+        lgd.Layout.Tile = 'south';
+
+    end
+
+    % Configuracao dos eixos
+
+    axis(axStream, 'equal');
+
+    xlim(axStream, [-0.4 1.4]);
+    ylim(axStream, [-0.5 0.5]);
+
+    xlabel(axStream, '$x/c$', 'Interpreter', 'latex');
+    ylabel(axStream, '$z/c$', 'Interpreter', 'latex');
+
+    grid(axStream, 'on');
+    box(axStream, 'on');
+
+    axStream.FontSize = 12;
+    axStream.GridAlpha = 0.12;
+
+    hold(axStream, 'off');
+
+    % Exportacao
+
+    drawnow;
+    exportgraphics(layoutStream, ...
+        fullfile(figDir, sprintf( ...
+        'panel_streamlines_%02d.pdf', r.alpha_deg)), ...
+        'ContentType', 'vector');
+
+end
+
+%% 12. Resultados dos casos especificos
+
+panelCases = readtable(fullfile(panelDir, 'cases.csv'));
+
+disp(panelCases);
+
+%% Funcoes auxiliares
+
+function runThinAirfoil(thinDir)
+    % O clear do script original fica isolado deste script.
+    run(fullfile(thinDir, 'main.m'));
+end
