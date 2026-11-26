@@ -98,90 +98,344 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
 
 \subsection*{Método dos painéis}
 
-Utilizou-se o método dos painéis de vórtices com intensidade linear
-{ref: Katz \& Plotkin}, implementado em MATLAB e esquematizado na
-Figura~\ref{fig:diag_paineis}.
+O método dos painéis foi implementado em MATLAB,
+considerando um escoamento bidimensional, estacionário,
+incompressível, invíscido e irrotacional no domínio
+exterior ao perfil. O escoamento sustentador foi
+representado pela superposição de um escoamento uniforme
+com uma distribuição linear de intensidade vorticial
+ao longo do contorno. Considerou-se uma velocidade de
+referência unitária ($V_\infty=1$).
 
-\begin{figure}[H]
+O procedimento seguido encontra-se esquematizado na
+Figura~\ref{fig:fluxograma_paineis}.
+
+
+
+
+\begin{figure}[htbp]
 \centering
-\begin{tikzpicture}[node distance=0.45cm]
-  \node[etapa] (p1) {\textbf{1.} Painelização do perfil};
-  \node[etapa, below=of p1] (p2) {\textbf{2.} Coeficientes de influência};
-  \node[etapa, below=of p2] (p3) {\textbf{3.} Condições de fronteira};
-  \node[etapa, below=of p3] (p4) {\textbf{4.} Resolução do sistema linear};
-  \node[etapa, below=of p4] (p5) {\textbf{5.} Velocidade tangencial e $C_p$};
-  \node[etapa, below=of p5] (p6) {\textbf{6.} Coeficientes de força};
-  \node[etapa, below=of p6] (p7) {\textbf{7.} Pós-processamento};
-  \foreach \a/\b in {p1/p2,p2/p3,p3/p4,p4/p5,p5/p6,p6/p7}
-    \draw[seta] (\a) -- (\b);
-  % ciclo de convergência
-  \draw[seta, dashed] (p6.east) -- ++(0.3,0) |- (p1.east);
-  % entradas
-  \node[io, left=0.5cm of p1, align=flush right] (j1) {Ficheiro de coordenadas; número de painéis $N$};
-  \node[io, left=0.5cm of p2, align=flush right] (j2) {Nós $(x_j,z_j)$; pontos de controlo $(x_i,z_i)$};
-  \node[io, left=0.5cm of p3, align=flush right] (j3) {$V_\infty$, $\alpha$; normais $\mathbf{n}_i$};
-  \node[io, left=0.5cm of p4, align=flush right] (j4) {Matriz $\mathbf{A}$, vetor $\mathbf{b}$};
-  \node[io, left=0.5cm of p5, align=flush right] (j5) {$\gamma_j$; influências; tangentes $\mathbf{t}_i$};
-  \node[io, left=0.5cm of p6, align=flush right] (j6) {$C_{p,i}$, $\mathbf{n}_i$, $\Delta s_i$, $\alpha$};
-  \node[io, left=0.5cm of p7, align=flush right] (j7) {$\gamma_j$, $V_{t,i}$, $C_{p,i}$; malha de pontos em redor do perfil};
-  % saídas
-  \node[io, right=0.75cm of p1] (q1) {Nós, pontos de controlo, $\mathbf{t}_i$, $\mathbf{n}_i$, $\Delta s_i$};
-  \node[io, right=0.75cm of p2] (q2) {Matriz $\mathbf{A}$, $(N{+}1)\times(N{+}1)$};
-  \node[io, right=0.75cm of p3] (q3) {Vetor $\mathbf{b}$; condição de Kutta $\gamma_1 + \gamma_{N+1} = 0$};
-  \node[io, right=0.75cm of p4] (q4) {Intensidades $\gamma_j$ nos $N+1$ nós};
-  \node[io, right=0.75cm of p5] (q5) {$V_{t,i}$, $C_{p,i}$; verificação $V_{n,i} \approx 0$};
-  \node[io, right=0.75cm of p6] (q6) {$C_x$, $C_z$ $\rightarrow$ $c_l$, $c_{d,p}$; ciclo em $N$ até variação de $c_l(5^\circ) < 0{,}5\,\%$};
-  \node[io, right=0.75cm of p7] (q7) {Linhas de corrente, ponto de estagnação, $C_{p,\min}$};
-  \foreach \k in {1,...,7} {
-    \draw[setaio] (j\k) -- (p\k);
-    \draw[setaio] (p\k) -- (q\k);
-  }
-  \path (p1.north) ++(0,0.6) coordinate (topo);
-  \node[titulo] at (j1 |- topo) {Entradas};
-  \node[titulo] at (q1 |- topo) {Saídas};
-\end{tikzpicture}
-\caption{Diagrama de blocos do método dos painéis. A seta a tracejado
-representa o estudo de convergência em $N$.}
-\label{fig:diag_paineis}
+\resizebox{0.98\linewidth}{!}{%
+\begin{tikzpicture}[
+    bloco/.style={
+        draw=black!65,
+        fill=blue!5,
+        rounded corners=2pt,
+        align=center,
+        text width=4.1cm,
+        minimum height=3.4cm,
+        inner sep=4pt,
+        font=\footnotesize
+    },
+    seta/.style={
+        -{Stealth[length=2mm]},
+        thin,
+        draw=black!80
+    }
+]
+
+% PRIMEIRA LINHA
+
+\node[bloco] (b1) {
+    \textbf{1. Discretização}\\[3pt]
+    \textbf{Entradas:} Ficheiro Lednicer; $N$\\[3pt]
+    Interpolação PCHIP e painelização\\[3pt]
+    \textbf{Saídas:} Nós, pontos de controlo,
+    $\Delta S_i$, $\vec{n}_i$, $\vec{t}_i$
+};
+
+\node[bloco, right=6mm of b1] (b2) {
+    \textbf{2. Escoamentos elementares}\\[3pt]
+    \textbf{Entradas:} $V_\infty$, $\alpha$;
+    geometria\\[3pt]
+    Distribuição vorticial linear\\[3pt]
+    \textbf{Saídas:} $U_\infty$, $W_\infty$;
+    $N+1$ incógnitas $\gamma_j$
+};
+
+\node[bloco, right=6mm of b2] (b3) {
+    \textbf{3. Construção do sistema}\\[3pt]
+    \textbf{Entradas:} Geometria,
+    $\vec{V}_\infty$; modelo vorticial\\[3pt]
+    Coeficientes de influência,
+    impermeabilidade e Kutta\\[3pt]
+    \textbf{Saídas:} $\mathbf{A}$,
+    $\mathbf{b}$; influências unitárias de velocidade
+};
+
+% REFERÊNCIA INFERIOR DA PRIMEIRA LINHA
+
+\path (b1.south) -- (b2.south) -- (b3.south);
+
+\coordinate (linha2) at
+($(current bounding box.south)-(0,7mm)$);
+
+% SEGUNDA LINHA
+
+\node[bloco, anchor=north] (b4)
+at (b3.center |- linha2) {
+    \textbf{4. Resolução e cálculo aerodinâmico}\\[3pt]
+    \textbf{Entradas:} $\mathbf{A}$,
+    $\mathbf{b}$, $\alpha$;
+    geometria e influências\\[3pt]
+    $\mathbf{A}\boldsymbol{\gamma}=\mathbf{b}$\\[3pt]
+    \textbf{Saídas:} $\gamma_j$, $V_{n,i}$,
+    $V_{t,i}$, $c_{p,i}$, $c_l$
+};
+
+\node[bloco, anchor=north] (b5)
+at (b2.center |- linha2) {
+   \textbf{5. Estudo de convergência}\\[3pt]
+    \textbf{Entradas:} $\alpha=5^\circ$;
+    $N=20:30:800$; $c_l(N)$; tempos\\[3pt]
+    Critério: $\varepsilon_N\leq0{,}5\%$\\[3pt]
+    \textbf{Saídas:} $\varepsilon_N$;
+    $N_{\mathrm{selecionado}}=260$
+};
+
+\node[bloco, anchor=north] (b6)
+at (b1.center |- linha2) {
+    \textbf{6. Análises aerodinâmicas}\\[3pt]
+    \textbf{Entradas:} $N=260$;
+    $\alpha\in[-20^\circ,20^\circ]$;
+    modelo de painéis\\[3pt]
+    Variação de $\alpha$ e pós-processamento\\[3pt]
+    \textbf{Saídas:} $c_l(\alpha)$, $c_{l\alpha}$,
+    $\alpha_0$, $c_p(x/c)$, $c_{p,\min}$,
+    linhas de corrente e estagnação
+};
+
+% SETAS PRINCIPAIS
+
+\draw[seta] (b1.east) -- (b2.west);
+\draw[seta] (b2.east) -- (b3.west);
+\draw[seta] (b3.south) -- (b4.north);
+\draw[seta] (b4.west) -- (b5.east |- b4.west);
+\draw[seta] (b5.west) -- (b6.east |- b5.west);
+
+% CICLO DE CONVERGÊNCIA
+
+\coordinate (baixo) at
+($(current bounding box.south)-(0,5mm)$);
+
+\coordinate (esquerda) at
+($(b1.west)-(5mm,0)$);
+
+\draw[seta,dashed]
+    (b5.south)
+    -- (b5.south |- baixo)
+    -- (esquerda |- baixo)
+    |- (b1.west);
+
+\node[font=\scriptsize, anchor=west]
+    at ($(b5.south |- baixo)+(5mm,3mm)$)
+    {Repetir para diferentes valores de $N$};
+
+\end{tikzpicture}%
+}
+\caption{Diagrama de blocos do método dos painéis
+aplicado ao perfil Roncz}
+\label{fig:fluxograma_paineis}
 \end{figure}
 
-\begin{etapas}
-  \item \textbf{Painelização.} O contorno é percorrido no sentido anti-horário a
-  partir do bordo de fuga; cada superfície é reinterpolada (\emph{pchip}) em
-  $N/2$ painéis de igual comprimento de arco, com ponto de controlo no ponto
-  médio, comprimento $\Delta s_i$, tangente $\mathbf{t}_i$ e normal exterior
-  $\mathbf{n}_i$.
-  \item \textbf{Coeficientes de influência.} A intensidade varia linearmente
-  entre os valores nodais $\gamma_j$ e $\gamma_{j+1}$; a velocidade induzida
-  calcula-se analiticamente no referencial local do painel, e $a_{ij}$ é a sua
-  componente normal no ponto $i$ para $\gamma_j$ unitário.
-  \item \textbf{Condições de fronteira.} Impermeabilidade nos pontos de
-  controlo e condição de Kutta (aproximada, pois o bordo de fuga tem espessura
-  finita):
-  \[
-    \sum_{j=1}^{N+1} a_{ij}\,\gamma_j = -\mathbf{V}_\infty \cdot \mathbf{n}_i ,
-    \quad i = 1,\dots,N, \qquad \gamma_1 + \gamma_{N+1} = 0 .
-  \]
-  \item \textbf{Resolução.} O sistema $\mathbf{A}\boldsymbol{\gamma} = \mathbf{b}$
-  resolve-se diretamente (operador \texttt{\textbackslash} do MATLAB).
-  \item \textbf{Velocidade tangencial e $C_p$.} Somando $\mathbf{V}_\infty$ à
-  velocidade induzida por todos os painéis,
-  \[
-    C_{p,i} = 1 - \left(\frac{V_{t,i}}{V_\infty}\right)^2 ,
-  \]
-  usando-se $V_{n,i} \approx 0$ para verificar a solução.
-  \item \textbf{Coeficientes de força.} Integrando a pressão no contorno e
-  projetando nas direções do escoamento livre,
-  \[
-    C_{x,z} = -\sum_i C_{p,i}\, n_{x,z,i}\,\Delta s_i , \qquad
-    c_l = -C_x \sin\alpha + C_z \cos\alpha , \qquad
-    c_{d,p} = C_x \cos\alpha + C_z \sin\alpha .
-  \]
-  Repete-se para $N$ entre 20 e 800 a $\alpha = 5^\circ$ (seta a tracejado).
-  \item \textbf{Pós-processamento.} Velocidade numa malha em redor do perfil
-  (linhas de corrente), ponto de estagnação (mudança de sinal de $V_t$ junto ao
-  bordo de ataque) e $C_{p,\min}$.
-\end{etapas}
+\begin{enumerate}
+
+    \item \textbf{Discretização da geometria.}
+    As coordenadas do perfil Roncz, fornecidas em formato
+    Lednicer, contêm 36 pontos por superfície, resultando
+    numa discretização inicial de 70 painéis. O contorno
+    foi percorrido no sentido anti-horário, desde o bordo
+    de fuga do extradorso até ao bordo de fuga do intradorso.
+
+    Para variar o número de painéis, aplicou-se uma
+    interpolação PCHIP, parametrizada pela distância
+    acumulada ao longo de cada superfície, mantendo
+    $N/2$ painéis em cada uma. Após a normalização das coordenadas pela corda, determinaram-se os pontos de controlo, localizados no ponto médio de cada painel, os comprimentos adimensionais $\Delta S_i$ e os vetores unitários tangencial $\vec{t}_i$ e normal exterior $\vec{n}_i$.
+
+    \item \textbf{Definição dos escoamentos elementares.}
+    O escoamento uniforme foi definido por
+    $\vec{V}_\infty=U_\infty\vec{i}+W_\infty\vec{k}$,
+    com $U_\infty=V_\infty\cos\alpha$ e
+    $W_\infty=V_\infty\sin\alpha$.
+
+    Considerando uma variação linear da intensidade
+    vorticial em cada painel, a velocidade induzida
+    pelo painel $j$ no ponto de controlo $i$ é dada por:
+
+    \begin{equation}
+        \vec{V}_{ij} =
+        \gamma_j\hat{\vec{V}}_{ij,\mathrm{start}}
+        +\gamma_{j+1}\hat{\vec{V}}_{ij,\mathrm{end}}.
+        \label{eq:velocidade_induzida}
+    \end{equation}
+
+    As contribuições unitárias foram determinadas
+    através da função \texttt{VorticeDist}, fornecida
+    no âmbito da unidade curricular. A continuidade
+    da distribuição nos nós interiores resulta em
+    $N+1$ intensidades vorticais desconhecidas para
+    $N$ painéis, incluindo os dois extremos do
+    bordo de fuga.
+
+    \item \textbf{Construção do sistema de equações.}
+    A condição de impermeabilidade foi imposta nos
+    pontos de controlo, anulando a componente normal
+    da velocidade total:
+
+    \begin{equation}
+        \vec{V}_i\cdot\vec{n}_i=0
+        \quad\Rightarrow\quad
+        \sum_{j=1}^{N+1}a_{ij}\gamma_j
+        =-\vec{V}_\infty\cdot\vec{n}_i.
+        \label{eq:impermeabilidade}
+    \end{equation}
+
+    Os coeficientes de influência $a_{ij}$ foram
+    obtidos pela projeção das contribuições unitárias
+    sobre a normal de cada painel. Nos nós interiores,
+    consideraram-se as contribuições dos dois painéis
+    adjacentes:
+
+    \begin{equation}
+        a_{ij} =
+        \begin{cases}
+            \hat{\vec{V}}_{i1,\mathrm{start}}
+            \cdot\vec{n}_i, & j=1,\\
+            \left(
+            \hat{\vec{V}}_{i(j-1),\mathrm{end}}
+            +\hat{\vec{V}}_{ij,\mathrm{start}}
+            \right)\cdot\vec{n}_i, & 2\leq j\leq N,\\
+            \hat{\vec{V}}_{iN,\mathrm{end}}
+            \cdot\vec{n}_i, & j=N+1.
+        \end{cases}
+        \label{eq:coeficientes_influencia}
+    \end{equation}
+
+    A condição de Kutta, expressa por
+    $\gamma_1+\gamma_{N+1}=0$, permitiu completar
+    o sistema de $N+1$ equações:
+
+    \begin{equation}
+        \mathbf{A}\boldsymbol{\gamma}=\mathbf{b},
+        \qquad
+        b_i=-\vec{V}_\infty\cdot\vec{n}_i,
+        \qquad b_{N+1}=0.
+        \label{eq:sistema_paineis}
+    \end{equation}
+    A matriz $\mathbf{A}$ possui dimensão $(N+1)\times(N+1)$. Esta formulação da condição de Kutta constitui
+    uma aproximação devido à espessura finita do
+    bordo de fuga.
+
+    \item \textbf{Resolução e cálculo aerodinâmico.}
+    O sistema linear foi resolvido através do operador
+    \texttt{\textbackslash} do MATLAB. Conhecidas as
+    intensidades vorticais, determinou-se a velocidade
+    total pela superposição das contribuições de todos
+    os painéis com o escoamento uniforme.
+
+   A componente normal da velocidade permitiu verificar
+que o escoamento não atravessa a superfície do perfil
+($V_{n,i}\approx0$). Por sua vez, a componente tangencial
+foi utilizada para determinar o coeficiente de pressão
+em cada ponto de controlo, através da equação de Bernoulli:
+
+\begin{equation}
+    V_{t,i}=\vec{V}_i\cdot\vec{t}_i,
+    \qquad
+    c_{p,i}=1-
+    \left(\frac{V_{t,i}}{V_\infty}\right)^2.
+    \label{eq:coeficiente_pressao}
+\end{equation}
+
+   A partir dos coeficientes de pressão, determinaram-se
+as componentes horizontal e vertical do coeficiente
+de força aerodinâmica, somando as contribuições de
+cada painel:
+
+\begin{equation}
+    \begin{aligned}
+        c_x &=-\sum_{i=1}^{N}
+        c_{p,i}n_{x,i}\Delta S_i,\\
+        c_z &=-\sum_{i=1}^{N}
+        c_{p,i}n_{z,i}\Delta S_i.
+    \end{aligned}
+    \label{eq:coeficientes_forca}
+\end{equation}
+
+O coeficiente de sustentação foi obtido a partir da
+componente da força aerodinâmica perpendicular à
+direção do escoamento incidente:
+
+\begin{equation}
+    c_l=-c_x\sin\alpha+c_z\cos\alpha.
+    \label{eq:coeficiente_sustentacao}
+\end{equation}
+
+    \item \textbf{Estudo de convergência.}
+    Para $\alpha=5^\circ$, repetiu-se o cálculo de
+    $c_l$ para discretizações entre 20 e 800 painéis,
+    com incrementos de 30. Excluíram-se as operações
+    de representação gráfica e de reconstrução do
+    campo de velocidades exterior, registando-se
+    o tempo de cálculo para cada discretização.
+
+    Considerando a solução de 800 painéis como
+    referência numérica, definiu-se o erro relativo
+    percentual por:
+
+    \begin{equation}
+        \varepsilon_N=
+        \left|
+        \frac{c_l(N)-c_l(800)}{c_l(800)}
+        \right|\times100.
+        \label{eq:erro_convergencia}
+    \end{equation}
+
+    Para uma tolerância de $0{,}5\%$, selecionaram-se
+    260 painéis, com um erro relativo de $0{,}468\%$.
+    O tempo de cálculo diminuiu de aproximadamente
+    $1{,}45$~s para $0{,}155$~s, correspondendo a
+    uma redução de $89{,}3\%$.
+
+    \item \textbf{Análises aerodinâmicas.}
+    Com a discretização selecionada, determinou-se
+    $c_l(\alpha)$ entre $-20^\circ$ e $20^\circ$,
+    com incrementos de $5^\circ$. O declive da curva
+    de sustentação e o ângulo de sustentação nula
+    foram obtidos por ajuste linear pelo método
+    dos mínimos quadrados, entre $-5^\circ$ e
+    $5^\circ$:
+
+    \begin{equation}
+        c_l(\alpha)=c_{l0}+c_{l\alpha}\alpha,
+        \qquad
+        \alpha_0=-\frac{c_{l0}}{c_{l\alpha}}.
+        \label{eq:curva_sustentacao}
+    \end{equation}
+
+    Para $\alpha=0^\circ$, $5^\circ$ e $20^\circ$,
+    calcularam-se as distribuições superficiais de
+    pressão, as linhas de corrente e o coeficiente
+    de pressão mínimo,
+    $c_{p,\min}=\min_i(c_{p,i})$.
+
+    A posição do ponto de estagnação anterior foi
+    estimada por interpolação linear entre pontos
+    de controlo consecutivos com velocidades
+    tangenciais de sinais opostos, utilizando:
+
+    \begin{equation}
+        \lambda=-\frac{V_{t,i}}{V_{t,i+1}-V_{t,i}},
+        \qquad
+        V_{t,i}V_{t,i+1}<0.
+        \label{eq:fator_interpolacao}
+    \end{equation}
+
+    As coordenadas adimensionais do ponto de
+    estagnação foram estimadas por interpolação
+    das coordenadas dos respetivos pontos de controlo.
+
+\end{enumerate}
 
 
 \subsection*{Simulação CFD}
