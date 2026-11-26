@@ -13,7 +13,7 @@ $c_l$, ângulo de sustentação nula, declive, custo, linhas de corrente e $C_p$
 % Critério: gráfico c_l(N) a 5° + figura da painelização escolhida.
 % Dados: N entre 20 e 800 a alpha = 5°; N = 260 dá erro < 0,5 % face a N = 800.
 
-A Figura~\ref{fig:conv_paineis} apresenta a evolução do coeficiente de sustentação em função do número de painéis, para $\alpha=5^\circ$. Para a discretização de referência, constituída por
+A Figura~\ref{fig:convergencia_paineis} apresenta a evolução do coeficiente de sustentação em função do número de painéis, para $\alpha=5^\circ$. Para a discretização de referência, constituída por
 800 painéis, obteve-se $c_l=0{,}64329$. Com 230 painéis,
 o erro relativo foi de $0{,}593\%$, enquanto com 260
 painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
@@ -45,15 +45,15 @@ painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
 
 
 A Figura~\ref{fig:painelizacao} mostra a painelização final, com
-$N = \tbd{260}$ painéis, e os vetores normais e tangentes de cada painel.
+$N = 260$ painéis e os respetivos pontos de controlo.
+\tbd{decidir se se acrescentam os vetores normais e tangentes à figura}
 \tbd{comentar a distribuição dos painéis junto aos bordos}
 
 \begin{figure}[H]
   \centering
-  \placeholder[0.8\linewidth]{3.5cm}{Figura: painelização com $N$ escolhido,
-  normais e tangentes (\texttt{graficar\_panelizationVectors\_Roncz.m})}
-  \caption{Painelização final do perfil Roncz/Marske-7, com os vetores normais
-  \tbd{cor} e tangentes \tbd{cor}.}
+  \includegraphics[width=0.8\linewidth]{../Comparison/figures/panelization.pdf}
+  \caption{Painelização final do perfil Roncz/Marske-7 com $N=260$ painéis
+  e respetivos pontos de controlo.}
   \label{fig:painelizacao}
 \end{figure}
 
@@ -61,49 +61,71 @@ $N = \tbd{260}$ painéis, e os vetores normais e tangentes de cada painel.
 \subsection*{Estudo de convergência da simulação CFD}
 % Critério: convergência de malha + independência da solução, justificar a malha.
 
-O estudo de independência de malha foi feito a $\alpha = \tbd{5}^\circ$,
-refinando a malha até a variação de $c_l$ entre malhas consecutivas ser
-inferior a \tbd{1}\,\%. A Tabela~\ref{tab:malhas} resume as malhas testadas.
-\tbd{justificar a malha escolhida: precisão vs. custo}
+O estudo de independência de malha foi realizado para quatro configurações
+de malha. \tbd{Confirmar o ângulo de ataque.}
+A Tabela~\ref{tab:malhas} resume as malhas testadas e a
+Figura~\ref{fig:independencia_cfd} apresenta os coeficientes aerodinâmicos e
+o indicador de eficiência das malhas.
 
 \begin{table}[H]
   \centering
-  \caption{Estudo de independência de malha a $\alpha = \tbd{5}^\circ$.}
+  \caption{Estudo de independência de malha.}
   \label{tab:malhas}
   \begin{tabular}{lccc}
     \toprule
-    Malha & N.º de células & $c_l$ & Variação de $c_l$ [\%] \\
+    Configuração & N.º de células & $c_l$ & Variação de $c_l$ [\%] \\
     \midrule
-    Grosseira & \tbd{} & \tbd{} & --- \\
-    Média     & \tbd{} & \tbd{} & \tbd{} \\
-    Fina      & \tbd{} & \tbd{} & \tbd{} \\
+    0,14 & \tbd{} & \tbd{} & --- \\
+    0,10 & \tbd{} & \tbd{} & \tbd{} \\
+    0,07 & \tbd{} & \tbd{} & \tbd{} \\
+    0,05 & \tbd{} & \tbd{} & \tbd{} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-A convergência iterativa avaliou-se pelos resíduos e pela estabilização de
-$c_l$ (Figura~\ref{fig:residuos}), e a resolução da camada limite pelo $y^+$ ao
-longo do perfil (Figura~\ref{fig:yplus}). \tbd{valores finais dos resíduos e
-n.º de iterações; o que acontece a $20^\circ$}. \tbd{valor máximo de $y^+$ e
-onde ocorre}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_1.png}
+    \caption{Coeficientes aerodinâmicos e equilíbrio aerodinâmico.}
+  \end{subfigure}\hfill
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_5.png}
+    \caption{Indicador de eficiência computacional.}
+  \end{subfigure}
+  \caption{Estudo de independência da solução CFD e eficiência das malhas.}
+  \label{fig:independencia_cfd}
+\end{figure}
+
+A Figura~\ref{fig:custo_yplus_cfd} apresenta os tempos de geração da malha
+e de simulação, bem como os valores médio, mínimo e máximo de $y^+$ para cada
+configuração de malha.
 
 \begin{figure}[H]
   \centering
-  \placeholder[0.45\linewidth]{4.5cm}{Resíduos a $5^\circ$}\hfill
-  \placeholder[0.45\linewidth]{4.5cm}{Resíduos a $20^\circ$}
-  \caption{Evolução dos resíduos para $\alpha = 5^\circ$ (esquerda) e
-  $\alpha = 20^\circ$ (direita).}
-  \label{fig:residuos}
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_2.png}
+    \caption{Tempos de geração de malha e simulação.}
+  \end{subfigure}\hfill
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_3.png}
+    \caption{Estatísticas de $y^+$ por malha.}
+  \end{subfigure}
+  \caption{Custo computacional e indicadores de resolução junto à parede.}
+  \label{fig:custo_yplus_cfd}
 \end{figure}
 
-\begin{figure}[H]
-  \centering
-  \placeholder[0.6\linewidth]{4.5cm}{$y^+$ ao longo do perfil a $0^\circ$,
-  $5^\circ$ e $20^\circ$}
-  \caption{$y^+$ ao longo do perfil para $\alpha = 0^\circ$, $5^\circ$ e
-  $20^\circ$.}
-  \label{fig:yplus}
-\end{figure}
+\tbd{Análise (sem IA): explicar os resultados do estudo de independência,
+identificar o parâmetro de refinamento e justificar a malha escolhida,
+considerando a precisão, o tempo de cálculo e a resolução da camada limite.}
+
+\tbd{A figura \texttt{CFD/graficos-mesh-independence/Figure\_4.png},
+relativa aos indicadores de qualidade da malha, não foi inserida para
+poupar espaço. Avaliar se é necessário incluí-la.}
 
 % ---------------------------------------------------------------------------
 \subsection*{Comparação de métodos}
@@ -216,12 +238,38 @@ $20^\circ$.
 
 \begin{figure}[H]
   \centering
-  \placeholder[0.45\linewidth]{3cm}{Painéis, $0^\circ$}\hfill
-  \placeholder[0.45\linewidth]{3cm}{CFD, $0^\circ$}\\[4pt]
-  \placeholder[0.45\linewidth]{3cm}{Painéis, $5^\circ$}\hfill
-  \placeholder[0.45\linewidth]{3cm}{CFD, $5^\circ$}\\[4pt]
-  \placeholder[0.45\linewidth]{3cm}{Painéis, $20^\circ$}\hfill
-  \placeholder[0.45\linewidth]{3cm}{CFD, $20^\circ$}
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../Comparison/figures/panel_streamlines_00.pdf}
+    \caption{Painéis, $\alpha=0^\circ$.}
+  \end{subfigure}\hfill
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../CFD/Streamlines/0deg.png}
+    \caption{CFD, $\alpha=0^\circ$.}
+  \end{subfigure}
+  \par\smallskip
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../Comparison/figures/panel_streamlines_05.pdf}
+    \caption{Painéis, $\alpha=5^\circ$.}
+  \end{subfigure}\hfill
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../CFD/Streamlines/5deg.png}
+    \caption{CFD, $\alpha=5^\circ$.}
+  \end{subfigure}
+  \par\smallskip
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../Comparison/figures/panel_streamlines_20.pdf}
+    \caption{Painéis, $\alpha=20^\circ$.}
+  \end{subfigure}\hfill
+  \begin{subfigure}[c]{0.48\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../CFD/Streamlines/20deg.png}
+    \caption{CFD, $\alpha=20^\circ$.}
+  \end{subfigure}
   \caption{Linhas de corrente previstas pelo método dos painéis (esquerda) e
   pela simulação CFD (direita) para $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$,
   de cima para baixo.}
