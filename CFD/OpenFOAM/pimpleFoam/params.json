@@ -1,0 +1,43 @@
+{
+  "aoa_deg": 0,
+  "U_inf": 95.0,
+  "nu": 1.789e-05,
+  "ground_enabled": false,
+  "ride_height": 0.05,
+  "surface_level_min": 6,
+  "surface_level_max": 7,
+  "elements": [
+    {
+      "name": "main",
+      "patch": "main",
+      "file": "airfoils/reference_airfoil.dat",
+      "chord": 1.0,
+      "x": 0.0,
+      "y": 0.0,
+      "angle": 20.0,
+      "angle_relative": false,
+      "flip_y": false,
+      "n": null,
+      "surface_level_min": null,
+      "surface_level_max": null,
+      "n_surface_layers": 20
+    }
+  ],
+  "n_elements": 1,
+  "airfoil_dat": "airfoils/reference_airfoil.dat",
+  "main_file": "airfoils/reference_airfoil.dat",
+  "main_chord": 1.0,
+  "main_angle": 20.0,
+  "main_name": "main",
+  "main_patch": "main",
+  "main_x": 0.0,
+  "main_y": 0.0,
+  "main_angle_relative": false,
+  "main_flip_y": false,
+  "main_n": null,
+  "main_surface_level_min": null,
+  "main_surface_level_max": null,
+  "main_n_surface_layers": 20,
+  "id": 1,
+  "run_name": "case_0001_reference_airfoil_aoa0"
+}

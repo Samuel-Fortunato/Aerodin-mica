@@ -1,0 +1,48 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2412                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _b8cf4d35-20260127 OPENFOAM=2412 patch=260127 version=2412
+Arch   : "LSB;label=32;scalar=64"
+Exec   : extrudeMesh
+Date   : Nov 26 2026
+Time   : 11:16:02
+Host   : nixos
+PID    : 92426
+I/O    : uncollated
+Case   : /home/gonca/CFD/Projeto/2D/aerodinamica-snappy/AERODINAMICA/aerodinamica-pimple/parametric_runs_snappy/case_0001_reference_airfoil_aoa0
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Selecting extrudeModel linearNormal
+Selected extrudeModel for linearNormal using coeffs 
+{
+    thickness       0.2;
+}
+
+Extruding from patch using model linearNormal
+Not collapsing any edges after extrusion
+
+Extruding patches 1(symFront) on mesh "/home/gonca/CFD/Projeto/2D/aerodinamica-snappy/AERODINAMICA/aerodinamica-pimple/parametric_runs_snappy/case_0001_reference_airfoil_aoa0"
+
+Create mesh for time = 0
+
+Adding overall 0 processor patches.
+Mesh bounding box : (-2 -2 0.05) (6 2 0.25)
+        with span : (8 4 0.2)
+Merge distance    : 0
+
+Writing mesh to "/home/gonca/CFD/Projeto/2D/aerodinamica-snappy/AERODINAMICA/aerodinamica-pimple/parametric_runs_snappy/case_0001_reference_airfoil_aoa0/constant/region0"
+
+End
+
