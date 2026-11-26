@@ -1,5 +1,7 @@
 function exportResults()
     panelModeOverride = 3;
+    panelExportOnly = true;
+
     AirfoilRoncz_main;
 
     T = table(angulos(:), CL_a(:), tempo_a(:), ...
