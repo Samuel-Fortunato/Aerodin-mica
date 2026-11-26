@@ -1,0 +1,1431 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2512                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : v2512 OPENFOAM=2512 version=v2512
+Arch   : "LSB;label=32;scalar=64"
+Exec   : /nix/store/y8j315q92cf152fc1nkshl1fgw43q1vc-openfoam-unwrapped-2512/opt/OpenFOAM-2512/platforms/linux64GccDPInt32Opt/bin/pimpleFoam -parallel
+Date   : Nov 26 2026
+Time   : 20:03:06
+Host   : nixos-laptop
+PID    : 324700
+I/O    : uncollated
+Case   : /home/samuel/Desktop/semestre-5/A/CFD/OpenFOAM/pimple-benchmark.NccuAM
+nProcs : 6
+Hosts  :
+(
+    (nixos-laptop 6)
+)
+Pstream initialized with:
+    node communication : off [type=host] (6 ranks, 1 nodes)
+    topology controls  : none
+    consensus exchange : 0 (tuning: 0)
+    exchange algorithm : 0
+    commsType          : nonBlocking
+    polling iterations : 0
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+memory pool : not available
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+
+PIMPLE: no residual control data found. Calculations will employ 2 corrector loops
+
+Reading field p
+
+Reading field U
+
+Reading/calculating face flux field phi
+
+Selecting incompressible transport model Newtonian
+Selecting turbulence model type RAS
+Selecting RAS turbulence model kOmegaSST
+Selecting patchDistMethod meshWave
+RAS
+{
+    RASModel        kOmegaSST;
+    turbulence      on;
+    printCoeffs     on;
+    alphaK1         0.85;
+    alphaK2         1;
+    alphaOmega1     0.5;
+    alphaOmega2     0.856;
+    gamma1          0.555556;
+    gamma2          0.44;
+    beta1           0.075;
+    beta2           0.0828;
+    betaStar        0.09;
+    a1              0.31;
+    b1              1;
+    c1              10;
+    F3              false;
+    decayControl    false;
+    kInf            0;
+    omegaInf        0;
+}
+
+No MRF models present
+
+No finite volume options present
+Courant Number mean: 0.117262 max: 286.927
+forceCoeffs forceCoeffs_object:
+    p: p
+    U: U
+    rho: rhoInf
+    Freestream density (rhoInf) set to 1.225
+    Not including porosity effects
+    magUInf: 95
+    lRef   : 1
+    Aref   : 0.2
+    rhoInf : 1.225
+    Selecting all coefficients
+    - Drag force: Cd
+    - Drag force front: Cd(f)
+    - Drag force rear: Cd(r)
+    - Lift force: Cl
+    - Lift force front: Cl(f)
+    - Lift force rear: Cl(r)
+    - Pitch moment: CmPitch
+    - Roll moment: CmRoll
+    - Yaw moment: CmYaw
+    - Side force: Cs
+    - Side force front: Cs(f)
+    - Side force rear: Cs(r)
+
+
+Courant Number mean: 0.000609156 max: 1.49053
+
+Starting time loop
+
+Courant Number mean: 0.000609156 max: 1.49053
+deltaT = 2.5974e-07
+Time = 2.5974e-07
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1, Final residual = 0.000242654, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 1, Final residual = 0.000224899, No Iterations 1
+GAMG:  Solving for p, Initial residual = 1, Final residual = 0.0323737, No Iterations 6
+GAMG:  Solving for p, Initial residual = 0.276144, Final residual = 0.008189, No Iterations 1
+time step continuity errors : sum local = 4.03373e-08, global = -3.48273e-10, cumulative = -3.48273e-10
+GAMG:  Solving for p, Initial residual = 0.200306, Final residual = 0.00548635, No Iterations 6
+GAMG:  Solving for p, Initial residual = 0.174015, Final residual = 6.5783e-07, No Iterations 13
+time step continuity errors : sum local = 3.63634e-12, global = -1.22454e-14, cumulative = -3.48285e-10
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 0.0661716, Final residual = 1.14555e-07, No Iterations 2
+DILUPBiCGStab:  Solving for Uy, Initial residual = 0.0209214, Final residual = 6.74822e-07, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.822306, Final residual = 0.0241295, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0196491, Final residual = 0.000779042, No Iterations 5
+time step continuity errors : sum local = 1.83041e-08, global = -1.57084e-11, cumulative = -3.63993e-10
+GAMG:  Solving for p, Initial residual = 0.105366, Final residual = 0.0010271, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00163326, Final residual = 5.48514e-07, No Iterations 10
+time step continuity errors : sum local = 1.5574e-11, global = 9.6323e-15, cumulative = -3.63984e-10
+DILUPBiCGStab:  Solving for omega, Initial residual = 0.00130558, Final residual = 7.65993e-08, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 1, Final residual = 3.92448e-07, No Iterations 3
+ExecutionTime = 0.1 s  ClockTime = 0 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	8603.85	8603.78	0.0763754	0
+    Cd(f):	1285.92	1285.87	0.0477731	0
+    Cd(r):	7317.94	7317.91	0.0286023	0
+    Cl:	20106.7	20106.8	-0.0639025	0
+    Cl(f):	-1161.93	-1161.92	-0.0101704	0
+    Cl(r):	21268.7	21268.7	-0.0537321	0
+    CmPitch:	-11215.3	-11215.3	0.0217808	0
+    CmRoll:	-3016.01	-3016.02	0.00958538	0
+    CmYaw:	1290.58	1290.57	0.0114563	0
+    Cs:	8.88237e-15	8.88227e-15	9.82862e-20	0
+    Cs(f):	1290.58	1290.57	0.0114563	0
+    Cs(r):	-1290.58	-1290.57	-0.0114563	0
+
+Courant Number mean: 0.000620198 max: 0.406728
+deltaT = 3.13337e-07
+Time = 5.73078e-07
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 0.180117, Final residual = 1.11894e-05, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 0.0401192, Final residual = 2.04763e-06, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.954185, Final residual = 0.00227448, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0541003, Final residual = 0.00152501, No Iterations 6
+time step continuity errors : sum local = 2.08061e-08, global = 1.74297e-10, cumulative = -1.89687e-10
+GAMG:  Solving for p, Initial residual = 0.951802, Final residual = 0.00227973, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0524119, Final residual = 7.67313e-07, No Iterations 17
+time step continuity errors : sum local = 7.74222e-12, global = 3.02715e-15, cumulative = -1.89684e-10
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 0.0015763, Final residual = 1.50236e-07, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 0.000752791, Final residual = 5.97109e-08, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.940801, Final residual = 0.00223075, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0426126, Final residual = 0.00118473, No Iterations 6
+time step continuity errors : sum local = 2.09341e-08, global = 1.74043e-10, cumulative = -1.56414e-11
+GAMG:  Solving for p, Initial residual = 0.691426, Final residual = 0.00462669, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0247458, Final residual = 6.24497e-07, No Iterations 14
+time step continuity errors : sum local = 2.16184e-12, global = -3.17877e-15, cumulative = -1.56446e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 1.30591e-05, Final residual = 2.3057e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 3.24692e-05, Final residual = 6.21448e-09, No Iterations 1
+ExecutionTime = 0.17 s  ClockTime = 0 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	-3.61423	-3.69284	0.0786132	0
+    Cd(f):	-0.632131	-0.678696	0.0465647	0
+    Cd(r):	-2.9821	-3.01415	0.0320486	0
+    Cl:	-7.83323	-7.78484	-0.0483869	0
+    Cl(f):	0.375982	0.386731	-0.0107488	0
+    Cl(r):	-8.20921	-8.17157	-0.0376381	0
+    CmPitch:	4.2926	4.27915	0.0134447	0
+    CmRoll:	1.17498	1.16773	0.00725804	0
+    CmYaw:	-0.542135	-0.553927	0.011792	0
+    Cs:	-6.01605e-16	-6.01763e-16	1.57597e-19	0
+    Cs(f):	-0.542135	-0.553927	0.011792	0
+    Cs(r):	0.542135	0.553927	-0.011792	0
+
+Courant Number mean: 0.000748203 max: 0.655505
+deltaT = 3.73595e-07
+Time = 9.46672e-07
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 0.000226111, Final residual = 3.4357e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 4.50652e-05, Final residual = 4.69805e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.4953, Final residual = 0.00340118, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00836623, Final residual = 0.000251977, No Iterations 3
+time step continuity errors : sum local = 4.73775e-10, global = 1.05125e-12, cumulative = -1.45933e-11
+GAMG:  Solving for p, Initial residual = 0.384252, Final residual = 0.00267078, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00600791, Final residual = 5.60786e-07, No Iterations 11
+time step continuity errors : sum local = 1.05036e-12, global = -3.58263e-16, cumulative = -1.45937e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 9.48243e-05, Final residual = 2.17007e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 2.05918e-05, Final residual = 3.46031e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.462217, Final residual = 0.00271948, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00904131, Final residual = 0.000253462, No Iterations 3
+time step continuity errors : sum local = 4.12077e-10, global = -4.01227e-12, cumulative = -1.86059e-11
+GAMG:  Solving for p, Initial residual = 0.0295005, Final residual = 0.000466342, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000821127, Final residual = 5.96109e-07, No Iterations 9
+time step continuity errors : sum local = 9.29198e-13, global = 2.91236e-15, cumulative = -1.8603e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 1.05091e-05, Final residual = 2.67913e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 3.8475e-05, Final residual = 8.98912e-09, No Iterations 1
+ExecutionTime = 0.23 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	-1.58464	-1.6622	0.0775571	0
+    Cd(f):	-0.224486	-0.2692	0.0447141	0
+    Cd(r):	-1.36016	-1.393	0.0328429	0
+    Cl:	-3.78557	-3.746	-0.0395708	0
+    Cl(f):	0.623773	0.63452	-0.0107471	0
+    Cl(r):	-4.40934	-4.38052	-0.0288237	0
+    CmPitch:	2.51656	2.50752	0.0090383	0
+    CmRoll:	0.567835	0.5619	0.00593562	0
+    CmYaw:	-0.237696	-0.24933	0.0116336	0
+    Cs:	-1.17285e-16	-1.17217e-16	-6.84464e-20	0
+    Cs(f):	-0.237696	-0.24933	0.0116336	0
+    Cs(r):	0.237696	0.24933	-0.0116336	0
+
+Courant Number mean: 0.000892078 max: 0.567654
+deltaT = 4.43101e-07
+Time = 1.38977e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 9.42107e-05, Final residual = 1.17278e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 2.06277e-05, Final residual = 2.55909e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.330353, Final residual = 0.00302541, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00595948, Final residual = 0.000176438, No Iterations 3
+time step continuity errors : sum local = 2.52963e-10, global = 1.13907e-13, cumulative = -1.84891e-11
+GAMG:  Solving for p, Initial residual = 0.239451, Final residual = 0.00219476, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0042102, Final residual = 9.01009e-07, No Iterations 10
+time step continuity errors : sum local = 1.29419e-12, global = -2.20587e-15, cumulative = -1.84913e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 5.64073e-05, Final residual = 9.82888e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 1.36306e-05, Final residual = 2.48197e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.361635, Final residual = 0.00175913, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0050695, Final residual = 0.000144026, No Iterations 3
+time step continuity errors : sum local = 1.59856e-10, global = -1.89472e-12, cumulative = -2.0386e-11
+GAMG:  Solving for p, Initial residual = 0.0207554, Final residual = 0.000181815, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000310768, Final residual = 5.82237e-07, No Iterations 8
+time step continuity errors : sum local = 6.27717e-13, global = 6.4021e-16, cumulative = -2.03854e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 8.98202e-06, Final residual = 3.17619e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 4.69406e-05, Final residual = 1.29491e-08, No Iterations 1
+ExecutionTime = 0.28 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	-0.652119	-0.726661	0.0745415	0
+    Cd(f):	-0.0909391	-0.133318	0.0423793	0
+    Cd(r):	-0.56118	-0.593342	0.0321622	0
+    Cl:	-1.56747	-1.53341	-0.0340573	0
+    Cl(f):	0.472201	0.4826	-0.0103993	0
+    Cl(r):	-2.03967	-2.01601	-0.023658	0
+    CmPitch:	1.25594	1.24931	0.00662933	0
+    CmRoll:	0.235121	0.230012	0.00510859	0
+    CmYaw:	-0.0978179	-0.108999	0.0111812	0
+    Cs:	-1.03298e-16	-1.03198e-16	-1.00279e-19	0
+    Cs(f):	-0.0978179	-0.108999	0.0111812	0
+    Cs(r):	0.0978179	0.108999	-0.0111812	0
+
+Courant Number mean: 0.00105804 max: 0.70073
+deltaT = 5.31721e-07
+Time = 1.92149e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 5.8769e-05, Final residual = 1.11864e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 1.39587e-05, Final residual = 2.89135e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.306198, Final residual = 0.00413366, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00693231, Final residual = 0.000207563, No Iterations 3
+time step continuity errors : sum local = 2.868e-10, global = 7.44159e-14, cumulative = -2.0311e-11
+GAMG:  Solving for p, Initial residual = 0.209205, Final residual = 0.00282846, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00490563, Final residual = 4.99688e-07, No Iterations 11
+time step continuity errors : sum local = 6.9222e-13, global = -1.34559e-15, cumulative = -2.03123e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 4.3695e-05, Final residual = 1.0985e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 1.10892e-05, Final residual = 2.94144e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.269452, Final residual = 0.00188968, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00504043, Final residual = 0.000148443, No Iterations 3
+time step continuity errors : sum local = 1.48506e-10, global = -1.56971e-12, cumulative = -2.1882e-11
+GAMG:  Solving for p, Initial residual = 0.0200037, Final residual = 0.000167016, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00030346, Final residual = 5.42316e-07, No Iterations 8
+time step continuity errors : sum local = 5.23673e-13, global = 2.63233e-16, cumulative = -2.18818e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 7.97323e-06, Final residual = 3.91812e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 6.1011e-05, Final residual = 1.95149e-08, No Iterations 1
+ExecutionTime = 0.34 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	-0.238387	-0.308924	0.0705368	0
+    Cd(f):	-0.0311803	-0.0709244	0.0397442	0
+    Cd(r):	-0.207207	-0.237999	0.0307926	0
+    Cl:	-0.586754	-0.556916	-0.0298386	0
+    Cl(f):	0.41217	0.422049	-0.00987905	0
+    Cl(r):	-0.998924	-0.978965	-0.0199595	0
+    CmPitch:	0.705547	0.700507	0.00504025	0
+    CmRoll:	0.0880131	0.0835374	0.00447579	0
+    CmYaw:	-0.035758	-0.0463385	0.0105805	0
+    Cs:	-9.72243e-17	-9.71113e-17	-1.12972e-19	0
+    Cs(f):	-0.035758	-0.0463385	0.0105805	0
+    Cs(r):	0.035758	0.0463385	-0.0105805	0
+
+Courant Number mean: 0.00126963 max: 0.887402
+deltaT = 6.23397e-07
+Time = 2.54489e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 4.2132e-05, Final residual = 1.20162e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 1.12295e-05, Final residual = 3.73429e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.29479, Final residual = 0.00508447, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00795202, Final residual = 0.000237528, No Iterations 3
+time step continuity errors : sum local = 3.21731e-10, global = 2.17073e-14, cumulative = -2.18601e-11
+GAMG:  Solving for p, Initial residual = 0.197714, Final residual = 0.00341559, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00562926, Final residual = 5.6915e-07, No Iterations 11
+time step continuity errors : sum local = 7.73625e-13, global = -1.60683e-15, cumulative = -2.18617e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 3.78563e-05, Final residual = 1.33195e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 9.85538e-06, Final residual = 3.73887e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.251846, Final residual = 0.00221752, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00571995, Final residual = 0.000169102, No Iterations 3
+time step continuity errors : sum local = 1.55934e-10, global = -1.50136e-12, cumulative = -2.3363e-11
+GAMG:  Solving for p, Initial residual = 0.0211439, Final residual = 0.00020125, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000372827, Final residual = 6.27984e-07, No Iterations 8
+time step continuity errors : sum local = 5.57045e-13, global = 4.27492e-16, cumulative = -2.33626e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 6.90368e-06, Final residual = 4.57639e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 8.7382e-05, Final residual = 3.11211e-08, No Iterations 1
+ExecutionTime = 0.39 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	-0.0199219	-0.0859721	0.0660503	0
+    Cd(f):	-0.000915958	-0.0378913	0.0369754	0
+    Cd(r):	-0.0190059	-0.0480808	0.0290749	0
+    Cl:	-0.0602998	-0.0339648	-0.026335	0
+    Cl(f):	0.377619	0.386891	-0.00927192	0
+    Cl(r):	-0.437919	-0.420856	-0.0170631	0
+    CmPitch:	0.407769	0.403873	0.00389559	0
+    CmRoll:	0.00904497	0.00509472	0.00395025	0
+    CmYaw:	-0.00298828	-0.0128958	0.00990754	0
+    Cs:	-9.08554e-17	-9.07123e-17	-1.43161e-19	0
+    Cs(f):	-0.00298828	-0.0128958	0.00990754	0
+    Cs(r):	0.00298828	0.0128958	-0.00990754	0
+
+Courant Number mean: 0.00148853 max: 1.09754
+deltaT = 6.98204e-07
+Time = 3.24309e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 3.32685e-05, Final residual = 1.27412e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 1.0078e-05, Final residual = 4.32013e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.322976, Final residual = 0.00608605, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00895143, Final residual = 0.000267823, No Iterations 3
+time step continuity errors : sum local = 3.45983e-10, global = -3.15906e-14, cumulative = -2.33942e-11
+GAMG:  Solving for p, Initial residual = 0.213009, Final residual = 0.00402055, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00633499, Final residual = 6.39332e-07, No Iterations 11
+time step continuity errors : sum local = 8.29722e-13, global = -1.80866e-15, cumulative = -2.3396e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 3.43071e-05, Final residual = 1.53068e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 9.09392e-06, Final residual = 4.41828e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.247468, Final residual = 0.00262773, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00661371, Final residual = 0.000197094, No Iterations 3
+time step continuity errors : sum local = 1.62749e-10, global = -7.90552e-14, cumulative = -2.34751e-11
+GAMG:  Solving for p, Initial residual = 0.0221821, Final residual = 0.000246808, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000457413, Final residual = 7.35707e-07, No Iterations 8
+time step continuity errors : sum local = 5.84353e-13, global = 1.24464e-15, cumulative = -2.34738e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 5.77084e-06, Final residual = 4.83539e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 0.000145799, Final residual = 5.4473e-08, No Iterations 1
+ExecutionTime = 0.45 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.0998773	0.0383793	0.061498	0
+    Cd(f):	0.0145923	-0.0196653	0.0342576	0
+    Cd(r):	0.085285	0.0580446	0.0272404	0
+    Cl:	0.235642	0.259033	-0.0233908	0
+    Cl(f):	0.35752	0.366164	-0.00864326	0
+    Cl(r):	-0.121878	-0.107131	-0.0147476	0
+    CmPitch:	0.239699	0.236647	0.00305215	0
+    CmRoll:	-0.0353463	-0.0388549	0.00350862	0
+    CmYaw:	0.0149816	0.0057569	0.0092247	0
+    Cs:	-8.48489e-17	-8.46636e-17	-1.85295e-19	0
+    Cs(f):	0.0149816	0.0057569	0.0092247	0
+    Cs(r):	-0.0149816	-0.0057569	-0.0092247	0
+
+Courant Number mean: 0.00166715 max: 1.28756
+deltaT = 7.97948e-07
+Time = 4.04104e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 3.1446e-05, Final residual = 1.52649e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 1.03572e-05, Final residual = 5.25507e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.34872, Final residual = 0.00691917, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00982015, Final residual = 0.000295015, No Iterations 3
+time step continuity errors : sum local = 3.77991e-10, global = -1.07666e-13, cumulative = -2.35815e-11
+GAMG:  Solving for p, Initial residual = 0.228411, Final residual = 0.00453806, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00695191, Final residual = 7.02009e-07, No Iterations 11
+time step continuity errors : sum local = 9.04186e-13, global = -2.06959e-15, cumulative = -2.35836e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 3.24042e-05, Final residual = 1.87635e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 8.74501e-06, Final residual = 5.59473e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.259352, Final residual = 0.00305301, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0076806, Final residual = 0.000227667, No Iterations 3
+time step continuity errors : sum local = 1.76616e-10, global = -5.34224e-14, cumulative = -2.3637e-11
+GAMG:  Solving for p, Initial residual = 0.0254449, Final residual = 0.00031271, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000578427, Final residual = 8.99681e-07, No Iterations 8
+time step continuity errors : sum local = 6.68908e-13, global = 1.27681e-15, cumulative = -2.36357e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 5.05271e-06, Final residual = 5.43811e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 0.00035126, Final residual = 1.43376e-07, No Iterations 1
+ExecutionTime = 0.51 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.184783	0.127865	0.0569181	0
+    Cd(f):	0.0249767	-0.00660564	0.0315824	0
+    Cd(r):	0.159806	0.134471	0.0253358	0
+    Cl:	0.449433	0.470255	-0.020822	0
+    Cl(f):	0.341563	0.349565	-0.00800179	0
+    Cl(r):	0.107869	0.12069	-0.0128202	0
+    CmPitch:	0.116847	0.114438	0.00240922	0
+    CmRoll:	-0.0674149	-0.0705382	0.0031233	0
+    CmYaw:	0.0277175	0.0191798	0.00853772	0
+    Cs:	-7.79921e-17	-7.77253e-17	-2.66808e-19	0
+    Cs(f):	0.0277175	0.0191798	0.00853772	0
+    Cs(r):	-0.0277175	-0.0191798	-0.00853772	0
+
+Courant Number mean: 0.0019053 max: 1.51721
+deltaT = 7.97948e-07
+Time = 4.83899e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.85043e-05, Final residual = 1.35534e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 9.74783e-06, Final residual = 4.6817e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.412686, Final residual = 0.00823058, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0108368, Final residual = 0.000327095, No Iterations 3
+time step continuity errors : sum local = 3.65968e-10, global = -1.46823e-13, cumulative = -2.37825e-11
+GAMG:  Solving for p, Initial residual = 0.263755, Final residual = 0.00526917, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00765897, Final residual = 7.74474e-07, No Iterations 11
+time step continuity errors : sum local = 8.72241e-13, global = -2.05341e-15, cumulative = -2.37846e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.99995e-05, Final residual = 1.70426e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 8.14725e-06, Final residual = 5.163e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.24666, Final residual = 0.00361679, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00877435, Final residual = 0.000261213, No Iterations 3
+time step continuity errors : sum local = 1.64061e-10, global = 4.99595e-15, cumulative = -2.37796e-11
+GAMG:  Solving for p, Initial residual = 0.0215892, Final residual = 0.00036074, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0006493, Final residual = 5.03812e-07, No Iterations 9
+time step continuity errors : sum local = 3.05986e-13, global = 3.82168e-16, cumulative = -2.37792e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 3.93226e-06, Final residual = 4.4345e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 0.00218436, Final residual = 8.00459e-07, No Iterations 1
+ExecutionTime = 0.57 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.216291	0.163388	0.0529029	0
+    Cd(f):	0.0274641	-0.00180465	0.0292688	0
+    Cd(r):	0.188827	0.165193	0.0236342	0
+    Cl:	0.537876	0.556658	-0.018782	0
+    Cl(f):	0.33418	0.341614	-0.00743388	0
+    Cl(r):	0.203696	0.215045	-0.0113481	0
+    CmPitch:	0.0652416	0.0632845	0.00195712	0
+    CmRoll:	-0.0806814	-0.0834987	0.0028173	0
+    CmYaw:	0.0324437	0.0245082	0.00793544	0
+    Cs:	-7.12583e-17	-7.09264e-17	-3.31892e-19	0
+    Cs(f):	0.0324437	0.0245082	0.00793544	0
+    Cs(r):	-0.0324437	-0.0245082	-0.00793544	0
+
+Courant Number mean: 0.0019053 max: 1.53405
+deltaT = 7.97948e-07
+Time = 5.63694e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.74161e-05, Final residual = 1.24618e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 9.43889e-06, Final residual = 4.29579e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.449312, Final residual = 0.00910156, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0115764, Final residual = 0.000351399, No Iterations 3
+time step continuity errors : sum local = 3.51504e-10, global = -1.83321e-13, cumulative = -2.39625e-11
+GAMG:  Solving for p, Initial residual = 0.284389, Final residual = 0.00577063, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00817569, Final residual = 8.29307e-07, No Iterations 11
+time step continuity errors : sum local = 8.35334e-13, global = -2.01535e-15, cumulative = -2.39645e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.84244e-05, Final residual = 1.57215e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 7.77725e-06, Final residual = 4.79817e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.25831, Final residual = 0.00415772, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0100242, Final residual = 0.000300143, No Iterations 3
+time step continuity errors : sum local = 1.58021e-10, global = 2.87443e-14, cumulative = -2.39358e-11
+GAMG:  Solving for p, Initial residual = 0.0215638, Final residual = 0.000426449, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000739828, Final residual = 5.8495e-07, No Iterations 9
+time step continuity errors : sum local = 2.98239e-13, global = 4.49428e-16, cumulative = -2.39353e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 3.1714e-06, Final residual = 3.6852e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 0.00028627, Final residual = 9.57449e-08, No Iterations 1
+ExecutionTime = 0.63 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.240968	0.191589	0.049379	0
+    Cd(f):	0.0290629	0.00180394	0.027259	0
+    Cd(r):	0.211905	0.189785	0.02212	0
+    Cl:	0.609475	0.626605	-0.0171298	0
+    Cl(f):	0.326892	0.333823	-0.00693121	0
+    Cl(r):	0.282583	0.292782	-0.0101986	0
+    CmPitch:	0.0221542	0.0205205	0.00163367	0
+    CmRoll:	-0.0914213	-0.0939907	0.00256947	0
+    CmYaw:	0.0361453	0.0287384	0.00740685	0
+    Cs:	-6.48636e-17	-6.44651e-17	-3.98494e-19	0
+    Cs(f):	0.0361453	0.0287384	0.00740685	0
+    Cs(r):	-0.0361453	-0.0287384	-0.00740685	0
+
+    writing force and moment coefficient files.
+
+Courant Number mean: 0.0019053 max: 1.53892
+deltaT = 7.97948e-07
+Time = 6.43489e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.67681e-05, Final residual = 1.16857e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 9.21232e-06, Final residual = 3.96866e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.480609, Final residual = 0.00988001, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0121889, Final residual = 0.000371669, No Iterations 3
+time step continuity errors : sum local = 3.38595e-10, global = -2.03151e-13, cumulative = -2.41385e-11
+GAMG:  Solving for p, Initial residual = 0.301338, Final residual = 0.00620558, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00860521, Final residual = 8.72787e-07, No Iterations 11
+time step continuity errors : sum local = 8.00738e-13, global = -1.96775e-15, cumulative = -2.41405e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.71468e-05, Final residual = 1.47388e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 7.46751e-06, Final residual = 4.4713e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.268182, Final residual = 0.00463494, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.011161, Final residual = 0.00033552, No Iterations 3
+time step continuity errors : sum local = 1.52125e-10, global = 4.57176e-14, cumulative = -2.40947e-11
+GAMG:  Solving for p, Initial residual = 0.0214573, Final residual = 0.000481436, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000818767, Final residual = 6.53121e-07, No Iterations 9
+time step continuity errors : sum local = 2.87038e-13, global = 4.78793e-16, cumulative = -2.40943e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 2.62066e-06, Final residual = 3.1076e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 0.000160037, Final residual = 4.94009e-08, No Iterations 1
+ExecutionTime = 0.68 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.258473	0.212192	0.0462815	0
+    Cd(f):	0.029869	0.00436274	0.0255062	0
+    Cd(r):	0.228604	0.207829	0.0207753	0
+    Cl:	0.662451	0.67822	-0.0157698	0
+    Cl(f):	0.321937	0.328423	-0.00648634	0
+    Cl(r):	0.340514	0.349797	-0.00928343	0
+    CmPitch:	-0.00928847	-0.010687	0.00139855	0
+    CmRoll:	-0.0993676	-0.101733	0.00236547	0
+    CmYaw:	0.038771	0.0318287	0.00694223	0
+    Cs:	-5.95731e-17	-5.91398e-17	-4.33253e-19	0
+    Cs(f):	0.038771	0.0318287	0.00694223	0
+    Cs(r):	-0.038771	-0.0318287	-0.00694223	0
+
+Courant Number mean: 0.0019053 max: 1.62019
+deltaT = 7.53617e-07
+Time = 7.1885e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.47383e-05, Final residual = 9.67573e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 8.50498e-06, Final residual = 3.21271e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.525332, Final residual = 0.0107582, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0127836, Final residual = 0.000391334, No Iterations 3
+time step continuity errors : sum local = 3.09895e-10, global = -2.00425e-13, cumulative = -2.42947e-11
+GAMG:  Solving for p, Initial residual = 0.325201, Final residual = 0.00667266, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00901908, Final residual = 9.15922e-07, No Iterations 11
+time step continuity errors : sum local = 7.30486e-13, global = -1.81119e-15, cumulative = -2.42965e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.56764e-05, Final residual = 1.22758e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 7.06742e-06, Final residual = 3.64442e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.271086, Final residual = 0.0051413, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0122618, Final residual = 0.000370262, No Iterations 3
+time step continuity errors : sum local = 1.36993e-10, global = 5.10996e-14, cumulative = -2.42454e-11
+GAMG:  Solving for p, Initial residual = 0.0191967, Final residual = 0.00051143, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000851631, Final residual = 6.95294e-07, No Iterations 9
+time step continuity errors : sum local = 2.50321e-13, global = 4.03859e-16, cumulative = -2.4245e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 2.08347e-06, Final residual = 2.29911e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 0.000108237, Final residual = 2.90697e-08, No Iterations 1
+ExecutionTime = 0.74 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.265448	0.221761	0.0436863	0
+    Cd(f):	0.0291768	0.00513049	0.0240464	0
+    Cd(r):	0.236271	0.216631	0.01964	0
+    Cl:	0.690313	0.705001	-0.0146879	0
+    Cl(f):	0.318144	0.324255	-0.00611142	0
+    Cl(r):	0.372169	0.380746	-0.00857652	0
+    CmPitch:	-0.0270127	-0.0282453	0.00123255	0
+    CmRoll:	-0.103547	-0.10575	0.00220319	0
+    CmYaw:	0.0398171	0.0332642	0.00655295	0
+    Cs:	-5.46598e-17	-5.42358e-17	-4.23946e-19	0
+    Cs(f):	0.0398171	0.0332642	0.00655295	0
+    Cs(r):	-0.0398171	-0.0332642	-0.00655295	0
+
+Courant Number mean: 0.00179945 max: 1.59582
+deltaT = 7.1175e-07
+Time = 7.90025e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.28892e-05, Final residual = 8.12384e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 7.89577e-06, Final residual = 2.62717e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.550693, Final residual = 0.0114009, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0132179, Final residual = 0.000405626, No Iterations 3
+time step continuity errors : sum local = 2.83551e-10, global = -1.80965e-13, cumulative = -2.4426e-11
+GAMG:  Solving for p, Initial residual = 0.338199, Final residual = 0.00701829, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00932321, Final residual = 9.4515e-07, No Iterations 11
+time step continuity errors : sum local = 6.6526e-13, global = -1.65465e-15, cumulative = -2.44276e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.44906e-05, Final residual = 1.03987e-08, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.74989e-06, Final residual = 3.02832e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.281381, Final residual = 0.00552225, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0132044, Final residual = 0.000399467, No Iterations 3
+time step continuity errors : sum local = 1.23755e-10, global = 5.96374e-14, cumulative = -2.4368e-11
+GAMG:  Solving for p, Initial residual = 0.0182589, Final residual = 0.000520893, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000855751, Final residual = 7.1325e-07, No Iterations 9
+time step continuity errors : sum local = 2.15436e-13, global = 3.0657e-16, cumulative = -2.43677e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 1.69684e-06, Final residual = 1.72978e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 8.2304e-05, Final residual = 1.93745e-08, No Iterations 1
+ExecutionTime = 0.79 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.2689	0.227406	0.0414946	0
+    Cd(f):	0.0283584	0.00553946	0.022819	0
+    Cd(r):	0.240542	0.221866	0.0186756	0
+    Cl:	0.707278	0.721089	-0.0138112	0
+    Cl(f):	0.31645	0.322244	-0.00579362	0
+    Cl(r):	0.390828	0.398845	-0.00801753	0
+    CmPitch:	-0.0371886	-0.0383006	0.00111196	0
+    CmRoll:	-0.106092	-0.108163	0.00207167	0
+    CmYaw:	0.040335	0.0341108	0.00622418	0
+    Cs:	-5.06361e-17	-5.02304e-17	-4.0567e-19	0
+    Cs(f):	0.040335	0.0341108	0.00622418	0
+    Cs(r):	-0.040335	-0.0341108	-0.00622418	0
+
+Courant Number mean: 0.00169947 max: 1.55479
+deltaT = 6.72208e-07
+Time = 8.57246e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.11549e-05, Final residual = 6.86297e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 7.32781e-06, Final residual = 2.16656e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.570727, Final residual = 0.0119271, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0135759, Final residual = 0.000417451, No Iterations 3
+time step continuity errors : sum local = 2.60147e-10, global = -1.60747e-13, cumulative = -2.45284e-11
+GAMG:  Solving for p, Initial residual = 0.348335, Final residual = 0.0072992, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00957359, Final residual = 9.70832e-07, No Iterations 11
+time step continuity errors : sum local = 6.09044e-13, global = -1.51005e-15, cumulative = -2.45299e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.34606e-05, Final residual = 8.86504e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.47125e-06, Final residual = 2.53988e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.290305, Final residual = 0.00586024, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.014059, Final residual = 0.000427241, No Iterations 3
+time step continuity errors : sum local = 1.1267e-10, global = 5.56002e-14, cumulative = -2.44743e-11
+GAMG:  Solving for p, Initial residual = 0.0175029, Final residual = 0.000529747, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000860297, Final residual = 7.37808e-07, No Iterations 9
+time step continuity errors : sum local = 1.89801e-13, global = 2.5199e-16, cumulative = -2.44741e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 1.40872e-06, Final residual = 1.3228e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 6.66921e-05, Final residual = 1.40515e-08, No Iterations 1
+ExecutionTime = 0.85 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.271626	0.231997	0.0396289	0
+    Cd(f):	0.0276015	0.0058236	0.0217779	0
+    Cd(r):	0.244024	0.226173	0.0178511	0
+    Cl:	0.72141	0.734499	-0.0130893	0
+    Cl(f):	0.314707	0.320229	-0.00552244	0
+    Cl(r):	0.406703	0.41427	-0.00756686	0
+    CmPitch:	-0.0459983	-0.0470205	0.00102221	0
+    CmRoll:	-0.108211	-0.110175	0.00196339	0
+    CmYaw:	0.0407439	0.0347995	0.00594434	0
+    Cs:	-4.7124e-17	-4.67391e-17	-3.84936e-19	0
+    Cs(f):	0.0407439	0.0347995	0.00594434	0
+    Cs(r):	-0.0407439	-0.0347995	-0.00594434	0
+
+Courant Number mean: 0.00160506 max: 1.50262
+deltaT = 6.72208e-07
+Time = 9.24467e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.0755e-05, Final residual = 6.72054e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 7.21571e-06, Final residual = 2.06739e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.570331, Final residual = 0.0121797, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0137918, Final residual = 0.00042475, No Iterations 3
+time step continuity errors : sum local = 2.52481e-10, global = -1.43015e-13, cumulative = -2.46171e-11
+GAMG:  Solving for p, Initial residual = 0.348083, Final residual = 0.0074554, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00972775, Final residual = 9.86618e-07, No Iterations 11
+time step continuity errors : sum local = 5.90283e-13, global = -1.45814e-15, cumulative = -2.46185e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.28662e-05, Final residual = 8.69032e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.32495e-06, Final residual = 2.4944e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.302715, Final residual = 0.00606545, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0147279, Final residual = 0.000448626, No Iterations 3
+time step continuity errors : sum local = 1.09601e-10, global = 5.25316e-14, cumulative = -2.4566e-11
+GAMG:  Solving for p, Initial residual = 0.018339, Final residual = 0.000545244, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000885575, Final residual = 7.65542e-07, No Iterations 9
+time step continuity errors : sum local = 1.82117e-13, global = 2.37229e-16, cumulative = -2.45658e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 1.25934e-06, Final residual = 1.19532e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 5.95352e-05, Final residual = 1.24307e-08, No Iterations 1
+ExecutionTime = 0.91 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.279874	0.241929	0.0379449	0
+    Cd(f):	0.027859	0.00701817	0.0208408	0
+    Cd(r):	0.252015	0.234911	0.0171041	0
+    Cl:	0.747186	0.759641	-0.0124558	0
+    Cl(f):	0.312296	0.317573	-0.00527727	0
+    Cl(r):	0.43489	0.442068	-0.00717857	0
+    CmPitch:	-0.061297	-0.0622477	0.000950651	0
+    CmRoll:	-0.112078	-0.113946	0.00186838	0
+    CmYaw:	0.0419811	0.0362893	0.00569174	0
+    Cs:	-4.38099e-17	-4.34227e-17	-3.8722e-19	0
+    Cs(f):	0.0419811	0.0362893	0.00569174	0
+    Cs(r):	-0.0419811	-0.0362893	-0.00569174	0
+
+Courant Number mean: 0.00160506 max: 1.53034
+deltaT = 6.72208e-07
+Time = 9.91688e-06
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.04611e-05, Final residual = 6.63667e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 7.10775e-06, Final residual = 1.98877e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.582606, Final residual = 0.012526, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0140176, Final residual = 0.000432217, No Iterations 3
+time step continuity errors : sum local = 2.45795e-10, global = -1.24689e-13, cumulative = -2.46905e-11
+GAMG:  Solving for p, Initial residual = 0.354495, Final residual = 0.00764379, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00988656, Final residual = 4.8936e-07, No Iterations 12
+time step continuity errors : sum local = 2.80095e-13, global = -5.93159e-16, cumulative = -2.46911e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.2293e-05, Final residual = 8.54162e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.17169e-06, Final residual = 2.46594e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.308984, Final residual = 0.00630489, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0153404, Final residual = 0.00046829, No Iterations 3
+time step continuity errors : sum local = 1.06429e-10, global = 4.38126e-14, cumulative = -2.46472e-11
+GAMG:  Solving for p, Initial residual = 0.018423, Final residual = 0.000560503, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000913096, Final residual = 7.91154e-07, No Iterations 9
+time step continuity errors : sum local = 1.75122e-13, global = 2.39058e-16, cumulative = -2.4647e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 1.13732e-06, Final residual = 1.09904e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 5.43612e-05, Final residual = 1.13494e-08, No Iterations 1
+ExecutionTime = 0.96 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.285991	0.24957	0.036421	0
+    Cd(f):	0.0278552	0.00786018	0.019995	0
+    Cd(r):	0.258136	0.24171	0.016426	0
+    Cl:	0.767604	0.7795	-0.0118967	0
+    Cl(f):	0.310559	0.315614	-0.00505502	0
+    Cl(r):	0.457044	0.463886	-0.00684167	0
+    CmPitch:	-0.0732425	-0.0741358	0.000893328	0
+    CmRoll:	-0.115141	-0.116925	0.0017845	0
+    CmYaw:	0.0428987	0.0374356	0.00546315	0
+    Cs:	-4.08295e-17	-4.04428e-17	-3.86686e-19	0
+    Cs(f):	0.0428987	0.0374356	0.00546315	0
+    Cs(r):	-0.0428987	-0.0374356	-0.00546315	0
+
+Courant Number mean: 0.00160505 max: 1.56155
+deltaT = 6.30195e-07
+Time = 1.05471e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.88942e-05, Final residual = 5.54907e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.56458e-06, Final residual = 1.66e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.612275, Final residual = 0.0130907, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0143192, Final residual = 0.000441569, No Iterations 3
+time step continuity errors : sum local = 2.25229e-10, global = -9.57958e-14, cumulative = -2.47428e-11
+GAMG:  Solving for p, Initial residual = 0.369395, Final residual = 0.00792182, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0100958, Final residual = 4.98959e-07, No Iterations 12
+time step continuity errors : sum local = 2.5612e-13, global = -5.65466e-16, cumulative = -2.47434e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.14399e-05, Final residual = 7.24088e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.92474e-06, Final residual = 2.07708e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.312225, Final residual = 0.00663265, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0160903, Final residual = 0.000493427, No Iterations 3
+time step continuity errors : sum local = 9.62606e-11, global = 3.42285e-14, cumulative = -2.47091e-11
+GAMG:  Solving for p, Initial residual = 0.0169354, Final residual = 0.000561652, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000908811, Final residual = 8.15403e-07, No Iterations 9
+time step continuity errors : sum local = 1.55256e-13, global = 2.20071e-16, cumulative = -2.47089e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.73584e-07, Final residual = 9.73584e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 4.74706e-05, Final residual = 8.99848e-09, No Iterations 1
+ExecutionTime = 1.03 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.285209	0.250092	0.0351163	0
+    Cd(f):	0.0269096	0.0076372	0.0192724	0
+    Cd(r):	0.258299	0.242455	0.0158439	0
+    Cl:	0.771298	0.782726	-0.0114282	0
+    Cl(f):	0.309958	0.314823	-0.00486426	0
+    Cl(r):	0.46134	0.467904	-0.00656397	0
+    CmPitch:	-0.0756907	-0.0765406	0.000849854	0
+    CmRoll:	-0.115695	-0.117409	0.00171423	0
+    CmYaw:	0.0427813	0.0375138	0.00526745	0
+    Cs:	-3.82509e-17	-3.78912e-17	-3.59651e-19	0
+    Cs(f):	0.0427813	0.0375138	0.00526745	0
+    Cs(r):	-0.0427813	-0.0375138	-0.00526745	0
+
+Courant Number mean: 0.00150474 max: 1.48631
+deltaT = 6.30195e-07
+Time = 1.11773e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.85599e-05, Final residual = 5.45896e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.47794e-06, Final residual = 1.64267e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.607434, Final residual = 0.0132283, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0144607, Final residual = 0.000445822, No Iterations 3
+time step continuity errors : sum local = 2.1933e-10, global = -7.05313e-14, cumulative = -2.47795e-11
+GAMG:  Solving for p, Initial residual = 0.366816, Final residual = 0.00801325, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0101978, Final residual = 5.03764e-07, No Iterations 12
+time step continuity errors : sum local = 2.49368e-13, global = -5.83028e-16, cumulative = -2.478e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.10245e-05, Final residual = 7.15413e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.82156e-06, Final residual = 2.07892e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.324514, Final residual = 0.00678271, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0166514, Final residual = 0.000510424, No Iterations 3
+time step continuity errors : sum local = 9.41956e-11, global = 2.67014e-14, cumulative = -2.47533e-11
+GAMG:  Solving for p, Initial residual = 0.0179103, Final residual = 0.000577996, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000936317, Final residual = 8.42771e-07, No Iterations 9
+time step continuity errors : sum local = 1.51594e-13, global = 2.25614e-16, cumulative = -2.47531e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.95405e-07, Final residual = 9.95405e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 4.48376e-05, Final residual = 8.55187e-09, No Iterations 1
+ExecutionTime = 1.09 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.291231	0.257307	0.0339239	0
+    Cd(f):	0.0270246	0.00841147	0.0186131	0
+    Cd(r):	0.264206	0.248895	0.0153108	0
+    Cl:	0.790605	0.801613	-0.0110077	0
+    Cl(f):	0.307498	0.312187	-0.00468967	0
+    Cl(r):	0.483108	0.489426	-0.00631802	0
+    CmPitch:	-0.0878052	-0.0886194	0.000814177	0
+    CmRoll:	-0.118591	-0.120242	0.00165115	0
+    CmYaw:	0.0436846	0.038596	0.00508859	0
+    Cs:	-3.57116e-17	-3.53546e-17	-3.56953e-19	0
+    Cs(f):	0.0436846	0.038596	0.00508859	0
+    Cs(r):	-0.0436846	-0.038596	-0.00508859	0
+
+Courant Number mean: 0.00150474 max: 1.50264
+deltaT = 6.30195e-07
+Time = 1.18075e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.8375e-05, Final residual = 5.42074e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.40894e-06, Final residual = 1.63725e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.615334, Final residual = 0.0134833, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.014622, Final residual = 0.000450152, No Iterations 3
+time step continuity errors : sum local = 2.14145e-10, global = -4.57245e-14, cumulative = -2.47988e-11
+GAMG:  Solving for p, Initial residual = 0.37086, Final residual = 0.00815184, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0103121, Final residual = 5.08597e-07, No Iterations 12
+time step continuity errors : sum local = 2.43437e-13, global = -5.9655e-16, cumulative = -2.47994e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.06172e-05, Final residual = 7.08626e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.70825e-06, Final residual = 2.07299e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.329256, Final residual = 0.00694321, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.017087, Final residual = 0.00052439, No Iterations 3
+time step continuity errors : sum local = 9.1855e-11, global = 1.65285e-14, cumulative = -2.47829e-11
+GAMG:  Solving for p, Initial residual = 0.0179807, Final residual = 0.000585719, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000952838, Final residual = 8.65127e-07, No Iterations 9
+time step continuity errors : sum local = 1.47717e-13, global = 2.38206e-16, cumulative = -2.47827e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 1.0228e-06, Final residual = 9.58628e-10, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 4.25235e-05, Final residual = 8.0837e-09, No Iterations 1
+ExecutionTime = 1.15 s  ClockTime = 1 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.295864	0.263033	0.0328316	0
+    Cd(f):	0.0270247	0.0090146	0.0180101	0
+    Cd(r):	0.26884	0.254018	0.0148215	0
+    Cl:	0.80605	0.816679	-0.0106287	0
+    Cl(f):	0.305695	0.310225	-0.00452944	0
+    Cl(r):	0.500355	0.506454	-0.00609924	0
+    CmPitch:	-0.09733	-0.0981149	0.0007849	0
+    CmRoll:	-0.120908	-0.122502	0.0015943	0
+    CmYaw:	0.0443797	0.0394549	0.00492475	0
+    Cs:	-3.32433e-17	-3.28914e-17	-3.5189e-19	0
+    Cs(f):	0.0443797	0.0394549	0.00492475	0
+    Cs(r):	-0.0443797	-0.0394549	-0.00492475	0
+
+Courant Number mean: 0.00150473 max: 1.51885
+deltaT = 6.30195e-07
+Time = 1.24377e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.81763e-05, Final residual = 5.37226e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.33918e-06, Final residual = 1.6325e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.622261, Final residual = 0.0137181, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0147708, Final residual = 0.000454111, No Iterations 3
+time step continuity errors : sum local = 2.09277e-10, global = -1.8883e-14, cumulative = -2.48015e-11
+GAMG:  Solving for p, Initial residual = 0.374386, Final residual = 0.00827944, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0104181, Final residual = 5.13922e-07, No Iterations 12
+time step continuity errors : sum local = 2.38293e-13, global = -6.10705e-16, cumulative = -2.48022e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 2.02373e-05, Final residual = 6.98042e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.60302e-06, Final residual = 2.05552e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.333804, Final residual = 0.00709944, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0175092, Final residual = 0.000537137, No Iterations 3
+time step continuity errors : sum local = 8.96117e-11, global = 6.34008e-15, cumulative = -2.47958e-11
+GAMG:  Solving for p, Initial residual = 0.018072, Final residual = 0.000592605, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000966826, Final residual = 8.8541e-07, No Iterations 9
+time step continuity errors : sum local = 1.43983e-13, global = 2.50624e-16, cumulative = -2.47956e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.38197e-07, Final residual = 9.38197e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 4.07663e-05, Final residual = 7.76998e-09, No Iterations 1
+ExecutionTime = 1.21 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.299486	0.267659	0.0318273	0
+    Cd(f):	0.0268753	0.00941878	0.0174565	0
+    Cd(r):	0.272611	0.25824	0.0143708	0
+    Cl:	0.819119	0.829404	-0.0102854	0
+    Cl(f):	0.304101	0.308482	-0.00438182	0
+    Cl(r):	0.515019	0.520922	-0.00590362	0
+    CmPitch:	-0.105459	-0.10622	0.000760898	0
+    CmRoll:	-0.122868	-0.124411	0.00154282	0
+    CmYaw:	0.0449229	0.0401488	0.0047741	0
+    Cs:	-3.08712e-17	-3.05251e-17	-3.46105e-19	0
+    Cs(f):	0.0449229	0.0401488	0.0047741	0
+    Cs(r):	-0.0449229	-0.0401488	-0.0047741	0
+
+    writing force and moment coefficient files.
+
+Courant Number mean: 0.00150473 max: 1.53348
+deltaT = 6.30195e-07
+Time = 1.30679e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.79676e-05, Final residual = 5.29256e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.27074e-06, Final residual = 1.6277e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.62864, Final residual = 0.0139598, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0149131, Final residual = 0.000457652, No Iterations 3
+time step continuity errors : sum local = 2.04602e-10, global = 2.65951e-14, cumulative = -2.4769e-11
+GAMG:  Solving for p, Initial residual = 0.377627, Final residual = 0.00841251, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.01052, Final residual = 5.19035e-07, No Iterations 12
+time step continuity errors : sum local = 2.33458e-13, global = -6.25273e-16, cumulative = -2.47696e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.98833e-05, Final residual = 6.87633e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.50576e-06, Final residual = 2.04294e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.337962, Final residual = 0.00724734, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0179113, Final residual = 0.000549349, No Iterations 3
+time step continuity errors : sum local = 8.74916e-11, global = -4.2458e-15, cumulative = -2.47738e-11
+GAMG:  Solving for p, Initial residual = 0.018185, Final residual = 0.000602404, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.000986033, Final residual = 9.08511e-07, No Iterations 9
+time step continuity errors : sum local = 1.40993e-13, global = 2.62653e-16, cumulative = -2.47736e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.6428e-07, Final residual = 9.6428e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.92911e-05, Final residual = 7.81458e-09, No Iterations 1
+ExecutionTime = 1.26 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.30337	0.272467	0.0309027	0
+    Cd(f):	0.0267826	0.00983516	0.0169474	0
+    Cd(r):	0.276587	0.262632	0.0139553	0
+    Cl:	0.832682	0.842655	-0.00997366	0
+    Cl(f):	0.3021	0.306346	-0.00424565	0
+    Cl(r):	0.530582	0.53631	-0.00572802	0
+    CmPitch:	-0.114241	-0.114982	0.000741186	0
+    CmRoll:	-0.124902	-0.126398	0.00149605	0
+    CmYaw:	0.0455054	0.04087	0.0046354	0
+    Cs:	-2.87016e-17	-2.83618e-17	-3.39804e-19	0
+    Cs(f):	0.0455054	0.04087	0.0046354	0
+    Cs(r):	-0.0455054	-0.04087	-0.0046354	0
+
+Courant Number mean: 0.00150473 max: 1.54338
+deltaT = 6.30195e-07
+Time = 1.3698e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.78062e-05, Final residual = 5.22776e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.21563e-06, Final residual = 1.62875e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.634603, Final residual = 0.0141843, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0150521, Final residual = 0.000461104, No Iterations 3
+time step continuity errors : sum local = 2.0019e-10, global = 5.18781e-14, cumulative = -2.47217e-11
+GAMG:  Solving for p, Initial residual = 0.380643, Final residual = 0.00853537, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0106193, Final residual = 5.24396e-07, No Iterations 12
+time step continuity errors : sum local = 2.29051e-13, global = -6.41225e-16, cumulative = -2.47223e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.95575e-05, Final residual = 6.78264e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.41564e-06, Final residual = 2.02634e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.342333, Final residual = 0.00740288, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0183239, Final residual = 0.000561607, No Iterations 3
+time step continuity errors : sum local = 8.55223e-11, global = -1.55633e-14, cumulative = -2.47379e-11
+GAMG:  Solving for p, Initial residual = 0.0183719, Final residual = 0.000616355, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00101039, Final residual = 9.35502e-07, No Iterations 9
+time step continuity errors : sum local = 1.38763e-13, global = 2.75171e-16, cumulative = -2.47376e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.87031e-07, Final residual = 9.87031e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.80449e-05, Final residual = 8.07369e-09, No Iterations 1
+ExecutionTime = 1.32 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.307416	0.277366	0.0300495	0
+    Cd(f):	0.0267239	0.0102458	0.0164781	0
+    Cd(r):	0.280692	0.267121	0.0135713	0
+    Cl:	0.84656	0.856249	-0.00968948	0
+    Cl(f):	0.299729	0.303848	-0.00411969	0
+    Cl(r):	0.546831	0.552401	-0.00556979	0
+    CmPitch:	-0.123551	-0.124276	0.000725054	0
+    CmRoll:	-0.126984	-0.128437	0.00145342	0
+    CmYaw:	0.0461124	0.041605	0.00450742	0
+    Cs:	-2.67277e-17	-2.63979e-17	-3.298e-19	0
+    Cs(f):	0.0461124	0.041605	0.00450742	0
+    Cs(r):	-0.0461124	-0.041605	-0.00450742	0
+
+Courant Number mean: 0.00150473 max: 1.54795
+deltaT = 6.30195e-07
+Time = 1.43282e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.7671e-05, Final residual = 5.18201e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.17001e-06, Final residual = 1.62635e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.640232, Final residual = 0.0144052, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0151794, Final residual = 0.000463891, No Iterations 3
+time step continuity errors : sum local = 1.95795e-10, global = 7.55116e-14, cumulative = -2.46621e-11
+GAMG:  Solving for p, Initial residual = 0.383482, Final residual = 0.00865677, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0107102, Final residual = 5.28383e-07, No Iterations 12
+time step continuity errors : sum local = 2.24362e-13, global = -6.50975e-16, cumulative = -2.46628e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.92502e-05, Final residual = 6.68711e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.33119e-06, Final residual = 1.99374e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.346483, Final residual = 0.00753832, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0187262, Final residual = 0.00057419, No Iterations 3
+time step continuity errors : sum local = 8.37599e-11, global = -3.52076e-14, cumulative = -2.4698e-11
+GAMG:  Solving for p, Initial residual = 0.0184913, Final residual = 0.000622487, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00102718, Final residual = 9.62874e-07, No Iterations 9
+time step continuity errors : sum local = 1.36829e-13, global = 2.92595e-16, cumulative = -2.46977e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 1.0064e-06, Final residual = 1.00193e-09, No Iterations 1
+DILUPBiCGStab:  Solving for k, Initial residual = 3.68624e-05, Final residual = 8.311e-09, No Iterations 1
+ExecutionTime = 1.37 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.309129	0.279868	0.0292605	0
+    Cd(f):	0.0264328	0.0103881	0.0160447	0
+    Cd(r):	0.282696	0.26948	0.0132158	0
+    Cl:	0.854211	0.863641	-0.00942964	0
+    Cl(f):	0.298936	0.302939	-0.00400293	0
+    Cl(r):	0.555275	0.560702	-0.00542672	0
+    CmPitch:	-0.128169	-0.128881	0.000711895	0
+    CmRoll:	-0.128132	-0.129546	0.00141445	0
+    CmYaw:	0.0463693	0.0419803	0.00438908	0
+    Cs:	-2.47756e-17	-2.44575e-17	-3.18146e-19	0
+    Cs(f):	0.0463693	0.0419803	0.00438908	0
+    Cs(r):	-0.0463693	-0.0419803	-0.00438908	0
+
+Courant Number mean: 0.00150473 max: 1.54922
+deltaT = 6.30195e-07
+Time = 1.49584e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.74684e-05, Final residual = 5.11024e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.10845e-06, Final residual = 1.61707e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.645593, Final residual = 0.014625, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0153108, Final residual = 0.000467472, No Iterations 3
+time step continuity errors : sum local = 1.92014e-10, global = 1.02015e-13, cumulative = -2.45957e-11
+GAMG:  Solving for p, Initial residual = 0.386175, Final residual = 0.00877813, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.010804, Final residual = 5.35335e-07, No Iterations 12
+time step continuity errors : sum local = 2.21214e-13, global = -6.66639e-16, cumulative = -2.45963e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.89595e-05, Final residual = 6.58327e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.25184e-06, Final residual = 1.9561e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.350439, Final residual = 0.00768752, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0191535, Final residual = 0.000584231, No Iterations 3
+time step continuity errors : sum local = 8.18132e-11, global = -4.50677e-14, cumulative = -2.46414e-11
+GAMG:  Solving for p, Initial residual = 0.0186288, Final residual = 0.000630691, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00104995, Final residual = 9.85868e-07, No Iterations 9
+time step continuity errors : sum local = 1.34466e-13, global = 3.03748e-16, cumulative = -2.46411e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 8.90814e-07, Final residual = 8.90814e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.59548e-05, Final residual = 8.56779e-09, No Iterations 1
+ExecutionTime = 1.43 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.313109	0.284582	0.0285265	0
+    Cd(f):	0.0262951	0.0106533	0.0156417	0
+    Cd(r):	0.286813	0.273929	0.0128848	0
+    Cl:	0.868395	0.877585	-0.00918992	0
+    Cl(f):	0.296006	0.2999	-0.00389414	0
+    Cl(r):	0.572389	0.577684	-0.00529578	0
+    CmPitch:	-0.138191	-0.138892	0.000700817	0
+    CmRoll:	-0.130259	-0.131638	0.00137849	0
+    CmYaw:	0.0469663	0.0426873	0.00427897	0
+    Cs:	-2.27907e-17	-2.24806e-17	-3.10036e-19	0
+    Cs(f):	0.0469663	0.0426873	0.00427897	0
+    Cs(r):	-0.0469663	-0.0426873	-0.00427897	0
+
+Courant Number mean: 0.00150473 max: 1.54782
+deltaT = 6.30195e-07
+Time = 1.55886e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.73787e-05, Final residual = 5.06134e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.07897e-06, Final residual = 1.61654e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.65052, Final residual = 0.0148498, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0154338, Final residual = 0.000469829, No Iterations 3
+time step continuity errors : sum local = 1.88018e-10, global = 1.26769e-13, cumulative = -2.45143e-11
+GAMG:  Solving for p, Initial residual = 0.388614, Final residual = 0.00890291, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0108923, Final residual = 5.39394e-07, No Iterations 12
+time step continuity errors : sum local = 2.17151e-13, global = -6.75803e-16, cumulative = -2.4515e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.86965e-05, Final residual = 6.48297e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.17917e-06, Final residual = 1.9199e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.354155, Final residual = 0.00782707, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0195541, Final residual = 0.00059555, No Iterations 3
+time step continuity errors : sum local = 8.01949e-11, global = -5.54198e-14, cumulative = -2.45704e-11
+GAMG:  Solving for p, Initial residual = 0.0187653, Final residual = 0.00064041, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00107689, Final residual = 5.05026e-07, No Iterations 10
+time step continuity errors : sum local = 6.62094e-14, global = 1.9049e-16, cumulative = -2.45702e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.03524e-07, Final residual = 9.03524e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.51718e-05, Final residual = 9.76206e-09, No Iterations 1
+ExecutionTime = 1.5 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.316385	0.288541	0.0278437	0
+    Cd(f):	0.02613	0.0108628	0.0152672	0
+    Cd(r):	0.290255	0.277678	0.0125765	0
+    Cl:	0.880416	0.889385	-0.00896882	0
+    Cl(f):	0.293616	0.297409	-0.00379276	0
+    Cl(r):	0.5868	0.591976	-0.00517606	0
+    CmPitch:	-0.146592	-0.147284	0.000691651	0
+    CmRoll:	-0.132062	-0.133408	0.00134532	0
+    CmYaw:	0.0474577	0.0432812	0.00417655	0
+    Cs:	-2.11251e-17	-2.08248e-17	-3.00327e-19	0
+    Cs(f):	0.0474577	0.0432812	0.00417655	0
+    Cs(r):	-0.0474577	-0.0432812	-0.00417655	0
+
+Courant Number mean: 0.00150473 max: 1.54414
+deltaT = 6.30195e-07
+Time = 1.62188e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.72801e-05, Final residual = 5.02077e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.04788e-06, Final residual = 1.61396e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.655103, Final residual = 0.015071, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0155629, Final residual = 0.000472192, No Iterations 3
+time step continuity errors : sum local = 1.84255e-10, global = 1.51272e-13, cumulative = -2.4419e-11
+GAMG:  Solving for p, Initial residual = 0.390872, Final residual = 0.00902562, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0109849, Final residual = 5.43501e-07, No Iterations 12
+time step continuity errors : sum local = 2.13347e-13, global = -6.8423e-16, cumulative = -2.44196e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.8448e-05, Final residual = 6.39631e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.10975e-06, Final residual = 1.8856e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.357635, Final residual = 0.0079723, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0199282, Final residual = 0.000605628, No Iterations 3
+time step continuity errors : sum local = 7.85385e-11, global = -6.49818e-14, cumulative = -2.44846e-11
+GAMG:  Solving for p, Initial residual = 0.0188418, Final residual = 0.00065197, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00109997, Final residual = 5.17491e-07, No Iterations 10
+time step continuity errors : sum local = 6.53226e-14, global = 1.89193e-16, cumulative = -2.44844e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.13964e-07, Final residual = 9.13964e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.44793e-05, Final residual = 1.15898e-08, No Iterations 1
+ExecutionTime = 1.56 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.319219	0.292012	0.0272071	0
+    Cd(f):	0.025935	0.0110168	0.0149182	0
+    Cd(r):	0.293284	0.280996	0.0122889	0
+    Cl:	0.891165	0.899929	-0.00876427	0
+    Cl(f):	0.291402	0.2951	-0.00369807	0
+    Cl(r):	0.599763	0.604829	-0.0050662	0
+    CmPitch:	-0.15418	-0.154864	0.000684061	0
+    CmRoll:	-0.133675	-0.134989	0.00131464	0
+    CmYaw:	0.0478829	0.0438019	0.00408106	0
+    Cs:	-1.96584e-17	-1.93674e-17	-2.90987e-19	0
+    Cs(f):	0.0478829	0.0438019	0.00408106	0
+    Cs(r):	-0.0478829	-0.0438019	-0.00408106	0
+
+Courant Number mean: 0.00150472 max: 1.53857
+deltaT = 6.30195e-07
+Time = 1.6849e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.71816e-05, Final residual = 4.98039e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 6.01799e-06, Final residual = 1.60647e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.659256, Final residual = 0.0152744, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0156681, Final residual = 0.00047398, No Iterations 3
+time step continuity errors : sum local = 1.8049e-10, global = 1.71697e-13, cumulative = -2.43127e-11
+GAMG:  Solving for p, Initial residual = 0.392934, Final residual = 0.00913813, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0110594, Final residual = 5.46055e-07, No Iterations 12
+time step continuity errors : sum local = 2.09176e-13, global = -6.91216e-16, cumulative = -2.43134e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.8207e-05, Final residual = 6.2623e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.04359e-06, Final residual = 1.84216e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.360971, Final residual = 0.00812705, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0203308, Final residual = 0.000615852, No Iterations 3
+time step continuity errors : sum local = 7.70672e-11, global = -7.69387e-14, cumulative = -2.43904e-11
+GAMG:  Solving for p, Initial residual = 0.0189429, Final residual = 0.000667959, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00113419, Final residual = 5.31733e-07, No Iterations 10
+time step continuity errors : sum local = 6.47792e-14, global = 1.86296e-16, cumulative = -2.43902e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.22606e-07, Final residual = 9.22606e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.38606e-05, Final residual = 1.30761e-08, No Iterations 1
+ExecutionTime = 1.62 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.320636	0.294024	0.0266125	0
+    Cd(f):	0.0256091	0.0110167	0.0145924	0
+    Cd(r):	0.295027	0.283007	0.0120201	0
+    Cl:	0.89806	0.906635	-0.00857448	0
+    Cl(f):	0.290143	0.293752	-0.0036095	0
+    Cl(r):	0.607918	0.612882	-0.00496498	0
+    CmPitch:	-0.158887	-0.159565	0.000677738	0
+    CmRoll:	-0.134709	-0.135995	0.00128617	0
+    CmYaw:	0.0480955	0.0441036	0.00399188	0
+    Cs:	-1.81315e-17	-1.78502e-17	-2.81255e-19	0
+    Cs(f):	0.0480955	0.0441036	0.00399188	0
+    Cs(r):	-0.0480955	-0.0441036	-0.00399188	0
+
+Courant Number mean: 0.00150472 max: 1.53138
+deltaT = 6.30195e-07
+Time = 1.74792e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.70379e-05, Final residual = 4.93013e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.97569e-06, Final residual = 1.5904e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.663247, Final residual = 0.0154732, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0157853, Final residual = 0.000475694, No Iterations 3
+time step continuity errors : sum local = 1.76931e-10, global = 2.11427e-13, cumulative = -2.41788e-11
+GAMG:  Solving for p, Initial residual = 0.394885, Final residual = 0.00924815, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0111437, Final residual = 5.50189e-07, No Iterations 12
+time step continuity errors : sum local = 2.05857e-13, global = -6.96532e-16, cumulative = -2.41795e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.79749e-05, Final residual = 6.14533e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 4.98012e-06, Final residual = 1.79474e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.363968, Final residual = 0.00826835, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0206734, Final residual = 0.000623966, No Iterations 3
+time step continuity errors : sum local = 7.54844e-11, global = -9.29443e-14, cumulative = -2.42724e-11
+GAMG:  Solving for p, Initial residual = 0.019105, Final residual = 0.000680807, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00115822, Final residual = 5.41598e-07, No Iterations 10
+time step continuity errors : sum local = 6.37633e-14, global = 1.82423e-16, cumulative = -2.42722e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.29674e-07, Final residual = 9.29674e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.33313e-05, Final residual = 1.38123e-08, No Iterations 1
+ExecutionTime = 1.67 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.322308	0.296252	0.026056	0
+    Cd(f):	0.0252672	0.0109795	0.0142877	0
+    Cd(r):	0.29704	0.285272	0.0117683	0
+    Cl:	0.905911	0.914309	-0.00839776	0
+    Cl(f):	0.288503	0.29203	-0.00352653	0
+    Cl(r):	0.617408	0.622279	-0.00487123	0
+    CmPitch:	-0.164452	-0.165125	0.000672354	0
+    CmRoll:	-0.135887	-0.137146	0.00125966	0
+    CmYaw:	0.0483461	0.0444377	0.0039084	0
+    Cs:	-1.7038e-17	-1.67655e-17	-2.72493e-19	0
+    Cs(f):	0.0483461	0.0444377	0.0039084	0
+    Cs(r):	-0.0483461	-0.0444377	-0.0039084	0
+
+Courant Number mean: 0.00150472 max: 1.52299
+deltaT = 6.30195e-07
+Time = 1.81094e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.69192e-05, Final residual = 4.88327e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.94201e-06, Final residual = 1.58027e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.666854, Final residual = 0.0156582, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0158888, Final residual = 0.000478028, No Iterations 3
+time step continuity errors : sum local = 1.73774e-10, global = 2.33743e-13, cumulative = -2.40385e-11
+GAMG:  Solving for p, Initial residual = 0.396646, Final residual = 0.00935081, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0112179, Final residual = 5.55e-07, No Iterations 12
+time step continuity errors : sum local = 2.02954e-13, global = -7.05512e-16, cumulative = -2.40392e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.77634e-05, Final residual = 6.05443e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 4.92158e-06, Final residual = 1.7605e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.36688, Final residual = 0.00842697, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0210643, Final residual = 0.000630981, No Iterations 3
+time step continuity errors : sum local = 7.38521e-11, global = -9.88891e-14, cumulative = -2.41381e-11
+GAMG:  Solving for p, Initial residual = 0.0191954, Final residual = 0.000695933, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00118837, Final residual = 5.52641e-07, No Iterations 10
+time step continuity errors : sum local = 6.29268e-14, global = 1.80841e-16, cumulative = -2.41379e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.35364e-07, Final residual = 9.35364e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.28386e-05, Final residual = 1.4464e-08, No Iterations 1
+ExecutionTime = 1.73 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.326386	0.300852	0.025534	0
+    Cd(f):	0.0251549	0.011153	0.0140019	0
+    Cd(r):	0.301231	0.289699	0.0115321	0
+    Cl:	0.920255	0.928488	-0.00823272	0
+    Cl(f):	0.284911	0.28836	-0.00344862	0
+    Cl(r):	0.635344	0.640128	-0.0047841	0
+    CmPitch:	-0.175216	-0.175884	0.000667743	0
+    CmRoll:	-0.138038	-0.139273	0.00123491	0
+    CmYaw:	0.048958	0.0451279	0.0038301	0
+    Cs:	-1.5679e-17	-1.54142e-17	-2.64777e-19	0
+    Cs(f):	0.048958	0.0451279	0.0038301	0
+    Cs(r):	-0.048958	-0.0451279	-0.0038301	0
+
+Courant Number mean: 0.00150472 max: 1.51396
+deltaT = 6.30195e-07
+Time = 1.87396e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.69076e-05, Final residual = 4.87739e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.93843e-06, Final residual = 1.5838e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.670376, Final residual = 0.0158453, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0159882, Final residual = 0.000478957, No Iterations 3
+time step continuity errors : sum local = 1.70295e-10, global = 2.50707e-13, cumulative = -2.38872e-11
+GAMG:  Solving for p, Initial residual = 0.398382, Final residual = 0.00945535, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.011289, Final residual = 5.56309e-07, No Iterations 12
+time step continuity errors : sum local = 1.98964e-13, global = -7.07932e-16, cumulative = -2.38879e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.75733e-05, Final residual = 5.97876e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 4.86732e-06, Final residual = 1.73197e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.369776, Final residual = 0.00855335, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0214065, Final residual = 0.000639923, No Iterations 3
+time step continuity errors : sum local = 7.25564e-11, global = -1.07781e-13, cumulative = -2.39957e-11
+GAMG:  Solving for p, Initial residual = 0.0192686, Final residual = 0.000711592, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00121644, Final residual = 5.6463e-07, No Iterations 10
+time step continuity errors : sum local = 6.23042e-14, global = 1.80964e-16, cumulative = -2.39955e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.39876e-07, Final residual = 9.39876e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.23828e-05, Final residual = 1.61863e-08, No Iterations 1
+ExecutionTime = 1.79 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.329351	0.304308	0.0250435	0
+    Cd(f):	0.024974	0.0112405	0.0137335	0
+    Cd(r):	0.304377	0.293067	0.01131	0
+    Cl:	0.931343	0.939421	-0.00807814	0
+    Cl(f):	0.282177	0.285552	-0.00337538	0
+    Cl(r):	0.649166	0.653869	-0.00470276	0
+    CmPitch:	-0.183495	-0.184158	0.000663687	0
+    CmRoll:	-0.139702	-0.140913	0.00121172	0
+    CmYaw:	0.0494027	0.0456461	0.00375652	0
+    Cs:	-1.43447e-17	-1.40874e-17	-2.5724e-19	0
+    Cs(f):	0.0494027	0.0456461	0.00375652	0
+    Cs(r):	-0.0494027	-0.0456461	-0.00375652	0
+
+    writing force and moment coefficient files.
+
+Courant Number mean: 0.00150472 max: 1.5041
+deltaT = 6.30195e-07
+Time = 1.93698e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.68656e-05, Final residual = 4.87887e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.92643e-06, Final residual = 1.58569e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.673657, Final residual = 0.0160353, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0160963, Final residual = 0.000479687, No Iterations 3
+time step continuity errors : sum local = 1.66943e-10, global = 2.6625e-13, cumulative = -2.37292e-11
+GAMG:  Solving for p, Initial residual = 0.399996, Final residual = 0.00956141, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0113663, Final residual = 5.57962e-07, No Iterations 12
+time step continuity errors : sum local = 1.95328e-13, global = -7.07018e-16, cumulative = -2.37299e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.73842e-05, Final residual = 5.91435e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 4.81436e-06, Final residual = 1.71593e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.371945, Final residual = 0.0086577, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0216575, Final residual = 0.000646156, No Iterations 3
+time step continuity errors : sum local = 7.12114e-11, global = -1.16326e-13, cumulative = -2.38463e-11
+GAMG:  Solving for p, Initial residual = 0.0192901, Final residual = 0.000717855, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00123092, Final residual = 5.70654e-07, No Iterations 10
+time step continuity errors : sum local = 6.11885e-14, global = 1.80542e-16, cumulative = -2.38461e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.43418e-07, Final residual = 9.43418e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.19981e-05, Final residual = 1.78682e-08, No Iterations 1
+ExecutionTime = 1.85 s  ClockTime = 2 s
+
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.330897	0.306315	0.0245818	0
+    Cd(f):	0.0246522	0.0111714	0.0134809	0
+    Cd(r):	0.306245	0.295144	0.011101	0
+    Cl:	0.938642	0.946575	-0.00793295	0
+    Cl(f):	0.28043	0.283736	-0.00330647	0
+    Cl(r):	0.658213	0.662839	-0.00462648	0
+    CmPitch:	-0.188891	-0.189551	0.000660005	0
+    CmRoll:	-0.140796	-0.141986	0.00118994	0
+    CmYaw:	0.0496346	0.0459473	0.00368727	0
+    Cs:	-1.31184e-17	-1.28689e-17	-2.49522e-19	0
+    Cs(f):	0.0496346	0.0459473	0.00368727	0
+    Cs(r):	-0.0496346	-0.0459473	-0.00368727	0
+
+Courant Number mean: 0.00150472 max: 1.49433
+deltaT = 6.30195e-07
+Time = 2e-05
+
+PIMPLE: iteration 1
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.67692e-05, Final residual = 4.87076e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 5.90164e-06, Final residual = 1.5893e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.676285, Final residual = 0.0161861, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0161696, Final residual = 0.000479992, No Iterations 3
+time step continuity errors : sum local = 1.63643e-10, global = 2.81762e-13, cumulative = -2.35643e-11
+GAMG:  Solving for p, Initial residual = 0.401262, Final residual = 0.00964479, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.0114182, Final residual = 5.58786e-07, No Iterations 12
+time step continuity errors : sum local = 1.91624e-13, global = -7.08236e-16, cumulative = -2.3565e-11
+PIMPLE: iteration 2
+DILUPBiCGStab:  Solving for Ux, Initial residual = 1.71944e-05, Final residual = 5.85747e-09, No Iterations 1
+DILUPBiCGStab:  Solving for Uy, Initial residual = 4.76255e-06, Final residual = 1.69964e-09, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.373853, Final residual = 0.00879872, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.021986, Final residual = 0.000652175, No Iterations 3
+time step continuity errors : sum local = 6.99434e-11, global = -1.23148e-13, cumulative = -2.36882e-11
+GAMG:  Solving for p, Initial residual = 0.01934, Final residual = 0.000736496, No Iterations 1
+GAMG:  Solving for p, Initial residual = 0.00126314, Final residual = 5.81653e-07, No Iterations 10
+time step continuity errors : sum local = 6.06554e-14, global = 1.81335e-16, cumulative = -2.3688e-11
+DILUPBiCGStab:  Solving for omega, Initial residual = 9.46248e-07, Final residual = 9.46248e-07, No Iterations 0
+DILUPBiCGStab:  Solving for k, Initial residual = 3.16358e-05, Final residual = 1.89323e-08, No Iterations 1
+ExecutionTime = 1.91 s  ClockTime = 2 s
+
+yPlus yplus write:
+    writing field yPlus
+    patch main y+ : min = 0.918198, max = 12.2639, average = 3.19919
+forceCoeffs forceCoeffs_object write:
+    Coefficient	Total	Pressure	Viscous	Internal
+    Cd:	0.331913	0.307766	0.0241466	0
+    Cd(f):	0.0242809	0.0110382	0.0132427	0
+    Cd(r):	0.307632	0.296728	0.0109039	0
+    Cl:	0.944503	0.952299	-0.00779616	0
+    Cl(f):	0.279035	0.282276	-0.00324159	0
+    Cl(r):	0.665468	0.670023	-0.00455457	0
+    CmPitch:	-0.193217	-0.193873	0.000656491	0
+    CmRoll:	-0.141675	-0.142845	0.00116942	0
+    CmYaw:	0.0497869	0.0461649	0.003622	0
+    Cs:	-1.19627e-17	-1.17221e-17	-2.406e-19	0
+    Cs(f):	0.0497869	0.0461649	0.003622	0
+    Cs(r):	-0.0497869	-0.0461649	-0.003622	0
+
+End
+
+Finalising parallel run

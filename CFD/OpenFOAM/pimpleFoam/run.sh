@@ -12,7 +12,7 @@ blockMesh | tee log.blockMesh
 
 # Parallel meshing
 decomposePar -copyZero | tee log.decomposePar
-mpirun -np 8 snappyHexMesh -parallel -overwrite | tee log.snappyHexMesh
+mpirun -np 6 --bind-to core --map-by core snappyHexMesh -parallel -overwrite | tee log.snappyHexMesh
 reconstructParMesh -constant -mergeTol 1e-6 | tee log.reconstructParMesh.log
 
 # Serial post-processing of the mesh
@@ -26,5 +26,5 @@ cp -r 0.orig 0
 decomposePar | tee log.decomposePar.final
 
 # Parallel run
-mpirun -np 8 pimpleFoam -parallel | tee log.pimpleFoam
+mpirun -np 6 --bind-to core --map-by core pimpleFoam -parallel | tee log.pimpleFoam
 reconstructPar | tee log.reconstructPar
