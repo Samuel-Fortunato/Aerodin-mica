@@ -1,5 +1,4 @@
 \section*{Procedimentos}
-% Estilos dos diagramas (etapa, io, seta, ...) definidos em config/preambulo.tex.
 
 \subsection*{Método dos perfis delgados}
 
@@ -32,7 +31,6 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[node distance=0.45cm]
-  % etapas
   \node[etapa] (e1) {\textbf{1.} Importação da geometria};
   \node[etapa, below=of e1] (e2) {\textbf{2.} Interpolação e linha média};
   \node[etapa, below=of e2] (e3) {\textbf{3.} Declive e mudança de variável $x \rightarrow \theta$};
@@ -41,14 +39,12 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
   \node[etapa, below=of e5] (e6) {\textbf{6.} Estudo de convergência em $N$};
   \foreach \a/\b in {e1/e2,e2/e3,e3/e4,e4/e5,e5/e6}
     \draw[seta] (\a) -- (\b);
-  % entradas
   \node[io, left=0.5cm of e1, align=flush right] (i1) {Ficheiro de coordenadas (formato Lednicer): \PontosExtradorso{} pontos no extradorso e \PontosIntradorso{} no intradorso};
   \node[io, left=0.5cm of e2, align=flush right] (i2) {$(x_u,z_u)$, $(x_l,z_l)$; $N = \NPerfisDelgados$ pontos};
   \node[io, left=0.5cm of e3, align=flush right] (i3) {$z_c(x)$; $x = \tfrac{1}{2}(1-\cos\theta)$};
   \node[io, left=0.5cm of e4, align=flush right] (i4) {$dz_c/dx\,(\theta)$, $\theta \in [0,\pi]$};
   \node[io, left=0.5cm of e5, align=flush right] (i5) {$I_0$, $A_1$; $\alpha \in [-20^\circ, 20^\circ]$, passo $0{,}5^\circ$};
   \node[io, left=0.5cm of e6, align=flush right] (i6) {$N \in \{\NMinTestePerfisDelgados,\dots,\Resultado[0]{\NRefPerfisDelgados}\}$; tolerâncias $\Delta c_l = 10^{-3}$, $\Delta\alpha_{L=0} = 0{,}01^\circ$};
-  % saídas
   \node[io, right=0.5cm of e1] (o1) {$(x_u,z_u)$, $(x_l,z_l)$, normalizados pela corda};
   \node[io, right=0.5cm of e2] (o2) {$z_c = \tfrac{1}{2}(z_u+z_l)$; espessura $z_u - z_l$};
   \node[io, right=0.5cm of e3] (o3) {$dz_c/dx\,(\theta)$};
@@ -86,8 +82,9 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
   A Figura~\ref{fig:geom} sobrepõe as superfícies interpoladas aos pontos
   originais e mostra a linha média resultante. A espessura máxima é de
   \Resultado[1]{\EspessuraPct}\,\% da corda em $x/c = 0{,}43$ e a curvatura máxima de \Resultado[1]{\CurvaturaMaxPct}\,\% em
-  $x/c = 0{,}39$. O \emph{reflex} junto ao bordo de fuga tem um mínimo de
-  $\Resultado[1]{\CurvaturaMinPct}\,\%$ em $x/c = 0{,}90$.
+  $x/c = 0{,}39$. A linha média atinge um mínimo de
+  $\Resultado[1]{\CurvaturaMinPct}\,\%$ em $x/c = 0{,}90$ e volta depois a subir até ao bordo de fuga,
+  o que corresponde ao \emph{reflex}.
 \end{etapas}
 
 \begin{figure}[H]
@@ -146,7 +143,6 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
   segurança.
 \end{etapas}
 
-
 \subsection*{Método dos painéis}
 
 O método dos painéis foi implementado em MATLAB,
@@ -165,7 +161,6 @@ e as saídas à direita.
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[node distance=0.45cm]
-  % etapas
   \node[etapa] (p1) {\textbf{1.} Discretização da geometria};
   \node[etapa, below=of p1] (p2) {\textbf{2.} Escoamentos elementares};
   \node[etapa, below=of p2] (p3) {\textbf{3.} Construção do sistema de equações};
@@ -174,16 +169,13 @@ e as saídas à direita.
   \node[etapa, below=of p5] (p6) {\textbf{6.} Análises aerodinâmicas};
   \foreach \a/\b in {p1/p2,p2/p3,p3/p4,p4/p5,p5/p6}
     \draw[seta] (\a) -- (\b);
-  % ciclo de convergência em N
   \draw[seta, dashed] (p5.east) -- ++(0.3,0) |- (p1.east);
-  % entradas
   \node[io, left=0.5cm of p1, align=flush right] (j1) {Ficheiro de coordenadas (formato Lednicer): \PontosExtradorso{} pontos por superfície; número de painéis $N$};
   \node[io, left=0.5cm of p2, align=flush right] (j2) {$V_\infty = 1$, $\alpha$; geometria dos painéis};
   \node[io, left=0.5cm of p3, align=flush right] (j3) {$\hat{\vec{V}}_{ij}$, $\vec{n}_i$, $\vec{V}_\infty$; impermeabilidade e condição de Kutta};
   \node[io, left=0.5cm of p4, align=flush right] (j4) {$\mathbf{A}$, $\mathbf{b}$; $\hat{\vec{V}}_{ij}$, $\vec{t}_i$, $\Delta S_i$};
   \node[io, left=0.5cm of p5, align=flush right] (j5) {$\alpha = 5^\circ$; $N = \NMinTestePaineis, 50, \dots, \NRefPaineis$; referência $N = \NRefPaineis$; tolerância $\varepsilon_N \le 0{,}5\,\%$};
   \node[io, left=0.5cm of p6, align=flush right] (j6) {$N = \NPaineis$; $\alpha \in [-20^\circ, 20^\circ]$, passo $5^\circ$};
-  % saídas
   \node[io, right=0.75cm of p1] (s1) {Nós, pontos de controlo, $\Delta S_i$, $\vec{n}_i$, $\vec{t}_i$};
   \node[io, right=0.75cm of p2] (s2) {$U_\infty$, $W_\infty$; velocidades induzidas unitárias $\hat{\vec{V}}_{ij}$; $N+1$ incógnitas $\gamma_j$};
   \node[io, right=0.75cm of p3] (s3) {Sistema $\mathbf{A}\boldsymbol{\gamma} = \mathbf{b}$, de dimensão $(N+1)\times(N+1)$};

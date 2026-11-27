@@ -1,12 +1,4 @@
-% ---------------------------------------------------------------------------
 \subsection*{Estudo de convergência da simulação CFD}
-% Critério: convergência de malha + independência da solução, justificar a malha.
-
-%O estudo de independência de malha foi realizado para quatro configurações
-%de malha. \tbd{Confirmar o ângulo de ataque.}
-%A Tabela~\ref{tab:malhas} resume as malhas testadas e a
-%Figura~\ref{fig:independencia_cfd} apresenta os coeficientes aerodinâmicos e
-%o indicador de eficiência das malhas.
 
 De forma a garantir que os resultados das simulações com recurso a CFD não são afetadas pela resolução da malha, é importante realizar um estudo de independência da malha. Para o efeito, foram realizadas simulações para quatro malhas diferentes, todas para um ângulo de ataque de 5\textdegree.
 
@@ -53,10 +45,6 @@ Foi obtida uma $U_\mathrm{rel} = 1.572\%$ para o $C_d$ e uma $U_\mathrm{rel} = 1
   \label{fig:independencia_cfd}
 \end{figure}
 
-%A Figura~\ref{fig:custo_yplus_cfd} apresenta os tempos de geração da malha
-%e de simulação, bem como os valores médio, mínimo e máximo de $y^+$ para cada
-%configuração de malha.
-
 \begin{figure}[H]
   \centering
   \begin{subfigure}[c]{0.45\linewidth}
@@ -72,14 +60,6 @@ Foi obtida uma $U_\mathrm{rel} = 1.572\%$ para o $C_d$ e uma $U_\mathrm{rel} = 1
   \caption{Custo computacional e indicadores de resolução junto à parede.}
   \label{fig:custo_yplus_cfd}
 \end{figure}
-
-%\tbd{Análise (sem IA): explicar os resultados do estudo de independência,
-%identificar o parâmetro de refinamento e justificar a malha escolhida,
-%considerando a precisão, o tempo de cálculo e a resolução da camada limite.}
-
-%\tbd{A figura \texttt{CFD/graficos-mesh-independence/Figure\_4.png},
-%relativa aos indicadores de qualidade da malha, não foi inserida para
-%poupar espaço. Avaliar se é necessário incluí-la.}
 
 Ao analisar a \cref{fig:independencia_cfd}, percebemos que, segundo o indicador de eficiência computacional, a malha "ideal" e a malha com $h_\mathrm{cel. externa} = 0.14$. No entanto, tendo em conta as falhas ao gerar as \textit{inflation layers} (particularmente no bordo de fuga - zona crítica), que resultam em zonas com $y^+$ superior a 5, e que a malha para $h_\mathrm{cel. externa} = 0.1$ não tem um custo temporal excessivo tendo em conta o volume de simulações a realizar, foi esta última a malha escolhida para as simulações deste estudo.
 

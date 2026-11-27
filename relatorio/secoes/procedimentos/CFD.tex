@@ -14,16 +14,13 @@ Figura~\ref{fig:diag_cfd}.
   \node[etapa, below=of c5] (c6) {\textbf{6.} Pós-processamento};
   \foreach \a/\b in {c1/c2,c2/c3,c3/c4,c4/c5,c5/c6}
     \draw[seta] (\a) -- (\b);
-  % ciclo de convergência de malha
   \draw[seta, dashed] (c5.east) -- ++(0.3,0) |- (c2.east);
-  % entradas
   \node[io, left=0.5cm of c1, align=flush right] (k1) {Coordenadas do perfil; dimensões do domínio $x\in[-2;6];\ y\in[-2;2]$};
   \node[io, left=0.5cm of c2, align=flush right] (k2) {Domínio; número de células, $y^+ \approx 1$ pretendido, refinamento junto à parede de nível 6 e 7};
-  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 95$~m/s, $\nu = 1.789\cdot10^{-7}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta 5\%};
+  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 95$~m/s, $\nu = 1.789\cdot10^{-5}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta 5\%};
   \node[io, left=0.5cm of c4, align=flush right] (k4) {Caso configurado; esquemas numéricos; critério de paragem dos resíduos de $10^{-7}$};
   \node[io, left=0.5cm of c5, align=flush right] (k5) {Campos $p$ e $\mathbf{U}$; $c$, $V_\infty$; direções de sustentação e arrasto};
   \node[io, left=0.5cm of c6, align=flush right] (k6) {Campos convergidos para $\alpha = 0^\circ, 5^\circ, \dots, 20^\circ$};
-  % saídas
   \node[io, right=0.75cm of c1] (r1) {Domínio 2D em torno do perfil};
   \node[io, right=0.75cm of c2] (r2) {Malha; qualidade (\texttt{checkMesh}) e $y^+$};
   \node[io, right=0.75cm of c3] (r3) {Caso pronto (\texttt{0/}, \texttt{constant/}, \texttt{system/})};
@@ -46,8 +43,6 @@ estudo de convergência de malha.}
 \begin{etapas}
   \item \textbf{Geometria e domínio.} O perfil é importado a partir das
       coordenadas e envolvido por um domínio 2D retangular, de dimensões $x\in[-2;6];\ y\in[-2;2]$, com o bordo de ataque do perfil centrado na origem $(0,0)$.
-  %\item \textbf{Malha.} Malha [TODO] com [TODO] células, refinada junto à parede
-  %para $y^+ \approx$~[TODO]; a qualidade verifica-se com \texttt{checkMesh}.
 
   \item \textbf{Malha.} Foi usada uma malha hexaédrica, gerada com o \texttt{snappyHexMesh}, com \approx 65000 células. O primeiro passo foi determinar a altura da primeira \textit{inflation layer}, $h_{FL}$, necessário  para obter $y+\approx1$:
   \begin{equation}
@@ -62,21 +57,6 @@ estudo de convergência de malha.}
   Foi utilizado uma célula exterior do domínio com $\SI{0.1}{\meter}$ de lado, tendo sido usado uma caixa de refinamento de nível 1 em $x\in[-1;5];\ y\in[-1;1]$. Foi também aplicado um refinamento local, junto à superfície do perfil, com nível de refinamento de 6 (ou 7 para zonas mais críticas).
 
   A qualidade das malhas foi verificada com o \texttt{checkMesh}.
-
-  %\item \textbf{Condições de fronteira e modelo físico.} Velocidade uniforme
-  %$V_\infty$ na entrada, pressão fixa na saída e não escorregamento no perfil;
-  %$\alpha$ imposto [TODO]: rodando $\mathbf{V}_\infty$ ou o perfil]. Resolvem-se as
-  %equações RANS 2D, estacionárias e incompressíveis, com o modelo de turbulência
-  %[TODO], com $Re = V_\infty c/\nu = 10^{7}$, próximo do valor em voo
-  %($Re \approx 9{,}6\times10^{6}$, com a corda na raiz e a atmosfera padrão
-  %ao nível do mar):
-  %\[
-  %  \nabla\cdot\overline{\mathbf{U}} = 0, \qquad
-  %  (\overline{\mathbf{U}}\cdot\nabla)\,\overline{\mathbf{U}} =
-  %  -\nabla \bar{p} + \nabla\cdot\left[(\nu + \nu_t)
-  %  \left(\nabla\overline{\mathbf{U}} + \nabla\overline{\mathbf{U}}^{\mathsf{T}}\right)\right],
-  %\]
-  %onde $\bar{p}$ é a pressão cinemática (dividida por $\rho$).
 
   \item \textbf{Condições de fronteira e modelo físico.} Para realizar as simulações com diferentes ângulos de ataque (0\textdegree, 5\textdegree, 10\textdegree, 15\textdegree, 20\textdegree), decidiu-se variar o ângulo do perfil, em vez do ângulo do fluxo na entrada. 
 
@@ -93,23 +73,12 @@ estudo de convergência de malha.}
 
   Foi considerado um $\mathrm{Re}\approx5.31\cdot10^6$, calculado com a \cref{eq:y+}.
 
-  Forem também calculadas a energia cinética turbulenta, $k$, e a taxa de dissipação específica, $\omega$, de forma a definir as condições de fronteira de turbulência na entrada para o modelo $k-\omega\ SST$:
+  Foram também calculadas a energia cinética turbulenta, $k$, e a taxa de dissipação específica, $\omega$, de forma a definir as condições de fronteira de turbulência na entrada para o modelo $k-\omega\ SST$:
   \[
-      k = \frac{3}{2}(U_\infty \cdot I)^2; \qquad \omega = \frac{\sqrt{k}}{C_\mu^0.25 \cdot L}
+      k = \frac{3}{2}(U_\infty \cdot I)^2; \qquad \omega = \frac{\sqrt{k}}{C_\mu^{0.25} \cdot L}
   \]
   tendo sido obtidos os valores $k=\SI{33.844}{\meter^2\per\second^2}$ e $\omega=\SI{151.733}{\per\second}$.
 
-  %\item \textbf{Resolução.} Algoritmo SIMPLE (\texttt{simpleFoam}) até os
-  %resíduos descerem abaixo de [TODO] e $c_l$ estabilizar.
-  %\item \textbf{Coeficientes de força.} Integrando a pressão e as tensões
-  %viscosas no perfil (\texttt{forceCoeffs}),
-  %\[
-  %  C_p = \frac{\bar{p} - \bar{p}_\infty}{\tfrac{1}{2}V_\infty^2}, \qquad
-  %  c_l = \frac{L'}{\tfrac{1}{2}\rho_\infty V_\infty^2 c}, \qquad
-  %  c_d = \frac{D'}{\tfrac{1}{2}\rho_\infty V_\infty^2 c}.
-  %\]
-  %Repete-se com malhas sucessivamente mais finas até $c_l$ deixar de variar
-  %(seta a tracejado); a escolha da malha justifica-se nos Resultados.
     
   \item \textbf{Resolução numérica.} A resolução numérica foi realizada através do solver \texttt{simpleFoam} (\textit{steady-state} e incompressível). Foi utilizado o algoritomo SIMPLEC (\textit{Semi-Inplicit Method for Pressure-Linked Equations - Consistent}) para acoplar os campos de pressão e velocidade, de forma a obter uma solução em regime estacionário.
   
@@ -119,9 +88,6 @@ estudo de convergência de malha.}
 
   A convergência das simulações foi avaliada através da monitorização da estabilização dos coeficientes aerodinâmicos $C_l$ e $C_d$, além da convergência dos resíduos e do critério de convergência definido no \texttt{fvSolution}.
 
-  %\item \textbf{Pós-processamento.} Para $\alpha = 0^\circ, 5^\circ, \dots,
-  %20^\circ$: linhas de corrente, $C_p$ ao longo do perfil, ponto de estagnação e
-  %$C_{p,\min}$.
   
   \item \textbf{Pós-processamento.} O pós processamento foi realizado com recurso aos ficheiros \texttt{log} produzidos pelas ferramentas do \texttt{OpenFOAM} e com recurso ao Paraview para analisar graficamente os resultados obtidos.
 \end{etapas}

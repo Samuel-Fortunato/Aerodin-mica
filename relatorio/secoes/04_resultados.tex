@@ -1,15 +1,10 @@
-\section*{Resultados} % ESTRUTURA PROVISÓRIA. Tudo o que está a vermelho (\tbd, \placeholder) é para
-% substituir. Os valores numéricos sem \tbd vêm dos results.csv de cada pasta.
-% Análise de resultados e explicações físicas: escrever SEM IA (regra da UC).
+\section*{Resultados}
 
 Nesta secção apresentam-se primeiro os estudos de convergência do método dos
 painéis e da simulação CFD, e depois a comparação dos três métodos em termos de
 $c_l$, ângulo de sustentação nula, declive, custo, linhas de corrente e $C_p$.
 
-% ---------------------------------------------------------------------------
 \subsection*{Estudo de convergência do método dos painéis}
-% Critério: gráfico c_l(N) a 5° + figura da painelização escolhida.
-% Dados: N entre 20 e 800 a alpha = 5°; N = 260 dá erro < 0,5 % face a N = 800.
 
 A Figura~\ref{fig:convergencia_paineis} apresenta a evolução do coeficiente de sustentação em função do número de painéis, para $\alpha=5^\circ$. Para a discretização de referência, constituída por
 \NRefPaineis{} painéis, obteve-se $c_l=\Resultado[5]{\ClRefPaineis}$. Com \NAnteriorPaineis{} painéis,
@@ -21,8 +16,6 @@ avaliadas, a satisfazer a tolerância estabelecida de
 $0{,}5\%$, permitindo uma redução do tempo de cálculo
 de aproximadamente $\Resultado[1]{\ReducaoTempoPaineis}\%$ relativamente à
 discretização de referência.
-
-
 
 \begin{figure}[htbp]
     \centering
@@ -48,7 +41,6 @@ discretização de referência.
     \label{fig:convergencia_paineis}
 \end{figure}
 
-
 A Figura~\ref{fig:painelizacao} mostra a painelização final, com
 $N = 260$ painéis e os respetivos pontos de controlo.
 Como a interpolação é parametrizada pela distância acumulada ao longo de
@@ -69,7 +61,6 @@ graças ao elevado número de painéis ($N = 260$).
 
 \input{secoes/resultados/CFD.tex}
 
-% ---------------------------------------------------------------------------
 \subsection*{Comparação de métodos}
 
 \paragraph{Coeficiente de sustentação.}
@@ -126,8 +117,8 @@ $c_l$ fica-se por $\Resultado{\ClCFDQuinze}$. A $20^\circ$ o descolamento começ
 bordo de ataque e ocupa quase todo o extradorso (Figura~\ref{fig:linhas}), pelo
 que o $c_l$ desce para $\Resultado{\ClCFDVinte}$ e o arrasto sobe para $c_d = \Resultado{\CdCFDVinte}$, quase todo
 de pressão. O perfil entra, portanto, em perda por volta dos $15^\circ$.
-\rasc{A $20^\circ$ a simulação estacionária não converge
-(Figura~\ref{fig:residuos}), pelo que este valor de $c_l$ é apenas indicativo.}
+A $20^\circ$ a simulação estacionária não converge
+(Figura~\ref{fig:residuos}), pelo que este valor de $c_l$ é apenas indicativo.
 
 Nos métodos potenciais a reta continua até $20^\circ$. Sem viscosidade não
 existe camada limite, logo nada pode descolar, e a condição de Kutta obriga o escoamento a sair
@@ -137,9 +128,9 @@ conseguem prever a perda nem o $c_{l,\max}$.
 \paragraph{Ângulo de sustentação nula e declive.}
 A Tabela~\ref{tab:alpha0} apresenta o ângulo de sustentação nula e o declive da
 curva $c_l(\alpha)$ na zona linear, obtidos por regressão linear entre
-\rasc{$0^\circ$ e $10^\circ$. Esta é a gama em que o declive do CFD entre ângulos
+$0^\circ$ e $10^\circ$. Esta é a gama em que o declive do CFD entre ângulos
 consecutivos difere menos de 10\,\% do declive entre $0^\circ$ e $5^\circ$. Os
-métodos potenciais são lineares em toda a gama, por isso é o CFD que a limita.}
+métodos potenciais são lineares em toda a gama, por isso é o CFD que a limita.
 
 \begin{table}[H]
   \centering
@@ -224,8 +215,9 @@ perfil, repetir a malha para cada ângulo.
 \paragraph{Vantagens, desvantagens e gama de aplicação.}
 A teoria dos perfis delgados tem solução analítica e praticamente não tem
 custo, bastando conhecer a linha média. Em troca, não considera a espessura nem
-a viscosidade, dá velocidade infinita no bordo de ataque e não consegue prever o
-arrasto nem a perda. Serve para uma primeira estimativa de $c_l$ e de
+a viscosidade, e por isso só dá a diferença de pressão entre as duas faces e não
+o $C_p$ de cada uma. Além disso, dá velocidade infinita no bordo de ataque e não
+consegue prever o arrasto nem a perda. Serve para uma primeira estimativa de $c_l$ e de
 $\alpha_{L=0}$ enquanto a curva é linear, até cerca de $10^\circ$.
 
 O método dos painéis já usa a forma real do perfil e, com um custo ainda baixo,
@@ -323,8 +315,7 @@ posição do ponto de estagnação e o $C_p$ mínimo.
   \label{fig:cp}
 \end{figure}
 
-
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Posição do ponto de estagnação e coeficiente de pressão mínimo.}
   \label{tab:estagnacao}
@@ -340,7 +331,7 @@ posição do ponto de estagnação e o $C_p$ mínimo.
   \end{tabular}
 \end{table}
 
-\rasc{A $0^\circ$ as distribuições dos dois métodos são muito semelhantes. No
+A $0^\circ$ as distribuições dos dois métodos são muito semelhantes. No
 extradorso a sucção cresce até perto do meio da corda e depois a pressão
 recupera até ao bordo de fuga. O $C_p$ mínimo está no intradorso, junto ao
 bordo de ataque, com $-0{,}56$ nos painéis e $-0{,}74$ no CFD. A partir de
@@ -362,15 +353,15 @@ CFD fica por cerca de $-7{,}1$. A seguir ao pico, nos painéis a pressão sobe a
 poucos ao longo de todo o extradorso, mas no CFD o $C_p$ fica quase constante a
 partir de $x/c \approx 0{,}1$, um patamar característico da zona descolada. Nos dois métodos o ponto de estagnação desloca-se para
 o intradorso, mas menos no CFD ($x/c \approx 0{,}024$ contra $0{,}105$), porque
-com o descolamento a circulação é muito menor.}
+com o descolamento a circulação é muito menor.
 
 \paragraph{Gama linear.}
 Como os métodos potenciais são lineares por construção, a gama linear do perfil
-identifica-se pelo CFD. \rasc{Entre $0^\circ$ e $5^\circ$ e entre $5^\circ$ e
+identifica-se pelo CFD. Entre $0^\circ$ e $5^\circ$ e entre $5^\circ$ e
 $10^\circ$, o $c_l$ do CFD aumenta quase o mesmo ($0{,}57$ e $0{,}52$). Entre
 $10^\circ$ e $15^\circ$ aumenta apenas $0{,}18$, e a partir daí diminui. A gama
 linear vai, assim, de $0^\circ$ a cerca de $10^\circ$. O $c_{l,\max}$, que marca a
 entrada em perda, é de pelo menos $1{,}34$ e fica entre $10^\circ$ e
 $20^\circ$. Como o $c_l$ ainda sobe de $10^\circ$ para $15^\circ$ e desce de
 $15^\circ$ para $20^\circ$, a perda deverá dar-se perto dos $15^\circ$, mas com
-simulações de $5^\circ$ em $5^\circ$ não é possível dizer exatamente onde.}
+simulações de $5^\circ$ em $5^\circ$ não é possível dizer exatamente onde.

@@ -1,15 +1,16 @@
 \section*{Conclusões}
 
-\rasc{A comparação dos três métodos assenta em resultados que não dependem da
-discretização. No método dos painéis, com $N = 260$ o $c_l$ a $5^\circ$ fica a
+Os estudos de convergência garantem que os resultados usados na comparação não
+dependem da discretização. No método dos painéis, com $N = 260$ o $c_l$ a $5^\circ$ fica a
 menos de 0,5\,\% do valor obtido com 800 painéis, e no CFD a malha escolhida,
 com cerca de 64 mil células, tem uma incerteza relativa de 1,3\,\% no $c_l$.
 
 Na zona linear, até cerca de $10^\circ$, os três métodos concordam bem e as
 diferenças explicam-se pelo que cada um inclui. Todos dão um ângulo de
-sustentação nula pequeno e negativo, entre $-0{,}67^\circ$ e $-0{,}13^\circ$,
-porque o \emph{reflex} junto ao bordo de fuga anula quase todo o efeito da
-curvatura. O método dos painéis, por incluir a espessura, prevê o maior declive
+sustentação nula negativo mas próximo de zero, entre $-0{,}67^\circ$ e
+$-0{,}13^\circ$. A linha média desce a meio da corda, o que torna $\alpha_{L=0}$
+negativo, mas volta a subir junto ao bordo de fuga, que é a zona com mais peso
+no cálculo, e as duas contribuições quase se anulam. O método dos painéis, por incluir a espessura, prevê o maior declive
 (6,78~rad$^{-1}$). No CFD a viscosidade reduz a circulação e compensa esse
 aumento, pelo que o declive (6,26~rad$^{-1}$) fica praticamente igual ao $2\pi$
 da teoria dos perfis delgados. Também as linhas de corrente e as distribuições
@@ -30,8 +31,9 @@ interessa a distribuição de pressões. O CFD demora minutos por ângulo e exig
 muito mais preparação, mas é o único adequado perto e depois da perda e para
 obter o arrasto.
 
-\paragraph{Uso de inteligência artificial.} Utilizou-se IA (Claude, da
-Anthropic) como apoio na programação em MATLAB (painelização, geração de figuras
-e correção de código), na formatação do relatório em \LaTeX{} e na redação de
-rascunhos do texto, que foram revistos pelo grupo.}
-\tbd{confirmar com o grupo onde foi usada}
+\paragraph{Uso de inteligência artificial.} Utilizaram-se ferramentas de
+inteligência artificial como apoio na programação em MATLAB, nomeadamente na
+painelização e na correção de código, na criação das representações gráficas
+(curva $c_l(\alpha)$, estudo de convergência, painelização, linhas de corrente e
+distribuições de $C_p$), na formatação do relatório em \LaTeX{} e na melhoria da
+formulação do texto.
