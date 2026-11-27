@@ -17,6 +17,13 @@ A Figura~\ref{fig:convergencia_paineis} apresenta a evolução do coeficiente de
 o erro relativo foi de $0{,}593\%$, enquanto com 260
 painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
 
+A discretização de 260 painéis foi a menor, entre as
+avaliadas, a satisfazer a tolerância estabelecida de
+$0{,}5\%$, permitindo uma redução do tempo de cálculo
+de aproximadamente $89{,}3\%$ relativamente à
+discretização de referência.
+
+
 
 \begin{figure}[htbp]
     \centering
@@ -43,16 +50,22 @@ painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
 \end{figure}
 
 
-A Figura~\ref{fig:painelizacao} mostra a painelização final, com
-$N = 260$ painéis e os respetivos pontos de controlo.
-\tbd{decidir se se acrescentam os vetores normais e tangentes à figura}
-\rasc{Como a interpolação é parametrizada pela distância acumulada ao longo de
-cada superfície, com pontos igualmente espaçados nesse parâmetro, os painéis
-têm todos aproximadamente o mesmo comprimento. Não há, portanto,
-concentração de painéis junto ao bordo de ataque, onde a curvatura da superfície
-e os gradientes de velocidade são maiores, nem junto ao bordo de fuga, onde se
-impõe a condição de Kutta. Por isso, o bordo de ataque só fica bem descrito
-graças ao elevado número de painéis ($N = 260$).}
+A Figura~\ref{fig:painelizacao} apresenta a painelização
+final, constituída por 260 painéis, distribuídos
+igualmente entre o extradorso e o intradorso, e os
+respetivos pontos de controlo.
+
+A interpolação PCHIP, parametrizada pela distância
+acumulada ao longo de cada superfície, permitiu obter
+painéis de comprimento aproximadamente uniforme em
+cada superfície, sem refinamento localizado junto aos
+bordos de ataque e de fuga.
+
+Importa salientar que o critério de convergência foi
+aplicado ao coeficiente de sustentação para
+$\alpha=5^\circ$, não tendo sido verificada a
+convergência das grandezas aerodinâmicas locais,
+nomeadamente do coeficiente de pressão.
 
 \begin{figure}[H]
   \centering
