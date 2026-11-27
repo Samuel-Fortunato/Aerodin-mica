@@ -45,7 +45,6 @@ painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
 
 A Figura~\ref{fig:painelizacao} mostra a painelização final, com
 $N = 260$ painéis e os respetivos pontos de controlo.
-\tbd{decidir se se acrescentam os vetores normais e tangentes à figura}
 \rasc{Como a interpolação é parametrizada pela distância acumulada ao longo de
 cada superfície, com pontos igualmente espaçados nesse parâmetro, os painéis
 têm todos aproximadamente o mesmo comprimento. Não há, portanto,
@@ -339,15 +338,21 @@ $20^\circ$ (escoamento descolado).}
 
 \paragraph{Gama linear.}
 Como os métodos potenciais são lineares por construção, a gama linear do perfil
-identifica-se pelo CFD. \rasc{Os incrementos de $c_l$ no CFD, por cada
-$5^\circ$, são de $0{,}57$, $0{,}52$, $0{,}18$ e $-0{,}29$. Entre $5^\circ$ e
-$10^\circ$ o declive é 9\,\% inferior ao inicial, ainda dentro da tolerância,
-mas entre $10^\circ$ e $15^\circ$ cai para cerca de um terço, e a partir daí
-$c_l$ diminui. A gama linear vai, portanto, de $0^\circ$ a $\approx 10^\circ$, e $c_{l,\max} \geq 1{,}34$ ocorre entre $10^\circ$ e
-$20^\circ$ (a resolução de $5^\circ$ não permite localizá-lo melhor). Em cruzeiro,
-$c_l \approx 0{,}22$, o que corresponde a $\alpha \approx 1{,}3^\circ$ (CFD) a
-$1{,}9^\circ$ (perfis delgados), pelo que o ponto de funcionamento fica bem dentro da zona
-linear, onde os três métodos diferem no máximo cerca de $0{,}06$ em $c_l$.}
-% Movido da Introdução — ponto de funcionamento em cruzeiro:
-% c_l = W / (1/2 rho V^2 S) = 1633*9,81 / (0,5*1,225*94,4^2*13,46) ≈ 0,22
-% Comparar com a zona linear: a que alpha corresponde em cada método?
+identifica-se pelo CFD. \rasc{Entre $0^\circ$ e $5^\circ$ e entre $5^\circ$ e
+$10^\circ$, o $c_l$ do CFD aumenta quase o mesmo ($0{,}57$ e $0{,}52$). Entre
+$10^\circ$ e $15^\circ$ aumenta apenas $0{,}18$, e a partir daí diminui. A gama
+linear vai, assim, de $0^\circ$ a cerca de $10^\circ$. O $c_{l,\max}$ é de pelo
+menos $1{,}34$ e fica entre $10^\circ$ e $20^\circ$, mas com simulações de
+$5^\circ$ em $5^\circ$ não é possível dizer exatamente onde.
+
+Para saber onde fica o ponto de funcionamento, estimou-se o $c_l$ em cruzeiro
+igualando a sustentação ao peso,
+\[
+  c_l \approx \frac{m g}{\tfrac{1}{2}\rho_\infty V_\infty^2 S}
+  = \frac{1633 \times 9{,}81}{0{,}5 \times 1{,}225 \times 94^2 \times 13{,}46}
+  \approx 0{,}22 ,
+\]
+com a massa máxima à descolagem~\cite{easa_tcds} \tbd{confirmar que a massa está
+no TCDS}. Este valor corresponde a um ângulo de ataque entre $1{,}3^\circ$ no CFD
+e $1{,}9^\circ$ na teoria dos perfis delgados, pelo que o perfil voa bem dentro
+da zona linear, onde os três métodos dão resultados muito próximos.}
