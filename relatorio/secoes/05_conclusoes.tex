@@ -1,13 +1,36 @@
 \section*{Conclusões}
-% ESTRUTURA PROVISÓRIA. Cada conclusão tem de estar justificada pelos Resultados.
 
-\begin{itemize}
-  \item \tbd{Ângulo de sustentação nula pelos três métodos e porque é parecido/diferente.}
-  \item \tbd{Declive na zona linear: painéis > perfis delgados > CFD? e porquê.}
-  \item \tbd{Convergência: $N$ escolhido nos painéis; malha escolhida no CFD.}
-  \item \tbd{Gama linear do perfil e entrada em perda (CFD).}
-  \item \tbd{Linhas de corrente e $C_p$: concordância a $0^\circ$ e $5^\circ$, diferenças a $20^\circ$.}
-  \item \tbd{Quando usar cada método, tendo em conta o custo.}
-\end{itemize}
+\rasc{No método dos painéis, $N = 260$ painéis bastam para o $c_l$ a $5^\circ$
+ficar a menos de 0,5\,\% do valor obtido com 800 painéis. No CFD escolheu-se a
+malha com cerca de 64 mil células, para a qual a incerteza relativa do $c_l$
+entre malhas é de 1,3\,\%.
 
+Os três métodos dão um ângulo de sustentação nula pequeno e negativo, entre
+$-0{,}67^\circ$ e $-0{,}13^\circ$, porque a subida da linha média junto ao bordo
+de fuga anula quase todo o efeito da curvatura.
 
+Na zona linear, o método dos painéis prevê o maior declive (6,78~rad$^{-1}$)
+por incluir a espessura. O CFD (6,26~rad$^{-1}$) fica praticamente igual à
+teoria dos perfis delgados ($2\pi$), porque o aumento devido à espessura é
+compensado pela redução devida à viscosidade.
+
+O CFD é linear até cerca de $10^\circ$ e o perfil entra em perda entre $15^\circ$
+e $20^\circ$. A $20^\circ$ o escoamento está descolado em quase todo o
+extradorso e não é estacionário, o que os métodos potenciais, que admitem
+escoamento sempre colado, não conseguem prever.
+
+A $0^\circ$ e a $5^\circ$ as linhas de corrente e as distribuições de $C_p$ dos
+painéis e do CFD são muito parecidas. A $20^\circ$ os painéis preveem um pico de
+sucção de $-21{,}8$, enquanto o CFD mostra um pico muito menor e um patamar de
+pressão no extradorso, típico do escoamento descolado.
+
+Os métodos potenciais calculam toda a curva $c_l(\alpha)$ em pouco mais de um
+segundo e chegam para estimar $c_l$ e $\alpha_{L=0}$ na zona linear. O CFD
+demora minutos por ângulo e exige muito mais preparação, mas é o único que
+serve perto e depois da perda e para obter o arrasto.
+
+\paragraph{Uso de inteligência artificial.} Utilizou-se IA (Claude, da
+Anthropic) como apoio na programação em MATLAB (painelização, geração de figuras
+e correção de código), na formatação do relatório em \LaTeX{} e na redação de
+rascunhos do texto, que foram revistos pelo grupo.}
+\tbd{confirmar com o grupo onde foi usada}
