@@ -17,10 +17,10 @@ Figura~\ref{fig:diag_cfd}.
   % ciclo de convergência de malha
   \draw[seta, dashed] (c5.east) -- ++(0.3,0) |- (c2.east);
   % entradas
-  \node[io, left=0.5cm of c1, align=flush right] (k1) {Coordenadas do perfil; dimensões do domínio \tbd{TODO}};
-  \node[io, left=0.5cm of c2, align=flush right] (k2) {Domínio; número de células, $y^+$ pretendido, refinamento junto à parede \tbd{TODO}};
-  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 100$~m/s, $\nu = 10^{-5}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta \tbd{TODO}};
-  \node[io, left=0.5cm of c4, align=flush right] (k4) {Caso configurado; esquemas numéricos; critério de paragem dos resíduos \tbd{TODO}};
+  \node[io, left=0.5cm of c1, align=flush right] (k1) {Coordenadas do perfil; dimensões do domínio $x\in[-2;6];\ y\in[-2;2]$};
+  \node[io, left=0.5cm of c2, align=flush right] (k2) {Domínio; número de células, $y^+ \approx 1$ pretendido, refinamento junto à parede de nível 6 e 7};
+  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 95$~m/s, $\nu = 1.789\cdot10^{-7}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta 5\%};
+  \node[io, left=0.5cm of c4, align=flush right] (k4) {Caso configurado; esquemas numéricos; critério de paragem dos resíduos de $10^{-7}$};
   \node[io, left=0.5cm of c5, align=flush right] (k5) {Campos $p$ e $\mathbf{U}$; $c$, $V_\infty$; direções de sustentação e arrasto};
   \node[io, left=0.5cm of c6, align=flush right] (k6) {Campos convergidos para $\alpha = 0^\circ, 5^\circ, \dots, 20^\circ$};
   % saídas
@@ -92,6 +92,12 @@ estudo de convergência de malha.}
   Este modelo combina as vantagens do $\mathrm{k-}\omega$ junto à camada limite com as vantagens do $\mathrm{k-}\epsilon$ nas regiões distantes da camada limite.
 
   Foi considerado um $\mathrm{Re}\approx5.31\cdot10^6$, calculado com a \cref{eq:y+}.
+
+  Forem também calculadas a energia cinética turbulenta, $k$, e a taxa de dissipação específica, $\omega$, de forma a definir as condições de fronteira de turbulência na entrada para o modelo $k-\omega\ SST$:
+  \[
+      k = \frac{3}{2}(U_\infty \cdot I)^2; \qquad \omega = \frac{\sqrt{k}}{C_\mu^0.25 \cdot L}
+  \]
+  tendo sido obtidos os valores $k=\SI{33.844}{\meter^2\per\second^2}$ e $\omega=\SI{151.733}{\per\second}$.
 
   %\item \textbf{Resolução.} Algoritmo SIMPLE (\texttt{simpleFoam}) até os
   %resíduos descerem abaixo de [TODO] e $c_l$ estabilizar.
