@@ -120,14 +120,13 @@ do bordo de fuga, o escoamento exterior deixa de acompanhar tão bem a superfíc
 o que reduz a circulação e explica a diferença de $\Resultado{\DifClPaineisCFDDez}$ a $10^\circ$. A partir
 de $10^\circ$ a curva do CFD dobra, porque o gradiente adverso de pressão já é
 forte o suficiente para provocar o descolamento ou separação da camada limite. A
-$15^\circ$ o descolamento começa junto ao bordo de fuga
-\tbd{$x/c$ onde a tensão de corte no extradorso se anula, pedir ao Gonçalo} e o
+$15^\circ$ o descolamento começa junto ao bordo de fuga ($\approx 0.7c$) e o
 $c_l$ fica-se por $\Resultado{\ClCFDQuinze}$. A $20^\circ$ o descolamento começa logo junto ao
 bordo de ataque e ocupa quase todo o extradorso (Figura~\ref{fig:linhas}), pelo
 que o $c_l$ desce para $\Resultado{\ClCFDVinte}$ e o arrasto sobe para $c_d = \Resultado{\CdCFDVinte}$, quase todo
 de pressão. O perfil entra, portanto, em perda entre $15^\circ$ e $20^\circ$.
-\rasc{A $20^\circ$ a simulação estacionária não converge
-(Figura~\ref{fig:residuos}), pelo que este valor de $c_l$ é apenas indicativo.}
+A $20^\circ$ a simulação estacionária não converge
+(Figura~\ref{fig:residuos}), pelo que este valor de $c_l$ é apenas indicativo, tendo sido obtido a partir da média das últimas 100 iterações.
 
 Nos métodos potenciais a reta continua até $20^\circ$. Sem viscosidade não
 existe camada limite, logo nada pode descolar, e a condição de Kutta obriga o escoamento a sair
@@ -135,11 +134,15 @@ suavemente pelo bordo de fuga independentemente do ângulo de ataque. Assim, nã
 conseguem prever a perda nem o $c_{l,\max}$.
 
 \paragraph{Ângulo de sustentação nula e declive.}
+%A Tabela~\ref{tab:alpha0} apresenta o ângulo de sustentação nula e o declive da
+%curva $c_l(\alpha)$ na zona linear, obtidos por regressão linear entre
+%$0^\circ$ e $10^\circ$. Esta é a gama em que o declive do CFD entre ângulos
+%consecutivos difere menos de 10\,\% do declive entre $0^\circ$ e $5^\circ$. Os
+%métodos potenciais são lineares em toda a gama, por isso é o CFD que a limita.
 A Tabela~\ref{tab:alpha0} apresenta o ângulo de sustentação nula e o declive da
 curva $c_l(\alpha)$ na zona linear, obtidos por regressão linear entre
-\rasc{$0^\circ$ e $10^\circ$. Esta é a gama em que o declive do CFD entre ângulos
-consecutivos difere menos de 10\,\% do declive entre $0^\circ$ e $5^\circ$. Os
-métodos potenciais são lineares em toda a gama, por isso é o CFD que a limita.}
+$0^\circ$ e $10^\circ$. Esta é a gama em que o declive do CFD apresenta um comportamento linear. Os
+métodos potenciais são lineares em toda a gama, por isso é o CFD que a limita a gama de ângulos a ser utilizada na regressão.
 
 \begin{table}[H]
   \centering
@@ -202,7 +205,7 @@ potenciais foram medidos num Intel Core i7-13650HX com 32~GB de RAM.
     $\approx$ \num[round-mode=places,round-precision=3,output-decimal-marker={,}]{\TempoPerfisDelgadosMs}~ms (total) \\
     Painéis & MATLAB & \NumAngulosPaineis &
     $\approx$ \num[round-mode=places,round-precision=2,output-decimal-marker={,}]{\TempoPaineisS}~s (total) \\
-    CFD             & OpenFOAM & \NumAngulosCFD & $\approx 6$~min por ângulo \tbd{confirmar} \\
+    CFD             & OpenFOAM & \NumAngulosCFD & $\approx 6$~min por ângulo  \\
     \bottomrule
   \end{tabular}
 \end{table}
