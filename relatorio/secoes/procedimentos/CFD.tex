@@ -93,6 +93,12 @@ estudo de convergência de malha.}
 
   Foi considerado um $\mathrm{Re}\approx5.31\cdot10^6$, calculado com a \cref{eq:y+}.
 
+  Forem também calculadas a energia cinética turbulenta, $k$, e a taxa de dissipação específica, $\omega$, de forma a definir as condições de fronteira de turbulência na entrada para o modelo $k-\omega\ SST$:
+  \[
+      k = \frac{3}{2}(U_\infty \cdot I)^2; \qquad \omega = \frac{\sqrt{k}}{C_\mu^0.25 \cdot L}
+  \]
+  tendo sido obtidos os valores $k=\SI{33.844}{\meter^2\per\second^2}$ e $\omega=\SI{151.733}{\per\second}$.
+
   %\item \textbf{Resolução.} Algoritmo SIMPLE (\texttt{simpleFoam}) até os
   %resíduos descerem abaixo de [TODO] e $c_l$ estabilizar.
   %\item \textbf{Coeficientes de força.} Integrando a pressão e as tensões
