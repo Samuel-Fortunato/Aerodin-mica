@@ -3,7 +3,29 @@
 
 \subsection*{Método dos perfis delgados}
 
-O procedimento, implementado em MATLAB, está esquematizado na
+O método dos perfis delgados foi implementado em MATLAB, considerando um
+escoamento bidimensional, estacionário, incompressível e invíscido, em torno de
+um perfil de espessura e curvatura pequenas face à corda e a ângulos de ataque
+pequenos. Nestas condições, o perfil é substituído por uma folha de vórtices
+$\gamma(\xi)$ colocada sobre a linha média, que, por ser pouco curvada, se
+aproxima pela corda. Impondo que a linha média seja uma linha de corrente,
+obtém-se a equação fundamental da teoria dos perfis delgados:
+\[
+  \frac{1}{2\pi}\int_0^c \frac{\gamma(\xi)\,d\xi}{x-\xi}
+  = V_\infty\left(\alpha - \frac{dz_c}{dx}\right).
+\]
+Com a mudança de variável $\xi = \tfrac{c}{2}(1-\cos\theta)$, a solução que
+satisfaz a condição de Kutta no bordo de fuga, $\gamma(\pi) = 0$, é a série
+\[
+  \gamma(\theta) = 2V_\infty\left[A_0\,\frac{1+\cos\theta}{\sin\theta}
+  + \sum_{n=1}^{\infty} A_n \sin(n\theta)\right],
+\]
+em que os coeficientes $A_n$ dependem apenas do declive da linha média. Pelo
+teorema de Kutta--Joukowski, $L' = \rho_\infty V_\infty \Gamma$, com
+$\Gamma = \int_0^c \gamma\,d\xi = \pi c V_\infty (A_0 + A_1/2)$, pelo que a
+sustentação depende apenas de $A_0$ e $A_1$.
+
+O procedimento seguido encontra-se esquematizado na
 Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saídas
 à direita.
 
@@ -46,11 +68,18 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
 \end{figure}
 
 \begin{etapas}
-  \item \textbf{Importação da geometria.} Coordenadas da base de dados da UIUC
-  (formato Lednicer), 36 pontos por superfície, já normalizadas pela corda.
-  \item \textbf{Interpolação e linha média.} As superfícies são interpoladas em
-  $N$ pontos (\emph{pchip} em $\sqrt{x}$, que acompanha melhor o bordo de
-  ataque), obtendo-se
+  \item \textbf{Importação da geometria.} As coordenadas do perfil Roncz
+  foram obtidas da base de dados da UIUC, em formato Lednicer, em que o extradorso e
+  o intradorso são listados separadamente, ambos do bordo de ataque
+  ($x/c = 0$) para o bordo de fuga ($x/c = 1$), com 36 pontos por superfície.
+  As coordenadas já se encontram normalizadas pela corda.
+  \item \textbf{Interpolação e linha média.} Como os pontos do extradorso e do
+  intradorso não têm, em geral, as mesmas abcissas, ambas as superfícies foram
+  interpoladas numa malha comum de $N$ pontos em $x/c \in [0,1]$. Usou-se uma
+  interpolação PCHIP (\emph{piecewise cubic Hermite}), que preserva a
+  monotonia dos dados e evita oscilações, parametrizada em $\sqrt{x}$, uma
+  variável que concentra a informação junto ao bordo de ataque, onde a curvatura
+  da superfície é maior. Obtêm-se a linha média e a espessura,
   \[
     z_c(x) = \frac{z_u(x) + z_l(x)}{2}, \qquad t(x) = z_u(x) - z_l(x).
   \]
@@ -69,30 +98,52 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
 \end{figure}
 
 \begin{etapas}[resume]
-  \item \textbf{Declive e mudança de variável.} $dz_c/dx$ calcula-se por
-  diferenças finitas centradas e é reinterpolado numa malha uniforme em
+  \item \textbf{Declive e mudança de variável.} O declive da linha média,
+  $dz_c/dx$, foi calculado por diferenças finitas centradas nos pontos
+  interiores (e unilaterais nos extremos) e reinterpolado (PCHIP) numa malha
+  de $N$ pontos uniforme em $\theta$, com
   \[
-    x = \frac{c}{2}\,(1 - \cos\theta), \qquad 0 \le \theta \le \pi .
+    x = \frac{c}{2}\,(1 - \cos\theta), \qquad 0 \le \theta \le \pi ,
   \]
-  \item \textbf{Coeficientes de Fourier.} Pela regra dos trapézios, com
-  $A_0 = \alpha - I_0$,
+  em que $\theta = 0$ corresponde ao bordo de ataque e $\theta = \pi$ ao bordo
+  de fuga. Esta é a variável em que a solução $\gamma(\theta)$ é expandida, e
+  uma malha uniforme em $\theta$ concentra os pontos junto aos bordos de
+  ataque e de fuga, onde $dz_c/dx$ varia mais rapidamente.
+  \item \textbf{Coeficientes de Fourier.} Os coeficientes da série dependem
+  do ângulo de ataque e do declive da linha média, $A_0 = \alpha - I_0$ e
+  $A_n = \tfrac{2}{\pi}\int_0^{\pi} (dz_c/dx)\cos(n\theta)\,d\theta$, em que
+  se separou a parte de $A_0$ que depende só da geometria:
   \[
     I_0 = \frac{1}{\pi}\int_0^{\pi} \frac{dz_c}{dx}\,d\theta, \qquad
     A_1 = \frac{2}{\pi}\int_0^{\pi} \frac{dz_c}{dx}\cos\theta\,d\theta .
   \]
-  \item \textbf{Coeficientes aerodinâmicos.} Para $\alpha$ entre $-20^\circ$ e
-  $20^\circ$ (passo $0{,}5^\circ$),
+  Os integrais foram calculados pela regra dos trapézios. Como $\alpha$ só
+  intervém em $A_0$, $I_0$ e $A_1$ são calculados uma única vez e servem para
+  todos os ângulos de ataque.
+  \item \textbf{Coeficientes aerodinâmicos.} Por unidade de envergadura, o
+  coeficiente de sustentação resulta de $\Gamma$:
   \[
-    c_l = 2\pi\left(A_0 + \frac{A_1}{2}\right) = 2\pi\,(\alpha - \alpha_{L=0}),
-    \qquad \alpha_{L=0} = I_0 - \frac{A_1}{2},
+    c_l = \frac{L'}{\tfrac{1}{2}\rho_\infty V_\infty^2 c}
+        = 2\pi\left(A_0 + \frac{A_1}{2}\right) = 2\pi\,(\alpha - \alpha_{L=0}),
+    \qquad \alpha_{L=0} = I_0 - \frac{A_1}{2}.
   \]
-  com $dc_l/d\alpha = 2\pi$~rad$^{-1}$, independente da geometria.
-  \item \textbf{Convergência.} Repete-se o cálculo para $N$ entre 50 e
-  $10\,000$ e comparam-se $c_l(5^\circ)$ e $\alpha_{L=0}$ com os valores para
-  $N = 10\,000$. As tolerâncias ($10^{-3}$ e $0{,}01^\circ$) são cumpridas a
-  partir de $N = 200$; com o valor usado, $N = 1000$, os erros são
-  $7{,}2\times10^{-5}$ e $6{,}6\times10^{-4}$\,$^\circ$. Como o custo é desprezável
-  ($\approx 0{,}1$~ms por cálculo), usou-se $N = 1000$ como margem de segurança.
+  O declive da curva de sustentação é $dc_l/d\alpha = 2\pi$~rad$^{-1}$, igual
+  para qualquer perfil delgado. A curvatura apenas desloca a reta através de
+  $\alpha_{L=0}$, e a espessura não intervém. A curva $c_l(\alpha)$ foi
+  calculada para $\alpha$ entre $-20^\circ$ e $20^\circ$, com passo de
+  $0{,}5^\circ$. Fora da gama de pequenos ângulos, os valores servem apenas
+  de comparação, uma vez que a teoria não prevê a perda.
+  \item \textbf{Estudo de convergência.} Para verificar que o resultado não
+  depende da discretização, repetiu-se o cálculo para $N$ entre 50 e
+  $10\,000$ pontos. Tomando a solução com $N = 10\,000$ como referência
+  numérica, definiram-se os erros absolutos de $c_l(5^\circ)$ e de
+  $\alpha_{L=0}$ em relação a essa solução,
+  com tolerâncias de $10^{-3}$ e $0{,}01^\circ$, respetivamente. As
+  tolerâncias são cumpridas a partir de $N = 200$. Com o valor usado,
+  $N = 1000$, os erros são de $7{,}2\times10^{-5}$ e
+  $6{,}6\times10^{-4}$\,$^\circ$. Como o custo computacional é desprezável
+  ($\approx 0{,}1$~ms por cálculo), adotou-se $N = 1000$ como margem de
+  segurança.
 \end{etapas}
 
 
@@ -108,333 +159,130 @@ ao longo do contorno. Considerou-se uma velocidade de
 referência unitária ($V_\infty=1$).
 
 O procedimento seguido encontra-se esquematizado na
-Figura~\ref{fig:fluxograma_paineis}.
+Figura~\ref{fig:fluxograma_paineis}, com as entradas de cada etapa à esquerda
+e as saídas à direita.
 
-
-
-
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
-\resizebox{0.98\linewidth}{!}{%
-\begin{tikzpicture}[
-    bloco/.style={
-        draw=black!65,
-        fill=blue!5,
-        rounded corners=2pt,
-        align=center,
-        text width=4.1cm,
-        minimum height=3.4cm,
-        inner sep=4pt,
-        font=\footnotesize
-    },
-    seta/.style={
-        -{Stealth[length=2mm]},
-        thin,
-        draw=black!80
-    }
-]
-
-% PRIMEIRA LINHA
-
-\node[bloco] (b1) {
-    \textbf{1. Discretização}\\[3pt]
-    \textbf{Entradas:} Ficheiro Lednicer; $N$\\[3pt]
-    Interpolação PCHIP e painelização\\[3pt]
-    \textbf{Saídas:} Nós, pontos de controlo,
-    $\Delta S_i$, $\vec{n}_i$, $\vec{t}_i$
-};
-
-\node[bloco, right=6mm of b1] (b2) {
-    \textbf{2. Escoamentos elementares}\\[3pt]
-    \textbf{Entradas:} $V_\infty$, $\alpha$;
-    geometria\\[3pt]
-    Distribuição vorticial linear\\[3pt]
-    \textbf{Saídas:} $U_\infty$, $W_\infty$;
-    $N+1$ incógnitas $\gamma_j$
-};
-
-\node[bloco, right=6mm of b2] (b3) {
-    \textbf{3. Construção do sistema}\\[3pt]
-    \textbf{Entradas:} Geometria,
-    $\vec{V}_\infty$; modelo vorticial\\[3pt]
-    Coeficientes de influência,
-    impermeabilidade e Kutta\\[3pt]
-    \textbf{Saídas:} $\mathbf{A}$,
-    $\mathbf{b}$; influências unitárias de velocidade
-};
-
-% REFERÊNCIA INFERIOR DA PRIMEIRA LINHA
-
-\path (b1.south) -- (b2.south) -- (b3.south);
-
-\coordinate (linha2) at
-($(current bounding box.south)-(0,7mm)$);
-
-% SEGUNDA LINHA
-
-\node[bloco, anchor=north] (b4)
-at (b3.center |- linha2) {
-    \textbf{4. Resolução e cálculo aerodinâmico}\\[3pt]
-    \textbf{Entradas:} $\mathbf{A}$,
-    $\mathbf{b}$, $\alpha$;
-    geometria e influências\\[3pt]
-    $\mathbf{A}\boldsymbol{\gamma}=\mathbf{b}$\\[3pt]
-    \textbf{Saídas:} $\gamma_j$, $V_{n,i}$,
-    $V_{t,i}$, $c_{p,i}$, $c_l$
-};
-
-\node[bloco, anchor=north] (b5)
-at (b2.center |- linha2) {
-   \textbf{5. Estudo de convergência}\\[3pt]
-    \textbf{Entradas:} $\alpha=5^\circ$;
-    $N=20:30:800$; $c_l(N)$; tempos\\[3pt]
-    Critério: $\varepsilon_N\leq0{,}5\%$\\[3pt]
-    \textbf{Saídas:} $\varepsilon_N$;
-    $N_{\mathrm{selecionado}}=260$
-};
-
-\node[bloco, anchor=north] (b6)
-at (b1.center |- linha2) {
-    \textbf{6. Análises aerodinâmicas}\\[3pt]
-    \textbf{Entradas:} $N=260$;
-    $\alpha\in[-20^\circ,20^\circ]$;
-    modelo de painéis\\[3pt]
-    Variação de $\alpha$ e pós-processamento\\[3pt]
-    \textbf{Saídas:} $c_l(\alpha)$, $c_{l\alpha}$,
-    $\alpha_0$, $c_p(x/c)$, $c_{p,\min}$,
-    linhas de corrente e estagnação
-};
-
-% SETAS PRINCIPAIS
-
-\draw[seta] (b1.east) -- (b2.west);
-\draw[seta] (b2.east) -- (b3.west);
-\draw[seta] (b3.south) -- (b4.north);
-\draw[seta] (b4.west) -- (b5.east |- b4.west);
-\draw[seta] (b5.west) -- (b6.east |- b5.west);
-
-% CICLO DE CONVERGÊNCIA
-
-\coordinate (baixo) at
-($(current bounding box.south)-(0,5mm)$);
-
-\coordinate (esquerda) at
-($(b1.west)-(5mm,0)$);
-
-\draw[seta,dashed]
-    (b5.south)
-    -- (b5.south |- baixo)
-    -- (esquerda |- baixo)
-    |- (b1.west);
-
-\node[font=\scriptsize, anchor=west]
-    at ($(b5.south |- baixo)+(5mm,3mm)$)
-    {Repetir para diferentes valores de $N$};
-
-\end{tikzpicture}%
-}
-\caption{Diagrama de blocos do método dos painéis
-aplicado ao perfil Roncz}
+\begin{tikzpicture}[node distance=0.45cm]
+  % etapas
+  \node[etapa] (p1) {\textbf{1.} Discretização da geometria};
+  \node[etapa, below=of p1] (p2) {\textbf{2.} Escoamentos elementares};
+  \node[etapa, below=of p2] (p3) {\textbf{3.} Construção do sistema de equações};
+  \node[etapa, below=of p3] (p4) {\textbf{4.} Resolução e cálculo aerodinâmico};
+  \node[etapa, below=of p4] (p5) {\textbf{5.} Estudo de convergência em $N$};
+  \node[etapa, below=of p5] (p6) {\textbf{6.} Análises aerodinâmicas};
+  \foreach \a/\b in {p1/p2,p2/p3,p3/p4,p4/p5,p5/p6}
+    \draw[seta] (\a) -- (\b);
+  % ciclo de convergência em N
+  \draw[seta, dashed] (p5.east) -- ++(0.3,0) |- (p1.east);
+  % entradas
+  \node[io, left=0.5cm of p1, align=flush right] (j1) {Ficheiro de coordenadas (formato Lednicer): 36 pontos por superfície; número de painéis $N$};
+  \node[io, left=0.5cm of p2, align=flush right] (j2) {$V_\infty = 1$, $\alpha$; geometria dos painéis};
+  \node[io, left=0.5cm of p3, align=flush right] (j3) {$\hat{\vec{V}}_{ij}$, $\vec{n}_i$, $\vec{V}_\infty$; impermeabilidade e condição de Kutta};
+  \node[io, left=0.5cm of p4, align=flush right] (j4) {$\mathbf{A}$, $\mathbf{b}$; $\hat{\vec{V}}_{ij}$, $\vec{t}_i$, $\Delta S_i$};
+  \node[io, left=0.5cm of p5, align=flush right] (j5) {$\alpha = 5^\circ$; $N = 20, 50, \dots, 800$; referência $N = 800$; tolerância $\varepsilon_N \le 0{,}5\,\%$};
+  \node[io, left=0.5cm of p6, align=flush right] (j6) {$N = 260$; $\alpha \in [-20^\circ, 20^\circ]$, passo $5^\circ$};
+  % saídas
+  \node[io, right=0.75cm of p1] (s1) {Nós, pontos de controlo, $\Delta S_i$, $\vec{n}_i$, $\vec{t}_i$};
+  \node[io, right=0.75cm of p2] (s2) {$U_\infty$, $W_\infty$; velocidades induzidas unitárias $\hat{\vec{V}}_{ij}$; $N+1$ incógnitas $\gamma_j$};
+  \node[io, right=0.75cm of p3] (s3) {Sistema $\mathbf{A}\boldsymbol{\gamma} = \mathbf{b}$, de dimensão $(N+1)\times(N+1)$};
+  \node[io, right=0.75cm of p4] (s4) {$\gamma_j$; $V_{n,i}$, $V_{t,i}$, $c_{p,i}$; $c_l$};
+  \node[io, right=0.75cm of p5] (s5) {$\varepsilon_N$ e tempo de cálculo em função de $N$; $N = 260$ selecionado};
+  \node[io, right=0.75cm of p6] (s6) {$c_l(\alpha)$, $c_{l\alpha}$, $\alpha_0$; $c_p(x/c)$, $c_{p,\min}$; linhas de corrente e ponto de estagnação};
+  \foreach \k in {1,...,6} {
+    \draw[setaio] (j\k) -- (p\k);
+    \draw[setaio] (p\k) -- (s\k);
+  }
+  \path (p1.north) ++(0,0.6) coordinate (topo);
+  \node[titulo] at (j1 |- topo) {Entradas};
+  \node[titulo] at (s1 |- topo) {Saídas};
+\end{tikzpicture}
+\caption{Diagrama de blocos do método dos painéis. A seta a tracejado
+representa o estudo de convergência em $N$.}
 \label{fig:fluxograma_paineis}
 \end{figure}
 
-\begin{enumerate}
-
-    \item \textbf{Discretização da geometria.}
-    As coordenadas do perfil Roncz, fornecidas em formato
-    Lednicer, contêm 36 pontos por superfície, resultando
-    numa discretização inicial de 70 painéis. O contorno
-    foi percorrido no sentido anti-horário, desde o bordo
-    de fuga do extradorso até ao bordo de fuga do intradorso.
-
-    Para variar o número de painéis, aplicou-se uma
-    interpolação PCHIP, parametrizada pela distância
-    acumulada ao longo de cada superfície, mantendo
-    $N/2$ painéis em cada uma. Após a normalização das coordenadas pela corda, determinaram-se os pontos de controlo, localizados no ponto médio de cada painel, os comprimentos adimensionais $\Delta S_i$ e os vetores unitários tangencial $\vec{t}_i$ e normal exterior $\vec{n}_i$.
-
-    \item \textbf{Definição dos escoamentos elementares.}
-    O escoamento uniforme foi definido por
-    $\vec{V}_\infty=U_\infty\vec{i}+W_\infty\vec{k}$,
-    com $U_\infty=V_\infty\cos\alpha$ e
-    $W_\infty=V_\infty\sin\alpha$.
-
-    Considerando uma variação linear da intensidade
-    vorticial em cada painel, a velocidade induzida
-    pelo painel $j$ no ponto de controlo $i$ é dada por:
-
-    \begin{equation}
-        \vec{V}_{ij} =
-        \gamma_j\hat{\vec{V}}_{ij,\mathrm{start}}
-        +\gamma_{j+1}\hat{\vec{V}}_{ij,\mathrm{end}}.
-        \label{eq:velocidade_induzida}
-    \end{equation}
-
-    As contribuições unitárias foram determinadas
-    através da função \texttt{VorticeDist}, fornecida
-    no âmbito da unidade curricular. A continuidade
-    da distribuição nos nós interiores resulta em
-    $N+1$ intensidades vorticais desconhecidas para
-    $N$ painéis, incluindo os dois extremos do
-    bordo de fuga.
-
-    \item \textbf{Construção do sistema de equações.}
-    A condição de impermeabilidade foi imposta nos
-    pontos de controlo, anulando a componente normal
-    da velocidade total:
-
-    \begin{equation}
-        \vec{V}_i\cdot\vec{n}_i=0
-        \quad\Rightarrow\quad
-        \sum_{j=1}^{N+1}a_{ij}\gamma_j
-        =-\vec{V}_\infty\cdot\vec{n}_i.
-        \label{eq:impermeabilidade}
-    \end{equation}
-
-    Os coeficientes de influência $a_{ij}$ foram
-    obtidos pela projeção das contribuições unitárias
-    sobre a normal de cada painel. Nos nós interiores,
-    consideraram-se as contribuições dos dois painéis
-    adjacentes:
-
-    \begin{equation}
-        a_{ij} =
-        \begin{cases}
-            \hat{\vec{V}}_{i1,\mathrm{start}}
-            \cdot\vec{n}_i, & j=1,\\
-            \left(
-            \hat{\vec{V}}_{i(j-1),\mathrm{end}}
-            +\hat{\vec{V}}_{ij,\mathrm{start}}
-            \right)\cdot\vec{n}_i, & 2\leq j\leq N,\\
-            \hat{\vec{V}}_{iN,\mathrm{end}}
-            \cdot\vec{n}_i, & j=N+1.
-        \end{cases}
-        \label{eq:coeficientes_influencia}
-    \end{equation}
-
-    A condição de Kutta, expressa por
-    $\gamma_1+\gamma_{N+1}=0$, permitiu completar
-    o sistema de $N+1$ equações:
-
-    \begin{equation}
-        \mathbf{A}\boldsymbol{\gamma}=\mathbf{b},
-        \qquad
-        b_i=-\vec{V}_\infty\cdot\vec{n}_i,
-        \qquad b_{N+1}=0.
-        \label{eq:sistema_paineis}
-    \end{equation}
-    A matriz $\mathbf{A}$ possui dimensão $(N+1)\times(N+1)$. Esta formulação da condição de Kutta constitui
-    uma aproximação devido à espessura finita do
-    bordo de fuga.
-
-    \item \textbf{Resolução e cálculo aerodinâmico.}
-    O sistema linear foi resolvido através do operador
-    \texttt{\textbackslash} do MATLAB. Conhecidas as
-    intensidades vorticais, determinou-se a velocidade
-    total pela superposição das contribuições de todos
-    os painéis com o escoamento uniforme.
-
-   A componente normal da velocidade permitiu verificar
-que o escoamento não atravessa a superfície do perfil
-($V_{n,i}\approx0$). Por sua vez, a componente tangencial
-foi utilizada para determinar o coeficiente de pressão
-em cada ponto de controlo, através da equação de Bernoulli:
-
-\begin{equation}
-    V_{t,i}=\vec{V}_i\cdot\vec{t}_i,
-    \qquad
-    c_{p,i}=1-
-    \left(\frac{V_{t,i}}{V_\infty}\right)^2.
-    \label{eq:coeficiente_pressao}
-\end{equation}
-
-   A partir dos coeficientes de pressão, determinaram-se
-as componentes horizontal e vertical do coeficiente
-de força aerodinâmica, somando as contribuições de
-cada painel:
-
-\begin{equation}
-    \begin{aligned}
-        c_x &=-\sum_{i=1}^{N}
-        c_{p,i}n_{x,i}\Delta S_i,\\
-        c_z &=-\sum_{i=1}^{N}
-        c_{p,i}n_{z,i}\Delta S_i.
-    \end{aligned}
-    \label{eq:coeficientes_forca}
-\end{equation}
-
-O coeficiente de sustentação foi obtido a partir da
-componente da força aerodinâmica perpendicular à
-direção do escoamento incidente:
-
-\begin{equation}
-    c_l=-c_x\sin\alpha+c_z\cos\alpha.
+\begin{etapas}
+  \item \textbf{Discretização da geometria.} As coordenadas do perfil Roncz,
+  em formato Lednicer, contêm 36 pontos por superfície (70 painéis na
+  discretização original). O contorno foi percorrido no sentido anti-horário,
+  do bordo de fuga do extradorso até ao bordo de fuga do intradorso. Para
+  variar o número de painéis, aplicou-se uma interpolação PCHIP parametrizada
+  pela distância acumulada ao longo de cada superfície, com $N/2$ painéis em
+  cada uma. Com as coordenadas normalizadas pela corda, determinaram-se os
+  pontos de controlo (ponto médio de cada painel), os comprimentos $\Delta S_i$
+  e os vetores unitários tangencial $\vec{t}_i$ e normal exterior $\vec{n}_i$.
+  \item \textbf{Escoamentos elementares.} O escoamento uniforme é
+  $\vec{V}_\infty=U_\infty\vec{i}+W_\infty\vec{k}$, com
+  $U_\infty=V_\infty\cos\alpha$ e $W_\infty=V_\infty\sin\alpha$. Com uma
+  intensidade vorticial linear em cada painel, a velocidade induzida pelo
+  painel $j$ no ponto de controlo $i$ é
+  $\vec{V}_{ij}=\gamma_j\hat{\vec{V}}_{ij,\mathrm{start}}+\gamma_{j+1}\hat{\vec{V}}_{ij,\mathrm{end}}$,
+  em que as contribuições unitárias $\hat{\vec{V}}_{ij}$ são dadas pela função
+  \texttt{VorticeDist}, fornecida na unidade curricular. A continuidade de
+  $\gamma$ nos nós interiores resulta em $N+1$ incógnitas $\gamma_j$ para $N$
+  painéis, incluindo os dois extremos do bordo de fuga.
+  \item \textbf{Construção do sistema de equações.} A condição de
+  impermeabilidade, imposta em cada ponto de controlo, anula a componente
+  normal da velocidade total:
+  \begin{equation}
+    \vec{V}_i\cdot\vec{n}_i=0
+    \quad\Rightarrow\quad
+    \sum_{j=1}^{N+1}a_{ij}\gamma_j=-\vec{V}_\infty\cdot\vec{n}_i .
+    \label{eq:impermeabilidade}
+  \end{equation}
+  Os coeficientes de influência $a_{ij}$ resultam da projeção das
+  contribuições unitárias na normal; nos nós interiores somam-se as
+  contribuições dos dois painéis adjacentes:
+  \begin{equation}
+    a_{ij} =
+    \begin{cases}
+      \hat{\vec{V}}_{i1,\mathrm{start}}\cdot\vec{n}_i, & j=1,\\
+      \left(\hat{\vec{V}}_{i(j-1),\mathrm{end}}+\hat{\vec{V}}_{ij,\mathrm{start}}\right)\cdot\vec{n}_i, & 2\leq j\leq N,\\
+      \hat{\vec{V}}_{iN,\mathrm{end}}\cdot\vec{n}_i, & j=N+1.
+    \end{cases}
+    \label{eq:coeficientes_influencia}
+  \end{equation}
+  A condição de Kutta, $\gamma_1+\gamma_{N+1}=0$, completa o sistema
+  $\mathbf{A}\boldsymbol{\gamma}=\mathbf{b}$, de dimensão
+  $(N+1)\times(N+1)$, com $b_i=-\vec{V}_\infty\cdot\vec{n}_i$ e $b_{N+1}=0$.
+  Esta forma da condição de Kutta é uma aproximação, dada a espessura finita
+  do bordo de fuga.
+  \item \textbf{Resolução e cálculo aerodinâmico.} O sistema foi resolvido
+  com o operador \texttt{\textbackslash} do MATLAB. Conhecidos os $\gamma_j$,
+  a velocidade total em cada ponto de controlo resulta da superposição das
+  contribuições de todos os painéis com o escoamento uniforme. A componente
+  normal permite verificar a impermeabilidade ($V_{n,i}\approx0$), e a
+  tangencial dá o coeficiente de pressão pela equação de Bernoulli. Somando
+  as contribuições de cada painel e projetando a força na direção
+  perpendicular ao escoamento incidente, obtém-se $c_l$:
+  \begin{equation}
+    c_{p,i}=1-\left(\frac{V_{t,i}}{V_\infty}\right)^2, \qquad
+    c_{x,z}=-\sum_{i=1}^{N} c_{p,i}\,n_{x,z,i}\,\Delta S_i, \qquad
+    c_l=-c_x\sin\alpha+c_z\cos\alpha ,
     \label{eq:coeficiente_sustentacao}
-\end{equation}
-
-    \item \textbf{Estudo de convergência.}
-    Para $\alpha=5^\circ$, repetiu-se o cálculo de
-    $c_l$ para discretizações entre 20 e 800 painéis,
-    com incrementos de 30. Excluíram-se as operações
-    de representação gráfica e de reconstrução do
-    campo de velocidades exterior, registando-se
-    o tempo de cálculo para cada discretização.
-
-    Considerando a solução de 800 painéis como
-    referência numérica, definiu-se o erro relativo
-    percentual por:
-
-    \begin{equation}
-        \varepsilon_N=
-        \left|
-        \frac{c_l(N)-c_l(800)}{c_l(800)}
-        \right|\times100.
-        \label{eq:erro_convergencia}
-    \end{equation}
-
-    Para uma tolerância de $0{,}5\%$, selecionaram-se
-    260 painéis, com um erro relativo de $0{,}468\%$.
-    O tempo de cálculo diminuiu de aproximadamente
-    $1{,}45$~s para $0{,}155$~s, correspondendo a
-    uma redução de $89{,}3\%$.
-
-    \item \textbf{Análises aerodinâmicas.}
-    Com a discretização selecionada, determinou-se
-    $c_l(\alpha)$ entre $-20^\circ$ e $20^\circ$,
-    com incrementos de $5^\circ$. O declive da curva
-    de sustentação e o ângulo de sustentação nula
-    foram obtidos por ajuste linear pelo método
-    dos mínimos quadrados, entre $-5^\circ$ e
-    $5^\circ$:
-
-    \begin{equation}
-        c_l(\alpha)=c_{l0}+c_{l\alpha}\alpha,
-        \qquad
-        \alpha_0=-\frac{c_{l0}}{c_{l\alpha}}.
-        \label{eq:curva_sustentacao}
-    \end{equation}
-
-    Para $\alpha=0^\circ$, $5^\circ$ e $20^\circ$,
-    calcularam-se as distribuições superficiais de
-    pressão, as linhas de corrente e o coeficiente
-    de pressão mínimo,
-    $c_{p,\min}=\min_i(c_{p,i})$.
-
-    A posição do ponto de estagnação anterior foi
-    estimada por interpolação linear entre pontos
-    de controlo consecutivos com velocidades
-    tangenciais de sinais opostos, utilizando:
-
-    \begin{equation}
-        \lambda=-\frac{V_{t,i}}{V_{t,i+1}-V_{t,i}},
-        \qquad
-        V_{t,i}V_{t,i+1}<0.
-        \label{eq:fator_interpolacao}
-    \end{equation}
-
-    As coordenadas adimensionais do ponto de
-    estagnação foram estimadas por interpolação
-    das coordenadas dos respetivos pontos de controlo.
-
-\end{enumerate}
+  \end{equation}
+  com $V_{t,i}=\vec{V}_i\cdot\vec{t}_i$.
+  \item \textbf{Estudo de convergência.} Para $\alpha=5^\circ$, repetiu-se o
+  cálculo de $c_l$ para 20 a 800 painéis, com incrementos de 30, registando o
+  tempo de cálculo de cada discretização (sem as operações de representação
+  gráfica nem a reconstrução do campo exterior). Tomando a solução com 800
+  painéis como referência numérica, definiu-se o erro relativo
+  $\varepsilon_N=\left|c_l(N)-c_l(800)\right|/\left|c_l(800)\right|\times100\,\%$.
+  Para uma tolerância de $0{,}5\,\%$, selecionaram-se 260 painéis, com um
+  erro de $0{,}468\,\%$ e uma redução do tempo de cálculo de $1{,}45$~s para
+  $0{,}155$~s ($-89{,}3\,\%$).
+  \item \textbf{Análises aerodinâmicas.} Com $N=260$, determinou-se
+  $c_l(\alpha)$ entre $-20^\circ$ e $20^\circ$, com incrementos de $5^\circ$.
+  O declive e o ângulo de sustentação nula foram obtidos por ajuste linear
+  (mínimos quadrados) entre $-5^\circ$ e $5^\circ$,
+  $c_l=c_{l0}+c_{l\alpha}\alpha$, com $\alpha_0=-c_{l0}/c_{l\alpha}$. Para
+  $\alpha=0^\circ$, $5^\circ$ e $20^\circ$, calcularam-se a distribuição de
+  $c_p$, as linhas de corrente e $c_{p,\min}=\min_i c_{p,i}$. O ponto de
+  estagnação localiza-se entre dois pontos de controlo consecutivos com
+  $V_{t,i}V_{t,i+1}<0$, e as suas coordenadas obtêm-se por interpolação
+  linear com o fator $\lambda=-V_{t,i}/(V_{t,i+1}-V_{t,i})$.
+\end{etapas}
 
 \input{secoes/procedimentos/CFD.tex}
