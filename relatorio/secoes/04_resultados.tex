@@ -189,44 +189,46 @@ A Tabela~\ref{tab:custo} compara o custo de cada método, num computador com
     \toprule
     Método & Software & N.º de ângulos & Tempo de cálculo \\
     \midrule
-    Perfis delgados & MATLAB   & 81 & $\approx 0{,}1$~ms (total) \\
-    Painéis         & MATLAB   & 9  & $\approx 1{,}5$~s (total) \\
-    CFD             & OpenFOAM & 5  & \rasc{$\approx 6$~min} por ângulo \tbd{confirmar} \\
+    Perfis delgados & MATLAB   & 81 & $\approx 0{,}3$~ms (total) \\
+    Painéis         & MATLAB   & 9  & $\approx 2{,}9$~s (total) \\
+    CFD             & OpenFOAM & 5  & $\approx 6$~min por ângulo \tbd{confirmar} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\rasc{A diferença de custo é ainda maior quando se inclui a preparação. Nos
-métodos potenciais, basta um \emph{script} que lê as coordenadas do perfil,
-e mudar de perfil ou de ângulo de ataque é imediato. No CFD é preciso construir
-o domínio, gerar e verificar a malha (incluindo as camadas prismáticas para
-$y^+ \approx 1$), definir as condições de fronteira e o modelo de turbulência,
-fazer o estudo de independência de malha e acompanhar a convergência de cada
-simulação. Além disso, como se rodou o perfil, a malha tem de ser gerada de
-novo para cada ângulo. Esta preparação demora horas a dias, contra minutos nos
-métodos potenciais.}
+Pela Tabela~\ref{tab:custo}, a teoria dos perfis delgados é a mais rápida,
+com os 81 ângulos calculados em menos de um milissegundo. A geometria só entra
+em $I_0$ e $A_1$, que se calculam uma vez, e a partir daí cada ângulo é apenas
+uma conta. O método dos painéis demora mais, porque para cada ângulo é preciso
+montar e resolver um sistema de $N+1 = 261$ equações com a influência de todos
+os painéis. Mesmo assim, o custo é baixo e tudo corre num \emph{script} de
+MATLAB. O CFD é, de longe, o mais caro. Cada ângulo demora alguns minutos,
+porque as equações do escoamento e do modelo de turbulência são resolvidas
+iterativamente em cerca de 64 mil células até os resíduos descerem abaixo de
+$10^{-7}$. A isto junta-se a preparação, que nos métodos potenciais se resume a
+ler as coordenadas do perfil, mas no CFD inclui gerar e verificar a malha,
+definir o caso, fazer o estudo de independência de malha e, como se rodou o
+perfil, repetir a malha para cada ângulo.
 
 \paragraph{Vantagens, desvantagens e gama de aplicação.}
-\rasc{Para uma primeira estimativa, a teoria dos perfis delgados chega. Só precisa
-da linha média e de dois integrais que nem dependem do ângulo de ataque, e mostra
-logo como a curvatura afeta $\alpha_{L=0}$. O problema é que trata o perfil como
-uma linha sem espessura nem viscosidade. O declive fica preso a $2\pi$, a
-velocidade no bordo de ataque tende para infinito e não há forma de obter o
-arrasto ou a perda. Os resultados só são de confiança até cerca de $10^\circ$.
+A teoria dos perfis delgados tem solução analítica e praticamente não tem
+custo, bastando conhecer a linha média. Em troca, não considera a espessura nem
+a viscosidade, dá velocidade infinita no bordo de ataque e não consegue prever o
+arrasto nem a perda. Serve para uma primeira estimativa de $c_l$ e de
+$\alpha_{L=0}$ enquanto a curva é linear, até cerca de $10^\circ$.
 
-Quando interessa a forma real do perfil, o método dos painéis é o passo
-seguinte. Em poucos segundos dá o $C_p$, as linhas de corrente e o ponto de
-estagnação, por isso é prático para comparar vários perfis. Continua a ser
-invíscido, o que o leva a sobrestimar o $c_l$ acima de $10^\circ$ (mais $1{,}32$
-do que o CFD a $20^\circ$) e a prever picos de sucção irrealistas, como
-$C_{p,\min} \approx -21{,}8$ a $20^\circ$. Além disso, o resultado muda com o
-número de painéis.
+O método dos painéis já usa a forma real do perfil e, com um custo ainda baixo,
+dá a distribuição de $C_p$ e as linhas de corrente, o que o torna útil para
+comparar vários perfis. No entanto, continua sem viscosidade, os resultados
+dependem do número de painéis e também não prevê o arrasto, o descolamento nem a
+perda. É indicado para estudar a distribuição de pressões com o escoamento
+colado, até cerca de $10^\circ$.
 
-O CFD fica para aquilo que os outros dois não conseguem fazer, ou seja, o arrasto
-e tudo o que envolva descolamento, acima de cerca de $10^\circ$. Em troca, exige
-muito mais tempo de preparação e de cálculo, e os resultados mudam com a malha e
-com o modelo de turbulência. A $20^\circ$ nem é certo que uma solução
-estacionária seja válida.}
+O CFD é o único que inclui a viscosidade e a turbulência, e por isso consegue
+prever o arrasto, o descolamento e a perda. O preço é um custo de preparação e
+de cálculo muito maior, e resultados que dependem da malha e do modelo de
+turbulência. É o método a usar perto e depois da perda, acima de cerca de
+$10^\circ$, e sempre que interessa o arrasto.
 
 \paragraph{Linhas de corrente.}
 A Figura~\ref{fig:linhas} apresenta as linhas de corrente previstas pelo método
