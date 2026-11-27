@@ -42,19 +42,19 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
   \foreach \a/\b in {e1/e2,e2/e3,e3/e4,e4/e5,e5/e6}
     \draw[seta] (\a) -- (\b);
   % entradas
-  \node[io, left=0.5cm of e1, align=flush right] (i1) {Ficheiro de coordenadas (formato Lednicer): 36 pontos no extradorso e 36 no intradorso};
-  \node[io, left=0.5cm of e2, align=flush right] (i2) {$(x_u,z_u)$, $(x_l,z_l)$; $N = 1000$ pontos};
+  \node[io, left=0.5cm of e1, align=flush right] (i1) {Ficheiro de coordenadas (formato Lednicer): \PontosExtradorso{} pontos no extradorso e \PontosIntradorso{} no intradorso};
+  \node[io, left=0.5cm of e2, align=flush right] (i2) {$(x_u,z_u)$, $(x_l,z_l)$; $N = \NPerfisDelgados$ pontos};
   \node[io, left=0.5cm of e3, align=flush right] (i3) {$z_c(x)$; $x = \tfrac{1}{2}(1-\cos\theta)$};
   \node[io, left=0.5cm of e4, align=flush right] (i4) {$dz_c/dx\,(\theta)$, $\theta \in [0,\pi]$};
   \node[io, left=0.5cm of e5, align=flush right] (i5) {$I_0$, $A_1$; $\alpha \in [-20^\circ, 20^\circ]$, passo $0{,}5^\circ$};
-  \node[io, left=0.5cm of e6, align=flush right] (i6) {$N \in \{50,\dots,10\,000\}$; tolerâncias $\Delta c_l = 10^{-3}$, $\Delta\alpha_{L=0} = 0{,}01^\circ$};
+  \node[io, left=0.5cm of e6, align=flush right] (i6) {$N \in \{\NMinTestePerfisDelgados,\dots,\Resultado[0]{\NRefPerfisDelgados}\}$; tolerâncias $\Delta c_l = 10^{-3}$, $\Delta\alpha_{L=0} = 0{,}01^\circ$};
   % saídas
   \node[io, right=0.5cm of e1] (o1) {$(x_u,z_u)$, $(x_l,z_l)$, normalizados pela corda};
   \node[io, right=0.5cm of e2] (o2) {$z_c = \tfrac{1}{2}(z_u+z_l)$; espessura $z_u - z_l$};
   \node[io, right=0.5cm of e3] (o3) {$dz_c/dx\,(\theta)$};
   \node[io, right=0.5cm of e4] (o4) {$I_0$, $A_1$ (regra dos trapézios)};
   \node[io, right=0.5cm of e5] (o5) {$\alpha_{L=0}$, $c_l(\alpha)$, $dc_l/d\alpha = 2\pi$};
-  \node[io, right=0.5cm of e6] (o6) {Erros de $c_l(5^\circ)$ e $\alpha_{L=0}$ em função de $N$; verificação de que $N = 1000$ cumpre as tolerâncias};
+  \node[io, right=0.5cm of e6] (o6) {Erros de $c_l(5^\circ)$ e $\alpha_{L=0}$ em função de $N$; verificação de que $N = \NPerfisDelgados$ cumpre as tolerâncias};
   \foreach \k in {1,...,6} {
     \draw[setaio] (i\k) -- (e\k);
     \draw[setaio] (e\k) -- (o\k);
@@ -71,7 +71,7 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
   \item \textbf{Importação da geometria.} As coordenadas do perfil Roncz
   foram obtidas da base de dados da UIUC, em formato Lednicer, em que o extradorso e
   o intradorso são listados separadamente, ambos do bordo de ataque
-  ($x/c = 0$) para o bordo de fuga ($x/c = 1$), com 36 pontos por superfície.
+  ($x/c = 0$) para o bordo de fuga ($x/c = 1$), com \PontosExtradorso{} pontos por superfície.
   As coordenadas já se encontram normalizadas pela corda.
   \item \textbf{Interpolação e linha média.} Como os pontos do extradorso e do
   intradorso não têm, em geral, as mesmas abcissas, ambas as superfícies foram
@@ -85,9 +85,9 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
   \]
   A Figura~\ref{fig:geom} sobrepõe as superfícies interpoladas aos pontos
   originais e mostra a linha média resultante. A espessura máxima é de
-  12,1\,\% da corda em $x/c = 0{,}43$ e a curvatura máxima de 2,8\,\% em
+  \Resultado[1]{\EspessuraPct}\,\% da corda em $x/c = 0{,}43$ e a curvatura máxima de \Resultado[1]{\CurvaturaMaxPct}\,\% em
   $x/c = 0{,}39$; a linha média tem \emph{reflex} junto ao bordo de fuga
-  (mínimo de $-0{,}5\,\%$ em $x/c = 0{,}90$).
+  (mínimo de $\Resultado[1]{\CurvaturaMinPct}\,\%$ em $x/c = 0{,}90$).
 \end{etapas}
 
 \begin{figure}[H]
@@ -134,15 +134,15 @@ Figura~\ref{fig:diag_thin}, com as entradas de cada etapa à esquerda e as saíd
   $0{,}5^\circ$. Fora da gama de pequenos ângulos, os valores servem apenas
   de comparação, uma vez que a teoria não prevê a perda.
   \item \textbf{Estudo de convergência.} Para verificar que o resultado não
-  depende da discretização, repetiu-se o cálculo para $N$ entre 50 e
-  $10\,000$ pontos. Tomando a solução com $N = 10\,000$ como referência
+  depende da discretização, repetiu-se o cálculo para $N$ entre \NMinTestePerfisDelgados{} e
+  $\Resultado[0]{\NRefPerfisDelgados}$ pontos. Tomando a solução com $N = \Resultado[0]{\NRefPerfisDelgados}$ como referência
   numérica, definiram-se os erros absolutos de $c_l(5^\circ)$ e de
   $\alpha_{L=0}$ em relação a essa solução,
   com tolerâncias de $10^{-3}$ e $0{,}01^\circ$, respetivamente. As
-  tolerâncias são cumpridas a partir de $N = 200$. Com o valor usado,
-  $N = 1000$, os erros são de $7{,}2\times10^{-5}$ e
-  $6{,}6\times10^{-4}$\,$^\circ$. Como o custo computacional é desprezável
-  ($\approx 0{,}1$~ms por cálculo), adotou-se $N = 1000$ como margem de
+  tolerâncias são cumpridas a partir de $N = \NMinConvergenciaPerfisDelgados$. Com o valor usado,
+  $N = \NPerfisDelgados$, os erros são de $\ResultadoCientifico{\ErroClPerfisDelgados}$ e
+  $\ResultadoCientifico{\ErroAlphaPerfisDelgados}$\,$^\circ$. Como o custo computacional é desprezável
+  ($\approx \Resultado[3]{\TempoPerfisDelgadosMs}$~ms por cálculo), adotou-se $N = \NPerfisDelgados$ como margem de
   segurança.
 \end{etapas}
 
@@ -177,18 +177,18 @@ e as saídas à direita.
   % ciclo de convergência em N
   \draw[seta, dashed] (p5.east) -- ++(0.3,0) |- (p1.east);
   % entradas
-  \node[io, left=0.5cm of p1, align=flush right] (j1) {Ficheiro de coordenadas (formato Lednicer): 36 pontos por superfície; número de painéis $N$};
+  \node[io, left=0.5cm of p1, align=flush right] (j1) {Ficheiro de coordenadas (formato Lednicer): \PontosExtradorso{} pontos por superfície; número de painéis $N$};
   \node[io, left=0.5cm of p2, align=flush right] (j2) {$V_\infty = 1$, $\alpha$; geometria dos painéis};
   \node[io, left=0.5cm of p3, align=flush right] (j3) {$\hat{\vec{V}}_{ij}$, $\vec{n}_i$, $\vec{V}_\infty$; impermeabilidade e condição de Kutta};
   \node[io, left=0.5cm of p4, align=flush right] (j4) {$\mathbf{A}$, $\mathbf{b}$; $\hat{\vec{V}}_{ij}$, $\vec{t}_i$, $\Delta S_i$};
-  \node[io, left=0.5cm of p5, align=flush right] (j5) {$\alpha = 5^\circ$; $N = 20, 50, \dots, 800$; referência $N = 800$; tolerância $\varepsilon_N \le 0{,}5\,\%$};
-  \node[io, left=0.5cm of p6, align=flush right] (j6) {$N = 260$; $\alpha \in [-20^\circ, 20^\circ]$, passo $5^\circ$};
+  \node[io, left=0.5cm of p5, align=flush right] (j5) {$\alpha = 5^\circ$; $N = \NMinTestePaineis, 50, \dots, \NRefPaineis$; referência $N = \NRefPaineis$; tolerância $\varepsilon_N \le 0{,}5\,\%$};
+  \node[io, left=0.5cm of p6, align=flush right] (j6) {$N = \NPaineis$; $\alpha \in [-20^\circ, 20^\circ]$, passo $5^\circ$};
   % saídas
   \node[io, right=0.75cm of p1] (s1) {Nós, pontos de controlo, $\Delta S_i$, $\vec{n}_i$, $\vec{t}_i$};
   \node[io, right=0.75cm of p2] (s2) {$U_\infty$, $W_\infty$; velocidades induzidas unitárias $\hat{\vec{V}}_{ij}$; $N+1$ incógnitas $\gamma_j$};
   \node[io, right=0.75cm of p3] (s3) {Sistema $\mathbf{A}\boldsymbol{\gamma} = \mathbf{b}$, de dimensão $(N+1)\times(N+1)$};
   \node[io, right=0.75cm of p4] (s4) {$\gamma_j$; $V_{n,i}$, $V_{t,i}$, $c_{p,i}$; $c_l$};
-  \node[io, right=0.75cm of p5] (s5) {$\varepsilon_N$ e tempo de cálculo em função de $N$; $N = 260$ selecionado};
+  \node[io, right=0.75cm of p5] (s5) {$\varepsilon_N$ e tempo de cálculo em função de $N$; $N = \NPaineis$ selecionado};
   \node[io, right=0.75cm of p6] (s6) {$c_l(\alpha)$, $c_{l\alpha}$, $\alpha_0$; $c_p(x/c)$, $c_{p,\min}$; linhas de corrente e ponto de estagnação};
   \foreach \k in {1,...,6} {
     \draw[setaio] (j\k) -- (p\k);
@@ -205,7 +205,7 @@ representa o estudo de convergência em $N$.}
 
 \begin{etapas}
   \item \textbf{Discretização da geometria.} As coordenadas do perfil Roncz,
-  em formato Lednicer, contêm 36 pontos por superfície (70 painéis na
+  em formato Lednicer, contêm \PontosExtradorso{} pontos por superfície (\NPaineisOriginais{} painéis na
   discretização original). O contorno foi percorrido no sentido anti-horário,
   do bordo de fuga do extradorso até ao bordo de fuga do intradorso. Para
   variar o número de painéis, aplicou-se uma interpolação PCHIP parametrizada
@@ -265,15 +265,15 @@ representa o estudo de convergência em $N$.}
   \end{equation}
   com $V_{t,i}=\vec{V}_i\cdot\vec{t}_i$.
   \item \textbf{Estudo de convergência.} Para $\alpha=5^\circ$, repetiu-se o
-  cálculo de $c_l$ para 20 a 800 painéis, com incrementos de 30, registando o
+  cálculo de $c_l$ para \NMinTestePaineis{} a \NRefPaineis{} painéis, com incrementos de \PassoTestePaineis{}, registando o
   tempo de cálculo de cada discretização (sem as operações de representação
-  gráfica nem a reconstrução do campo exterior). Tomando a solução com 800
+  gráfica nem a reconstrução do campo exterior). Tomando a solução com \NRefPaineis{}
   painéis como referência numérica, definiu-se o erro relativo
-  $\varepsilon_N=\left|c_l(N)-c_l(800)\right|/\left|c_l(800)\right|\times100\,\%$.
-  Para uma tolerância de $0{,}5\,\%$, selecionaram-se 260 painéis, com um
-  erro de $0{,}468\,\%$ e uma redução do tempo de cálculo de $1{,}45$~s para
-  $0{,}155$~s ($-89{,}3\,\%$).
-  \item \textbf{Análises aerodinâmicas.} Com $N=260$, determinou-se
+  $\varepsilon_N=\left|c_l(N)-c_l(\NRefPaineis)\right|/\left|c_l(\NRefPaineis)\right|\times100\,\%$.
+  Para uma tolerância de $0{,}5\,\%$, selecionaram-se \NPaineis{} painéis, com um
+  erro de $\Resultado[3]{\ErroConvergenciaPaineis}\,\%$ e uma redução do tempo de cálculo de $\Resultado{\TempoRefPaineis}$~s para
+  $\Resultado[3]{\TempoConvergenciaPaineis}$~s ($-\Resultado[1]{\ReducaoTempoPaineis}\,\%$).
+  \item \textbf{Análises aerodinâmicas.} Com $N=\NPaineis$, determinou-se
   $c_l(\alpha)$ entre $-20^\circ$ e $20^\circ$, com incrementos de $5^\circ$.
   O declive e o ângulo de sustentação nula foram obtidos por ajuste linear
   (mínimos quadrados) entre $-5^\circ$ e $5^\circ$,

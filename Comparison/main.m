@@ -222,6 +222,9 @@ writelines(timingText, tmpTimingFile);
 [ok, msg] = movefile(tmpTimingFile, timingFile, 'f');
 assert(ok, 'Erro ao exportar os tempos para LaTeX: %s', msg);
 
+% Atualizar os restantes valores numericos do relatorio.
+exportReportResults();
+
 
 
 %% 9. Estudo de convergencia dos paineis
