@@ -450,6 +450,48 @@ panelCases = readtable(fullfile(panelDir, 'cases.csv'));
 
 disp(panelCases);
 
+%% 13. Distribuicao do coeficiente de pressao - Metodo dos paineis
+
+cpPanel = readtable(fullfile(panelDir, 'cp.csv'), 'TextType', 'string');
+
+for a = [0 5 20]
+    T = cpPanel(cpPanel.alpha_deg == a,:);
+    upper = sortrows(T(T.surface == "upper",:), 'x_c');
+    lower = sortrows(T(T.surface == "lower",:), 'x_c');
+    assert(~isempty(upper) && ~isempty(lower), ...
+        'Distribuicao de Cp em falta para alpha = %g graus.', a);
+
+    figCp = figure('Name', sprintf('Cp - Paineis - %g graus', a), ...
+        'Color', 'w', 'WindowStyle', 'docked');
+    axCp = axes(figCp);
+    hold(axCp, 'on');
+
+    plot(axCp, upper.x_c, upper.cp, '-', ...
+        'Color', colorThin, 'LineWidth', 1.5, ...
+        'DisplayName', 'Extradorso');
+    plot(axCp, lower.x_c, lower.cp, '-', ...
+        'Color', colorPanel, 'LineWidth', 1.5, ...
+        'DisplayName', 'Intradorso');
+
+    % Convencao aerodinamica: Cp negativo no topo, sem alterar os valores.
+    axCp.YDir = 'reverse';
+    xlim(axCp, [0 1]);
+    xlabel(axCp, '$x/c$', 'Interpreter', 'latex');
+    ylabel(axCp, '$C_p$', 'Interpreter', 'latex');
+    title(axCp, sprintf('$\\alpha = %g^{\\circ}$', a), ...
+        'Interpreter', 'latex');
+    grid(axCp, 'on');
+    box(axCp, 'on');
+    axCp.FontSize = 12;
+    axCp.GridAlpha = 0.12;
+    legend(axCp, 'Location', 'best', 'Box', 'off');
+    hold(axCp, 'off');
+
+    exportgraphics(axCp, ...
+        fullfile(figDir, sprintf('panel_cp_%02d.pdf', a)), ...
+        'ContentType', 'vector');
+end
+
 %% Funcoes auxiliares
 
 function runThinAirfoil(thinDir)
