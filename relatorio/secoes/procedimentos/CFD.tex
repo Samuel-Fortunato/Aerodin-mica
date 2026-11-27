@@ -3,7 +3,7 @@
 A simulação foi realizada no OpenFOAM v2606~\cite{openfoam}, segundo o procedimento da
 Figura~\ref{fig:diag_cfd}.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \begin{tikzpicture}[node distance=0.45cm]
   \node[etapa] (c1) {\textbf{1.} Geometria e domínio computacional};
@@ -17,10 +17,10 @@ Figura~\ref{fig:diag_cfd}.
   % ciclo de convergência de malha
   \draw[seta, dashed] (c5.east) -- ++(0.3,0) |- (c2.east);
   % entradas
-  \node[io, left=0.5cm of c1, align=flush right] (k1) {Coordenadas do perfil; dimensões do domínio [TODO]};
-  \node[io, left=0.5cm of c2, align=flush right] (k2) {Domínio; número de células, $y^+$ pretendido, refinamento junto à parede [TODO]};
-  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 100$~m/s, $\nu = 10^{-5}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta [TODO]};
-  \node[io, left=0.5cm of c4, align=flush right] (k4) {Caso configurado; esquemas numéricos; critério de paragem dos resíduos [TODO]};
+  \node[io, left=0.5cm of c1, align=flush right] (k1) {Coordenadas do perfil; dimensões do domínio \tbd{TODO}};
+  \node[io, left=0.5cm of c2, align=flush right] (k2) {Domínio; número de células, $y^+$ pretendido, refinamento junto à parede \tbd{TODO}};
+  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 100$~m/s, $\nu = 10^{-5}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta \tbd{TODO}};
+  \node[io, left=0.5cm of c4, align=flush right] (k4) {Caso configurado; esquemas numéricos; critério de paragem dos resíduos \tbd{TODO}};
   \node[io, left=0.5cm of c5, align=flush right] (k5) {Campos $p$ e $\mathbf{U}$; $c$, $V_\infty$; direções de sustentação e arrasto};
   \node[io, left=0.5cm of c6, align=flush right] (k6) {Campos convergidos para $\alpha = 0^\circ, 5^\circ, \dots, 20^\circ$};
   % saídas

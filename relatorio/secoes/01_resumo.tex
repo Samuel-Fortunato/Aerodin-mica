@@ -1,11 +1,21 @@
 \tituloResumo
-% ESTRUTURA PROVISÓRIA. Máx. 250 palavras: procedimentos + resultados mais relevantes.
+% Máx. 250 palavras: procedimentos + resultados mais relevantes.
 
-Neste trabalho estudou-se o perfil \tbd{Roncz/Marske-7}, usado como substituto
-do perfil da raiz da asa do Cirrus SR22, pela teoria dos perfis delgados, pelo
-método dos painéis e por uma simulação CFD 2D em OpenFOAM com o modelo
-\tbd{turbulência}. \tbd{Convergência: $N$ escolhido nos painéis e malha
-escolhida no CFD.} \tbd{$\alpha_{L=0}$ e declive pelos três métodos.}
-\tbd{Comportamento do CFD acima de $10^\circ$ e perda.} \tbd{Linhas de corrente e
-$C_p$: semelhantes a $0^\circ$ e $5^\circ$, diferentes a $20^\circ$.}
-\tbd{Conclusão: para que serve cada método.}
+\rasc{Neste trabalho estudou-se o perfil Roncz/Marske-7, usado como substituto do
+perfil da raiz da asa do Cirrus SR22, com a teoria dos perfis delgados, o método
+dos painéis e uma simulação CFD 2D em
+OpenFOAM com o modelo de turbulência $k$--$\omega$ SST. No método dos painéis
+escolheram-se $N = 260$ painéis, com um erro de 0,5\,\% no $c_l$ a $5^\circ$
+face a 800 painéis, e no CFD uma malha com cerca de 64 mil células, com uma
+incerteza relativa de 1,3\,\% no $c_l$ entre malhas. Os ângulos de sustentação
+nula previstos pela teoria dos perfis delgados, pelo método dos painéis e pelo
+CFD são $-0{,}13^\circ$, $-0{,}39^\circ$ e $-0{,}67^\circ$, e os declives na zona
+linear são 6,28, 6,78 e 6,26~rad$^{-1}$. O método dos painéis prevê o maior
+declive por incluir a espessura, enquanto no CFD esse efeito é quase anulado
+pela viscosidade. O CFD é linear até cerca de $10^\circ$ e o perfil entra em
+perda entre $15^\circ$ e $20^\circ$, com o escoamento descolado e não
+estacionário a $20^\circ$, o que os métodos potenciais não preveem. As linhas de corrente e as distribuições de $C_p$ dos
+painéis e do CFD são semelhantes a $0^\circ$ e $5^\circ$, mas muito diferentes a
+$20^\circ$. Os métodos potenciais servem para estimativas rápidas na zona
+linear, e o CFD é necessário perto e depois da perda e para o arrasto,
+com um custo muito maior.}

@@ -5,7 +5,6 @@
 Nesta secção apresentam-se primeiro os estudos de convergência do método dos
 painéis e da simulação CFD, e depois a comparação dos três métodos em termos de
 $c_l$, ângulo de sustentação nula, declive, custo, linhas de corrente e $C_p$.
-\tbd{reescrever}
 
 % ---------------------------------------------------------------------------
 \subsection*{Estudo de convergência do método dos painéis}
@@ -45,13 +44,13 @@ painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
 
 A Figura~\ref{fig:painelizacao} mostra a painelização final, com
 $N = 260$ painéis e os respetivos pontos de controlo.
-\rasc{Como a interpolação é parametrizada pela distância acumulada ao longo de
+Como a interpolação é parametrizada pela distância acumulada ao longo de
 cada superfície, com pontos igualmente espaçados nesse parâmetro, os painéis
 têm todos aproximadamente o mesmo comprimento. Não há, portanto,
 concentração de painéis junto ao bordo de ataque, onde a curvatura da superfície
 e os gradientes de velocidade são maiores, nem junto ao bordo de fuga, onde se
 impõe a condição de Kutta. Por isso, o bordo de ataque só fica bem descrito
-graças ao elevado número de painéis ($N = 260$).}
+graças ao elevado número de painéis ($N = 260$).
 
 \begin{figure}[H]
   \centering
@@ -120,8 +119,8 @@ $c_l$ fica-se por $1{,}34$. A $20^\circ$ o descolamento começa logo junto ao
 bordo de ataque e ocupa quase todo o extradorso (Figura~\ref{fig:linhas}), pelo
 que o $c_l$ desce para $1{,}05$ e o arrasto sobe para $c_d = 0{,}27$, quase todo
 de pressão. O perfil entra, portanto, em perda entre $15^\circ$ e $20^\circ$.
-\tbd{confirmar se a simulação a $20^\circ$ convergiu ou se o escoamento é não
-estacionário}
+\rasc{A $20^\circ$ a simulação estacionária não converge
+(Figura~\ref{fig:residuos}), pelo que este valor de $c_l$ é apenas indicativo.}
 
 Nos métodos potenciais a reta continua até $20^\circ$. Sem viscosidade não
 existe camada limite, logo nada pode descolar, e a condição de Kutta obriga o escoamento a sair
@@ -240,7 +239,7 @@ A Figura~\ref{fig:linhas} apresenta as linhas de corrente previstas pelo método
 dos painéis e pela simulação CFD para $\alpha = 0^\circ$, $5^\circ$ e
 $20^\circ$.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \begin{subfigure}[c]{0.48\linewidth}
     \centering
@@ -299,33 +298,24 @@ extradorso, com uma esteira larga, o que explica a
 queda de $c_l$ e o aumento de $c_d$.
 
 \paragraph{Coeficiente de pressão.}
-As Figuras~\ref{fig:cp} e \ref{fig:cp-CFD} apresentam a distribuição de $C_p$ ao longo do
-perfil prevista pelo método dos painéis e pelo CFD respetivamente. A Tabela~\ref{tab:estagnacao}
-apresenta a posição do ponto de estagnação e o $C_p$ mínimo.
+A Figura~\ref{fig:cp} apresenta a distribuição de $C_p$ ao longo do perfil
+prevista pelos dois métodos, e a Tabela~\ref{tab:estagnacao} apresenta a
+posição do ponto de estagnação e o $C_p$ mínimo.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.32\linewidth]{../Comparison/figures/panel_cp_00.pdf}\hfill
   \includegraphics[width=0.32\linewidth]{../Comparison/figures/panel_cp_05.pdf}\hfill
-  \includegraphics[width=0.32\linewidth]{../Comparison/figures/panel_cp_20.pdf}
-  \caption{Distribuição do coeficiente de pressão ao longo do perfil prevista
-  pelo método dos painéis para $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$.}
-  \label{fig:cp}
-\end{figure}
-
-\begin{figure}[H]
-  \centering
+  \includegraphics[width=0.32\linewidth]{../Comparison/figures/panel_cp_20.pdf}\\[2pt]
   \includegraphics[width=0.32\linewidth]{../CFD/Cp_Plots/0deg.png}\hfill
   \includegraphics[width=0.32\linewidth]{../CFD/Cp_Plots/5deg.png}\hfill
   \includegraphics[width=0.32\linewidth]{../CFD/Cp_Plots/20deg.png}
-  \caption{Distribuição do coeficiente de pressão ao longo do perfil prevista
-  pelo CFD para $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$.}
-  \label{fig:cp-CFD}
+  \caption{Distribuição do coeficiente de pressão ao longo do perfil para
+  $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$, prevista pelo método dos painéis
+  (em cima) e pelo CFD (em baixo).}
+  \label{fig:cp}
 \end{figure}
 
-
-\tbd{Falta a distribuição de $C_p$ à superfície obtida por CFD, para
-permitir a comparação direta das curvas dos dois métodos.}
 
 \begin{table}[H]
   \centering
@@ -336,16 +326,31 @@ permitir a comparação direta das curvas dos dois métodos.}
     & \multicolumn{2}{c}{Ponto de estagnação, $x/c$} & \multicolumn{2}{c}{$C_{p,\min}$ ($x/c$)} \\
     $\alpha$ & Painéis & CFD & Painéis & CFD \\
     \midrule
-    $0^\circ$  & 0,002 & 0,00068 & $-0{,}56$ (0,007) & $-0{,}74$ (0,00798) \\
-    $5^\circ$  & 0,005 & 0,00191 & $-1{,}16$ (0,024) & $-1{,}4$ (0.01452)\\
-    $20^\circ$ & 0,105 & 0,02357 & $-21{,}8$ (0,001) & $-7{,}1$ (0.00002) \\
+    $0^\circ$  & 0,002 & 0,00068 & $-0{,}56$ (0,007) & $-0{,}74$ (0,008) \\
+    $5^\circ$  & 0,005 & 0,00191 & $-1{,}16$ (0,024) & $-1{,}4$ (0,0145) \\
+    $20^\circ$ & 0,105 & 0,02357 & $-21{,}8$ (0,001) & $-7{,}1$ (0,00002) \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\tbd{Análise: deslocamento do ponto de estagnação para o intradorso
-com $\alpha$; pico de sucção maior nos painéis; patamar de $C_p$ no CFD a
-$20^\circ$ (escoamento descolado).}
+\rasc{A $0^\circ$ e a $5^\circ$ as distribuições dos dois métodos têm praticamente
+a mesma forma. A $0^\circ$ a maior sucção do extradorso aparece a meio da corda,
+e a $5^\circ$ passa para junto do bordo de ataque, com o ponto de estagnação a
+deslocar-se ligeiramente para o intradorso. Nos dois ângulos as curvas cruzam-se
+a partir de $x/c \approx 0{,}7$, onde a pressão passa a ser maior em cima do que
+em baixo. É o efeito do \emph{reflex} da linha média, o mesmo que torna o $c_l$ a
+$0^\circ$ tão pequeno. As curvas do CFD têm pequenos picos regulares, sem
+significado físico, e os $C_{p,\min}$ do CFD a $0^\circ$ e $5^\circ$ na
+Tabela~\ref{tab:estagnacao} correspondem ao topo destes picos.
+\tbd{confirmar com o Gonçalo a origem dos picos}
+
+A $20^\circ$ os resultados são muito diferentes. Nos painéis o pico de sucção
+chega a $-21{,}8$ junto ao bordo de ataque e a pressão sobe aos poucos ao longo
+de todo o extradorso. No CFD o pico fica-se por cerca de $-7$ e, a partir de
+$x/c \approx 0{,}1$, o $C_p$ do extradorso fica quase constante, um patamar
+típico de escoamento descolado. A área entre as curvas é por isso muito menor no
+CFD, de acordo com o $c_l$ de $1{,}05$ contra $2{,}37$. Com menos circulação, o
+ponto de estagnação também se desloca menos para o intradorso.}
 
 \paragraph{Gama linear.}
 Como os métodos potenciais são lineares por construção, a gama linear do perfil
@@ -354,16 +359,4 @@ $10^\circ$, o $c_l$ do CFD aumenta quase o mesmo ($0{,}57$ e $0{,}52$). Entre
 $10^\circ$ e $15^\circ$ aumenta apenas $0{,}18$, e a partir daí diminui. A gama
 linear vai, assim, de $0^\circ$ a cerca de $10^\circ$. O $c_{l,\max}$ é de pelo
 menos $1{,}34$ e fica entre $10^\circ$ e $20^\circ$, mas com simulações de
-$5^\circ$ em $5^\circ$ não é possível dizer exatamente onde.
-
-Para saber onde fica o ponto de funcionamento, estimou-se o $c_l$ em cruzeiro
-igualando a sustentação ao peso,
-\[
-  c_l \approx \frac{m g}{\tfrac{1}{2}\rho_\infty V_\infty^2 S}
-  = \frac{1633 \times 9{,}81}{0{,}5 \times 1{,}225 \times 94^2 \times 13{,}46}
-  \approx 0{,}22 ,
-\]
-com a massa máxima à descolagem~\cite{easa_tcds} \tbd{confirmar que a massa está
-no TCDS}. Este valor corresponde a um ângulo de ataque entre $1{,}3^\circ$ no CFD
-e $1{,}9^\circ$ na teoria dos perfis delgados, pelo que o perfil voa bem dentro
-da zona linear, onde os três métodos dão resultados muito próximos.}
+$5^\circ$ em $5^\circ$ não é possível dizer exatamente onde.}
