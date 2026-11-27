@@ -1,23 +1,27 @@
 /*---------------------------------------------------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2412                                  |
+|  \\    /   O peration     | Version:  2606                                  |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
-Build  : _b8cf4d35-20260127 OPENFOAM=2412 patch=260127 version=2412
+Build  : _481094f-20260618 OPENFOAM=2606 version=2606
 Arch   : "LSB;label=32;scalar=64"
 Exec   : decomposePar -copyZero
 Date   : Nov 26 2026
-Time   : 11:15:23
+Time   : 22:11:12
 Host   : nixos
-PID    : 89936
+PID    : 149078
 I/O    : uncollated
-Case   : /home/gonca/CFD/Projeto/2D/aerodinamica-snappy/AERODINAMICA/aerodinamica-pimple/parametric_runs_snappy/case_0001_reference_airfoil_aoa0
+Case   : /home/gonca/Documentos/!LaTeX/UA/Aerodin-mica/CFD/OpenFOAM/pimpleFoam
 nProcs : 1
 trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+memory pool : not available
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
-allowSystemOperations : Allowing user-supplied system call operations
+
+--> FOAM Warning : allowSystemOperations : Allowing user-supplied system call operations.
+                   This can be a security risk if running untrusted cases
+                   through e.g. 'coded' on-the-fly-compilation functionality.
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 Create time
@@ -31,7 +35,7 @@ Create mesh
 Calculating distribution of cells
 Decomposition method scotch [8] (region region0)
 
-Finished decomposition in 0.11 s
+Finished decomposition in 0.12 s
 
 Calculating original mesh data
 
@@ -44,94 +48,98 @@ Distributing points to processors
 Constructing processor meshes
 
 Processor 0
-    Number of cells = 400
-    Number of points = 882
-    Number of faces shared with processor 1 = 20
-    Number of faces shared with processor 3 = 20
-    Number of faces shared with processor 5 = 20
-    Number of processor patches = 3
-    Number of processor faces = 60
-    Number of boundary faces = 820
+    Number of cells = 399
+    Number of points = 880
+    Number of faces shared with processor 1 = 21
+    Number of faces shared with processor 2 = 19
+    Number of faces shared with processor 4 = 20
+    Number of faces shared with processor 6 = 1
+    Number of processor patches = 4
+    Number of processor faces = 61
+    Number of boundary faces = 817
 
 Processor 1
-    Number of cells = 400
-    Number of points = 882
-    Number of faces shared with processor 0 = 20
-    Number of faces shared with processor 2 = 20
-    Number of processor patches = 2
-    Number of processor faces = 40
+    Number of cells = 401
+    Number of points = 888
+    Number of faces shared with processor 0 = 21
+    Number of faces shared with processor 2 = 2
+    Number of faces shared with processor 3 = 23
+    Number of processor patches = 3
+    Number of processor faces = 46
     Number of boundary faces = 840
 
 Processor 2
-    Number of cells = 400
-    Number of points = 882
-    Number of faces shared with processor 1 = 20
-    Number of faces shared with processor 3 = 20
-    Number of processor patches = 2
-    Number of processor faces = 40
-    Number of boundary faces = 840
+    Number of cells = 399
+    Number of points = 880
+    Number of faces shared with processor 0 = 19
+    Number of faces shared with processor 1 = 2
+    Number of faces shared with processor 3 = 19
+    Number of faces shared with processor 6 = 19
+    Number of processor patches = 4
+    Number of processor faces = 59
+    Number of boundary faces = 819
 
 Processor 3
-    Number of cells = 400
-    Number of points = 882
-    Number of faces shared with processor 0 = 20
-    Number of faces shared with processor 2 = 20
-    Number of faces shared with processor 6 = 20
-    Number of processor patches = 3
-    Number of processor faces = 60
-    Number of boundary faces = 820
+    Number of cells = 401
+    Number of points = 888
+    Number of faces shared with processor 1 = 23
+    Number of faces shared with processor 2 = 19
+    Number of processor patches = 2
+    Number of processor faces = 42
+    Number of boundary faces = 844
 
 Processor 4
     Number of cells = 400
     Number of points = 882
-    Number of faces shared with processor 5 = 20
-    Number of faces shared with processor 7 = 20
-    Number of processor patches = 2
-    Number of processor faces = 40
-    Number of boundary faces = 840
-
-Processor 5
-    Number of cells = 400
-    Number of points = 882
     Number of faces shared with processor 0 = 20
-    Number of faces shared with processor 4 = 20
+    Number of faces shared with processor 5 = 20
     Number of faces shared with processor 6 = 20
     Number of processor patches = 3
     Number of processor faces = 60
     Number of boundary faces = 820
 
+Processor 5
+    Number of cells = 400
+    Number of points = 882
+    Number of faces shared with processor 4 = 20
+    Number of faces shared with processor 7 = 20
+    Number of processor patches = 2
+    Number of processor faces = 40
+    Number of boundary faces = 840
+
 Processor 6
     Number of cells = 400
     Number of points = 882
-    Number of faces shared with processor 3 = 20
-    Number of faces shared with processor 5 = 20
+    Number of faces shared with processor 0 = 1
+    Number of faces shared with processor 2 = 19
+    Number of faces shared with processor 4 = 20
     Number of faces shared with processor 7 = 20
-    Number of processor patches = 3
+    Number of processor patches = 4
     Number of processor faces = 60
     Number of boundary faces = 820
 
 Processor 7
     Number of cells = 400
     Number of points = 882
-    Number of faces shared with processor 4 = 20
+    Number of faces shared with processor 5 = 20
     Number of faces shared with processor 6 = 20
     Number of processor patches = 2
     Number of processor faces = 40
     Number of boundary faces = 840
 
-Number of processor faces = 200
-Max number of cells = 400 (0% above average 400)
-Max number of processor patches = 3 (20% above average 2.5)
-Max number of faces between processors = 60 (20% above average 50)
+Number of processor faces = 204
+Max number of cells = 401 (0.25% above average 400)
+Max number of processor patches = 4 (33.3333% above average 3)
+Max number of faces between processors = 61 (19.6078% above average 51)
 
-Processor 0: copying "0/" to "processor0/0"
-Processor 1: copying "0/" to "processor1/0"
-Processor 2: copying "0/" to "processor2/0"
-Processor 3: copying "0/" to "processor3/0"
-Processor 4: copying "0/" to "processor4/0"
-Processor 5: copying "0/" to "processor5/0"
-Processor 6: copying "0/" to "processor6/0"
-Processor 7: copying "0/" to "processor7/0"
+Processor 0: copying "0.orig/" to "processor0/0"
+Processor 1: copying "0.orig/" to "processor1/0"
+Processor 2: copying "0.orig/" to "processor2/0"
+Processor 3: copying "0.orig/" to "processor3/0"
+Processor 4: copying "0.orig/" to "processor4/0"
+Processor 5: copying "0.orig/" to "processor5/0"
+Processor 6: copying "0.orig/" to "processor6/0"
+Processor 7: copying "0.orig/" to "processor7/0"
 
 End
 

@@ -1,53 +1,61 @@
 /*---------------------------------------------------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2412                                  |
+|  \\    /   O peration     | Version:  2606                                  |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
-Build  : _b8cf4d35-20260127 OPENFOAM=2412 patch=260127 version=2412
+Build  : _481094f-20260618 OPENFOAM=2606 version=2606
 Arch   : "LSB;label=32;scalar=64"
 Exec   : checkMesh -allTopology -allGeometry
 Date   : Nov 26 2026
-Time   : 11:16:05
+Time   : 22:11:55
 Host   : nixos
-PID    : 92564
+PID    : 149770
 I/O    : uncollated
-Case   : /home/gonca/CFD/Projeto/2D/aerodinamica-snappy/AERODINAMICA/aerodinamica-pimple/parametric_runs_snappy/case_0001_reference_airfoil_aoa0
+Case   : /home/gonca/Documentos/!LaTeX/UA/Aerodin-mica/CFD/OpenFOAM/pimpleFoam
 nProcs : 1
 trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+memory pool : not available
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
-allowSystemOperations : Allowing user-supplied system call operations
+
+--> FOAM Warning : allowSystemOperations : Allowing user-supplied system call operations.
+                   This can be a security risk if running untrusted cases
+                   through e.g. 'coded' on-the-fly-compilation functionality.
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 Create time
 
-Create mesh for time = 0
+--> FOAM Warning : 
+    From static Foam::instantList Foam::timeSelector::select0(Foam::Time&, const Foam::argList&)
+    in file db/Time/timeSelector.C at line 284
+    No time specified or available, selecting 'constant'
+Create mesh for time = constant
 
 Check mesh...
     Enabling all (cell, face, edge, point) topology checks.
     Enabling all geometry checks.
 
-Time = 0
+Time = constant
 
 Mesh stats 
-    points:           129014
+    points:           128978
     internal points:  0
-    edges:            319291
-    internal edges:   63045
+    edges:            319201
+    internal edges:   63027
     internal edges using one boundary point:   0
-    internal edges using two boundary points:  63045
-    faces:            253162
-    internal faces:   125930
-    cells:            62885
-    faces per cell:   6.02834
+    internal edges using two boundary points:  63027
+    faces:            253090
+    internal faces:   125894
+    cells:            62867
+    faces per cell:   6.02835
     boundary patches: 6
     point zones:      1
     face zones:       0
     cell zones:       0
 
 Overall number of cells of each type:
-    hexahedra:     60662
+    hexahedra:     60644
     prisms:        456
     wedges:        0
     pyramids:      0
@@ -76,9 +84,9 @@ Checking patch topology for multiply connected surfaces...
                    inlet       40       82  ok (non-closed singly connected) (-2 -2 0.05) (-2 2 0.25)
                   outlet       40       82  ok (non-closed singly connected) (6 -2 0.05) (6 2 0.25)
                     main     1222     2444  ok (non-closed singly connected) (-0.000322753 -0.343748 0.05) (0.940297 0.0179355 0.25)
-                   front    62885    64507  ok (non-closed singly connected) (-2 -2 0.25) (6 2 0.25)
-                    back    62885    64507  ok (non-closed singly connected) (-2 -2 0.05) (6 2 0.05)
-                    ".*"   127232   129014      ok (closed singly connected) (-2 -2 0.05) (6 2 0.25)
+                    back    62867    64489  ok (non-closed singly connected) (-2 -2 0.05) (6 2 0.05)
+                   front    62867    64489  ok (non-closed singly connected) (-2 -2 0.25) (6 2 0.25)
+                    ".*"   127196   128978      ok (closed singly connected) (-2 -2 0.05) (6 2 0.25)
 
 
 Checking faceZone topology for multiply connected surfaces...
@@ -96,30 +104,30 @@ Checking geometry...
     Mesh has 2 geometric (non-empty/wedge) directions (1 1 0)
     Mesh has 2 solution (non-empty) directions (1 1 0)
     All edges aligned with or perpendicular to non-empty directions.
-    Boundary openness (4.32048e-19 4.73321e-19 -6.20224e-16) OK.
-    Max cell openness = 6.36343e-15 OK.
+    Boundary openness (-2.47526e-18 1.79939e-18 -1.0958e-14) OK.
+    Max cell openness = 4.8796e-15 OK.
     Max aspect ratio = 85.5567 OK.
     Minimum face area = 4.99071e-09. Maximum face area = 0.0201291.  Face area magnitudes OK.
     Min volume = 9.98143e-10. Max volume = 0.00201486.  Total volume = 6.38386.  Cell volumes OK.
-    Mesh non-orthogonality Max: 46.6102 average: 4.03554
+    Mesh non-orthogonality Max: 46.5911 average: 4.03606
     Non-orthogonality check OK.
     Face pyramids OK.
     Max skewness = 1.80393 OK.
     Coupled point location match (average 0) OK.
     Face tets OK.
     Min/max edge length = 1.49992e-05 0.2 OK.
-   *There are 2 faces with concave angles between consecutive edges. Max concave angle = 11.2129 degrees.
+   *There are 2 faces with concave angles between consecutive edges. Max concave angle = 11.1517 degrees.
   <<Writing 2 faces with concave angles to set concaveFaces
     Face flatness (1 = flat, 0 = butterfly) : min = 1  average = 1
     All face flatness OK.
-    Cell determinant (wellposedness) : minimum: 0.000462152 average: 0.34005
+    Cell determinant (wellposedness) : minimum: 0.000462152 average: 0.340004
  ***Cells with small determinant (< 0.001) found, number of cells: 1512
-  <<Writing 1512 under-determined cells to set underdeterminedCells
- ***Concave cells (using face planes) found, number of cells: 985
-  <<Writing 985 concave cells to set concaveCells
-    Face interpolation weight : minimum: 0.200152 average: 0.46429
+  <<Writing 1512 under-determined cells to set cellDeterminant
+ ***Concave cells (using face planes) found, number of cells: 988
+  <<Writing 988 concave cells to set concaveCells
+    Face interpolation weight : minimum: 0.200487 average: 0.464286
     Face interpolation weight check OK.
-    Face volume ratio : minimum: 0.189719 average: 0.872931
+    Face volume ratio : minimum: 0.189874 average: 0.872921
     Face volume ratio check OK.
 
 Failed 2 mesh checks.

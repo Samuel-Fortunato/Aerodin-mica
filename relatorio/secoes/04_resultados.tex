@@ -62,105 +62,7 @@ graças ao elevado número de painéis ($N = 260$).}
   \label{fig:painelizacao}
 \end{figure}
 
-% ---------------------------------------------------------------------------
-\subsection*{Estudo de convergência da simulação CFD}
-
-{\huge\bfseries\color{red} GONÇALO: ISTO SÃO IDEIAS\par} % REMOVER antes de entregar
-% Critério: convergência de malha + independência da solução, justificar a malha.
-
-O estudo de independência de malha foi realizado para quatro configurações
-de malha, \rasc{a $\alpha = 5^\circ$} \tbd{confirmar: os $c_l$ ($\approx 0{,}63$) coincidem com o CFD a $5^\circ$}.
-A Tabela~\ref{tab:malhas} resume as malhas testadas e a
-Figura~\ref{fig:independencia_cfd} apresenta os coeficientes aerodinâmicos e
-o indicador de eficiência das malhas.
-
-\begin{table}[H]
-  \centering
-  \caption{Estudo de independência de malha.}
-  \label{tab:malhas}
-  \begin{tabular}{lccc}
-    \toprule
-    Configuração & N.º de células & $c_l$ & Variação de $c_l$ [\%] \\
-    \midrule
-    0,14 & \tbd{} & \rasc{0,637} & --- \\
-    0,10 & \tbd{} & \rasc{0,635} & \rasc{$-0{,}4$} \\
-    0,07 & \tbd{} & \rasc{0,618} & \rasc{$-2{,}7$} \\
-    0,05 & \tbd{} & \rasc{0,626} & \rasc{$+1{,}4$} \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[c]{0.48\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_1.png}
-    \caption{Coeficientes aerodinâmicos e equilíbrio aerodinâmico.}
-  \end{subfigure}\hfill
-  \begin{subfigure}[c]{0.48\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_5.png}
-    \caption{Indicador de eficiência computacional.}
-  \end{subfigure}
-  \caption{Estudo de independência da solução CFD e eficiência das malhas.}
-  \label{fig:independencia_cfd}
-\end{figure}
-
-A Figura~\ref{fig:custo_yplus_cfd} apresenta os tempos de geração da malha
-e de simulação, bem como os valores médio, mínimo e máximo de $y^+$ para cada
-configuração de malha.
-
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[c]{0.48\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_2.png}
-    \caption{Tempos de geração de malha e simulação.}
-  \end{subfigure}\hfill
-  \begin{subfigure}[c]{0.48\linewidth}
-    \centering
-    \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_3.png}
-    \caption{Estatísticas de $y^+$ por malha.}
-  \end{subfigure}
-  \caption{Custo computacional e indicadores de resolução junto à parede.}
-  \label{fig:custo_yplus_cfd}
-\end{figure}
-
-\rasc{O parâmetro de refinamento é o tamanho das células da malha de fundo
-(0,14, 0,10, 0,07 e 0,05~m), reduzido aproximadamente por um fator $\sqrt{2}$
-entre malhas consecutivas, mantendo-se os níveis de refinamento junto ao
-perfil e as camadas prismáticas. Nas quatro malhas, $c_l$ varia entre 0,618 e
-0,637, sempre a menos de 2\,\% do valor assintótico (0,626), e $c_d$ entre
-0,0146 e 0,0151 (desvios até cerca de 2\,\%). A variação não é monótona, já que $c_l$
-desce até à malha 0,07 e volta a subir na malha 0,05, o que indica que as
-diferenças restantes são da ordem do erro numérico e iterativo, e não uma
-tendência sistemática de refinamento.
-
-O custo, por outro lado, cresce rapidamente. O tempo total, somando a geração
-da malha e a simulação, passa de cerca de 3~min (0,14) para 6~min (0,10), 10~min (0,07) e
-19~min (0,05). O $y^+$ médio está entre 1,6 e 2,1 em todas as malhas, dentro
-do intervalo pretendido ($y^+ < 5$), mas as malhas 0,14 e 0,05 apresentam
-máximos locais próximos de 30, enquanto nas malhas 0,10 e 0,07 o máximo é
-inferior a 4.
-
-Pelo indicador de eficiência (Figura~\ref{fig:independencia_cfd}b), a malha
-0,14 é a de menor custo para a precisão obtida, seguida da 0,10. Escolheu-se a
-malha 0,10, que tem um custo apenas ligeiramente superior, $c_l$ a 1,3\,\% do
-valor assintótico e $y^+ < 5$ em todo o perfil, garantindo a resolução da
-subcamada viscosa. \tbd{confirmar com o Gonçalo a malha usada nas simulações
-finais e o n.º de células de cada malha}}
-
-A Figura~\ref{fig:qualidade_malha} apresenta os indicadores de qualidade de
-cada configuração de malha, obtidos com o \texttt{checkMesh}, nomeadamente a
-não-ortogonalidade máxima e média, a \emph{skewness} máxima, a razão de aspeto
-máxima e o número de células problemáticas.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\linewidth]{../CFD/graficos-mesh-independence/Figure_4_2x2.png}
-  \caption{Indicadores de qualidade das malhas (\texttt{checkMesh}).}
-  \label{fig:qualidade_malha}
-\end{figure}
+\input{secoes/resultados/CFD.tex}
 
 % ---------------------------------------------------------------------------
 \subsection*{Comparação de métodos}
@@ -391,10 +293,19 @@ extradorso, com uma esteira larga, o que explica a
 queda de $c_l$ e o aumento de $c_d$.}
 
 \paragraph{Coeficiente de pressão.}
-A Figura~\ref{fig:cp} compara as distribuições de $C_p$ previstas pelos dois
+As Figuras~\ref{fig:cp-cfd}~e~\ref{fig:cp} comparam as distribuições de $C_p$ previstas pelos dois
 métodos, e a Tabela~\ref{tab:estagnacao} apresenta a posição do ponto de
 estagnação e o $C_p$ mínimo.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.32\linewidth]{../CFD/Cp/0deg.png}\hfill
+  \includegraphics[width=0.32\linewidth]{../CFD/Cp/5deg.png}\hfill
+  \includegraphics[width=0.32\linewidth]{../CFD/Cp/20deg.png}
+  \caption{Coeficiente de pressão ao longo do perfil previsto pelo método dos
+  painéis e pela simulação CFD para $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$.}
+  \label{fig:cp-cfd}
+\end{figure}
 \begin{figure}[H]
   \centering
   \placeholder[0.32\linewidth]{4cm}{$C_p$, $0^\circ$\\painéis + CFD}\hfill
@@ -414,9 +325,9 @@ estagnação e o $C_p$ mínimo.
     & \multicolumn{2}{c}{Ponto de estagnação, $x/c$} & \multicolumn{2}{c}{$C_{p,\min}$ ($x/c$)} \\
     $\alpha$ & Painéis & CFD & Painéis & CFD \\
     \midrule
-    $0^\circ$  & \rasc{0,002} & \tbd{} & \rasc{$-0{,}56$ (0,007)} & \tbd{} \\
-    $5^\circ$  & \rasc{0,005} & \tbd{} & \rasc{$-1{,}16$ (0,024)} & \tbd{} \\
-    $20^\circ$ & \rasc{0,105} & \tbd{} & \rasc{$-21{,}8$ (0,001)} & \tbd{} \\
+    $0^\circ$  & \rasc{0,002} & 0,00068 & \rasc{$-0{,}56$ (0,007)} & $-0{,}74$ \\
+    $5^\circ$  & \rasc{0,005} & 0,00191 & \rasc{$-1{,}16$ (0,024)} & $-1{,}4$ \\
+    $20^\circ$ & \rasc{0,105} & 0,02357 & \rasc{$-21{,}8$ (0,001)} & $-7{,}1$ \\
     \bottomrule
   \end{tabular}
 \end{table}

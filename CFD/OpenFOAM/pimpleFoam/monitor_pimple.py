@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # USER CONFIGURATION
 # ==========================================================
 
-LOG_FILE = "log.monitorFoam"
+LOG_FILE = "log.pimpleFoam"
 REFRESH_INTERVAL = 0.5
 
 # ----------------------------------------------------------
