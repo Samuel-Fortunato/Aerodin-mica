@@ -213,8 +213,8 @@ aceleração no extradorso, saída no bordo de fuga); diferenças a $20^\circ$
 (descolamento, recirculação vs. condição de Kutta).}
 
 \paragraph{Coeficiente de pressão.}
-A Figura~\ref{fig:cp} apresenta a distribuição de $C_p$ ao longo do
-perfil prevista pelo método dos painéis. A Tabela~\ref{tab:estagnacao}
+As Figuras~\ref{fig:cp} e \ref{fig:cp-CFD} apresentam a distribuição de $C_p$ ao longo do
+perfil prevista pelo método dos painéis e pelo CFD respetivamente. A Tabela~\ref{tab:estagnacao}
 apresenta a posição do ponto de estagnação e o $C_p$ mínimo.
 
 \begin{figure}[H]
@@ -226,6 +226,17 @@ apresenta a posição do ponto de estagnação e o $C_p$ mínimo.
   pelo método dos painéis para $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$.}
   \label{fig:cp}
 \end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.32\linewidth]{../CFD/Cp_Plots/0deg.png}\hfill
+  \includegraphics[width=0.32\linewidth]{../CFD/Cp_Plots/5deg.png}\hfill
+  \includegraphics[width=0.32\linewidth]{../CFD/Cp_Plots/20deg.png}
+  \caption{Distribuição do coeficiente de pressão ao longo do perfil prevista
+  pelo CFD para $\alpha = 0^\circ$, $5^\circ$ e $20^\circ$.}
+  \label{fig:cp-CFD}
+\end{figure}
+
 
 \tbd{Falta a distribuição de $C_p$ à superfície obtida por CFD, para
 permitir a comparação direta das curvas dos dois métodos.}
