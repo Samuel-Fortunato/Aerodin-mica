@@ -83,3 +83,18 @@ Foi obtida uma $U_\mathrm{rel} = 1.572\%$ para o $C_d$ e uma $U_\mathrm{rel} = 1
 
 Ao analisar a \cref{fig:independencia_cfd}, percebemos que, segundo o indicador de eficiência computacional, a malha "ideal" e a malha com $h_\mathrm{cel. externa} = 0.14$. No entanto, tendo em conta as falhas ao gerar as \textit{inflation layers} (particularmente no bordo de fuga - zona crítica), que resultam em zonas com $y^+$ superior a 5, e que a malha para $h_\mathrm{cel. externa} = 0.1$ não tem um custo temporal excessivo tendo em conta o volume de simulações a realizar, foi esta última a malha escolhida para as simulações deste estudo.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.49\linewidth]{../CFD/Plots/0deg.png}\hfill
+  \includegraphics[width=0.49\linewidth]{../CFD/Plots/15deg.png}\hfill
+  \caption{Resíduos e coeficiente para 0\textdegree e 15\textdegree.}
+  \label{fig:plots1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.49\linewidth]{../CFD/Plots/20deg.png}\hfill
+  \includegraphics[width=0.49\linewidth]{../CFD/Plots/20deg-pimple.png}\hfill
+  \caption{Resíduos e coeficiente para 20\textdegree em regime estacionário e em regime transiente.}
+  \label{fig:plots1}
+\end{figure}
