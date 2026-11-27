@@ -17,7 +17,7 @@ REFRESH_INTERVAL = 0.5
 PLOT_INITIAL_RESIDUALS = True
 PLOT_FINAL_RESIDUALS = False
 PLOT_COEFFICIENTS = True
-PLOT_CONTINUITY = True
+PLOT_CONTINUITY = False 
 
 # ----------------------------------------------------------
 # RESIDUAL FIELDS
