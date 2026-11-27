@@ -111,14 +111,14 @@ do bordo de fuga, o escoamento exterior deixa de acompanhar tão bem a superfíc
 o que reduz a circulação e explica a diferença de $\Resultado{\DifClPaineisCFDDez}$ a $10^\circ$. A partir
 de $10^\circ$ a curva do CFD dobra, porque o gradiente adverso de pressão já é
 forte o suficiente para provocar o descolamento ou separação da camada limite. A
-$15^\circ$ o descolamento começa junto ao bordo de fuga
-\tbd{$x/c$ onde a tensão de corte no extradorso se anula, pedir ao Gonçalo} e o
+$15^\circ$ o descolamento começa a partir de $x/c \approx 0{,}7$ e o
 $c_l$ fica-se por $\Resultado{\ClCFDQuinze}$. A $20^\circ$ o descolamento começa logo junto ao
 bordo de ataque e ocupa quase todo o extradorso (Figura~\ref{fig:linhas}), pelo
 que o $c_l$ desce para $\Resultado{\ClCFDVinte}$ e o arrasto sobe para $c_d = \Resultado{\CdCFDVinte}$, quase todo
 de pressão. O perfil entra, portanto, em perda por volta dos $15^\circ$.
 A $20^\circ$ a simulação estacionária não converge
-(Figura~\ref{fig:residuos}), pelo que este valor de $c_l$ é apenas indicativo.
+(Figura~\ref{fig:residuos}), pelo que este valor de $c_l$ é apenas indicativo e corresponde à média das
+últimas 100 iterações.
 
 Nos métodos potenciais a reta continua até $20^\circ$. Sem viscosidade não
 existe camada limite, logo nada pode descolar, e a condição de Kutta obriga o escoamento a sair
@@ -193,7 +193,7 @@ potenciais foram medidos num Intel Core i7-13650HX com 32~GB de RAM.
     $\approx$ \num[round-mode=places,round-precision=3,output-decimal-marker={,}]{\TempoPerfisDelgadosMs}~ms (total) \\
     Painéis & MATLAB & \NumAngulosPaineis &
     $\approx$ \num[round-mode=places,round-precision=2,output-decimal-marker={,}]{\TempoPaineisS}~s (total) \\
-    CFD             & OpenFOAM & \NumAngulosCFD & $\approx 6$~min por ângulo \tbd{confirmar} \\
+    CFD             & OpenFOAM & \NumAngulosCFD & $\approx 6$~min por ângulo  \\
     \bottomrule
   \end{tabular}
 \end{table}
