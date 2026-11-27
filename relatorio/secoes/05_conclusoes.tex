@@ -1,33 +1,34 @@
 \section*{Conclusões}
 
-\rasc{No método dos painéis, $N = 260$ painéis bastam para o $c_l$ a $5^\circ$
-ficar a menos de 0,5\,\% do valor obtido com 800 painéis. No CFD escolheu-se a
-malha com cerca de 64 mil células, para a qual a incerteza relativa do $c_l$
-entre malhas é de 1,3\,\%.
+\rasc{A comparação dos três métodos assenta em resultados que não dependem da
+discretização. No método dos painéis, com $N = 260$ o $c_l$ a $5^\circ$ fica a
+menos de 0,5\,\% do valor obtido com 800 painéis, e no CFD a malha escolhida,
+com cerca de 64 mil células, tem uma incerteza relativa de 1,3\,\% no $c_l$.
 
-Os três métodos dão um ângulo de sustentação nula pequeno e negativo, entre
-$-0{,}67^\circ$ e $-0{,}13^\circ$, porque a subida da linha média junto ao bordo
-de fuga anula quase todo o efeito da curvatura.
+Na zona linear, até cerca de $10^\circ$, os três métodos concordam bem e as
+diferenças explicam-se pelo que cada um inclui. Todos dão um ângulo de
+sustentação nula pequeno e negativo, entre $-0{,}67^\circ$ e $-0{,}13^\circ$,
+porque o \emph{reflex} junto ao bordo de fuga anula quase todo o efeito da
+curvatura. O método dos painéis, por incluir a espessura, prevê o maior declive
+(6,78~rad$^{-1}$). No CFD a viscosidade reduz a circulação e compensa esse
+aumento, pelo que o declive (6,26~rad$^{-1}$) fica praticamente igual ao $2\pi$
+da teoria dos perfis delgados. Também as linhas de corrente e as distribuições
+de $C_p$ dos painéis e do CFD são quase iguais a $0^\circ$ e $5^\circ$.
 
-Na zona linear, o método dos painéis prevê o maior declive (6,78~rad$^{-1}$)
-por incluir a espessura. O CFD (6,26~rad$^{-1}$) fica praticamente igual à
-teoria dos perfis delgados ($2\pi$), porque o aumento devido à espessura é
-compensado pela redução devida à viscosidade.
+Acima de $10^\circ$ só o CFD acompanha o comportamento real do perfil. O
+gradiente adverso de pressão faz a camada limite engrossar e depois descolar, o
+$c_l$ deixa de crescer linearmente e o perfil entra em perda por volta dos
+$15^\circ$. A $20^\circ$ o escoamento está descolado em quase todo o extradorso
+e não é estacionário, enquanto os métodos potenciais, que admitem escoamento
+sempre colado, continuam a prever um aumento linear do $c_l$ e um pico de
+sucção de $-21{,}8$ que o escoamento real não suporta.
 
-O CFD é linear até cerca de $10^\circ$ e o perfil entra em perda entre $15^\circ$
-e $20^\circ$. A $20^\circ$ o escoamento está descolado em quase todo o
-extradorso e não é estacionário, o que os métodos potenciais, que admitem
-escoamento sempre colado, não conseguem prever.
-
-A $0^\circ$ e a $5^\circ$ as linhas de corrente e as distribuições de $C_p$ dos
-painéis e do CFD são muito parecidas. A $20^\circ$ os painéis preveem um pico de
-sucção de $-21{,}8$, enquanto o CFD mostra um pico muito menor e um patamar de
-pressão no extradorso, típico do escoamento descolado.
-
-Os métodos potenciais calculam toda a curva $c_l(\alpha)$ em pouco mais de um
-segundo e chegam para estimar $c_l$ e $\alpha_{L=0}$ na zona linear. O CFD
-demora minutos por ângulo e exige muito mais preparação, mas é o único que
-serve perto e depois da perda e para obter o arrasto.
+Assim, a teoria dos perfis delgados e o método dos painéis servem para estimar
+$c_l$ e $\alpha_{L=0}$ de forma rápida na zona linear, calculando toda a curva
+em pouco mais de um segundo, sendo o método dos painéis preferível quando
+interessa a distribuição de pressões. O CFD demora minutos por ângulo e exige
+muito mais preparação, mas é o único adequado perto e depois da perda e para
+obter o arrasto.
 
 \paragraph{Uso de inteligência artificial.} Utilizou-se IA (Claude, da
 Anthropic) como apoio na programação em MATLAB (painelização, geração de figuras

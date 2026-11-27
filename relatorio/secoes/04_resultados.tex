@@ -125,7 +125,7 @@ $15^\circ$ o descolamento começa junto ao bordo de fuga
 $c_l$ fica-se por $\Resultado{\ClCFDQuinze}$. A $20^\circ$ o descolamento começa logo junto ao
 bordo de ataque e ocupa quase todo o extradorso (Figura~\ref{fig:linhas}), pelo
 que o $c_l$ desce para $\Resultado{\ClCFDVinte}$ e o arrasto sobe para $c_d = \Resultado{\CdCFDVinte}$, quase todo
-de pressão. O perfil entra, portanto, em perda entre $15^\circ$ e $20^\circ$.
+de pressão. O perfil entra, portanto, em perda por volta dos $15^\circ$.
 \rasc{A $20^\circ$ a simulação estacionária não converge
 (Figura~\ref{fig:residuos}), pelo que este valor de $c_l$ é apenas indicativo.}
 
@@ -309,7 +309,7 @@ A Figura~\ref{fig:cp} apresenta a distribuição de $C_p$ ao longo do perfil
 prevista pelos dois métodos, e a Tabela~\ref{tab:estagnacao} apresenta a
 posição do ponto de estagnação e o $C_p$ mínimo.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.32\linewidth]{../Comparison/figures/panel_cp_00.pdf}\hfill
   \includegraphics[width=0.32\linewidth]{../Comparison/figures/panel_cp_05.pdf}\hfill
@@ -340,30 +340,37 @@ posição do ponto de estagnação e o $C_p$ mínimo.
   \end{tabular}
 \end{table}
 
-\rasc{A $0^\circ$ e a $5^\circ$ as distribuições dos dois métodos têm praticamente
-a mesma forma. A $0^\circ$ a maior sucção do extradorso aparece a meio da corda,
-e a $5^\circ$ passa para junto do bordo de ataque, com o ponto de estagnação a
-deslocar-se ligeiramente para o intradorso. Nos dois ângulos as curvas cruzam-se
-a partir de $x/c \approx 0{,}7$, onde a pressão passa a ser maior em cima do que
-em baixo. É o efeito do \emph{reflex} da linha média, o mesmo que torna o $c_l$ a
-$0^\circ$ tão pequeno. As curvas do CFD têm pequenos picos regulares, sem
-significado físico, e os $C_{p,\min}$ do CFD a $0^\circ$ e $5^\circ$ na
-Tabela~\ref{tab:estagnacao} correspondem ao topo destes picos.
-\tbd{confirmar com o Gonçalo a origem dos picos}
+\rasc{A $0^\circ$ as distribuições dos dois métodos são muito semelhantes. No
+extradorso a sucção cresce até perto do meio da corda e depois a pressão
+recupera até ao bordo de fuga. O $C_p$ mínimo está no intradorso, junto ao
+bordo de ataque, com $-0{,}56$ nos painéis e $-0{,}74$ no CFD. A partir de
+$x/c \approx 0{,}7$ as curvas cruzam-se e a pressão passa a ser maior no
+extradorso do que no intradorso, por causa do \emph{reflex}, o que explica o
+$c_l$ tão pequeno a $0^\circ$.
 
-A $20^\circ$ os resultados são muito diferentes. Nos painéis o pico de sucção
-chega a $-21{,}8$ junto ao bordo de ataque e a pressão sobe aos poucos ao longo
-de todo o extradorso. No CFD o pico fica-se por cerca de $-7$ e, a partir de
-$x/c \approx 0{,}1$, o $C_p$ do extradorso fica quase constante, um patamar
-típico de escoamento descolado. A área entre as curvas é por isso muito menor no
-CFD, de acordo com o $c_l$ de $1{,}05$ contra $2{,}37$. Com menos circulação, o
-ponto de estagnação também se desloca menos para o intradorso.}
+A $5^\circ$ o pico de sucção do extradorso passa para junto do bordo de ataque
+e fica mais intenso, com $-1{,}16$ nos painéis e $-1{,}4$ no CFD, e o ponto de
+estagnação desloca-se ligeiramente para o intradorso. As duas distribuições
+continuam quase iguais, de acordo com o $c_l$ de $0{,}64$ nos dois métodos. A
+diferença nos $C_{p,\min}$ vem sobretudo dos pequenos picos regulares das curvas
+do CFD, que não têm significado físico e cujo topo dá os valores da
+Tabela~\ref{tab:estagnacao}. 
+
+A $20^\circ$ o método dos painéis prevê um pico de sucção de $-21{,}8$ junto ao
+bordo de ataque, um valor que só se obtém por não haver viscosidade, enquanto o
+CFD fica por cerca de $-7{,}1$. A seguir ao pico, nos painéis a pressão sobe aos
+poucos ao longo de todo o extradorso, mas no CFD o $C_p$ fica quase constante a
+partir de $x/c \approx 0{,}1$, um patamar característico da zona descolada. Nos dois métodos o ponto de estagnação desloca-se para
+o intradorso, mas menos no CFD ($x/c \approx 0{,}024$ contra $0{,}105$), porque
+com o descolamento a circulação é muito menor.}
 
 \paragraph{Gama linear.}
 Como os métodos potenciais são lineares por construção, a gama linear do perfil
 identifica-se pelo CFD. \rasc{Entre $0^\circ$ e $5^\circ$ e entre $5^\circ$ e
 $10^\circ$, o $c_l$ do CFD aumenta quase o mesmo ($0{,}57$ e $0{,}52$). Entre
 $10^\circ$ e $15^\circ$ aumenta apenas $0{,}18$, e a partir daí diminui. A gama
-linear vai, assim, de $0^\circ$ a cerca de $10^\circ$. O $c_{l,\max}$ é de pelo
-menos $1{,}34$ e fica entre $10^\circ$ e $20^\circ$, mas com simulações de
-$5^\circ$ em $5^\circ$ não é possível dizer exatamente onde.}
+linear vai, assim, de $0^\circ$ a cerca de $10^\circ$. O $c_{l,\max}$, que marca a
+entrada em perda, é de pelo menos $1{,}34$ e fica entre $10^\circ$ e
+$20^\circ$. Como o $c_l$ ainda sobe de $10^\circ$ para $15^\circ$ e desce de
+$15^\circ$ para $20^\circ$, a perda deverá dar-se perto dos $15^\circ$, mas com
+simulações de $5^\circ$ em $5^\circ$ não é possível dizer exatamente onde.}

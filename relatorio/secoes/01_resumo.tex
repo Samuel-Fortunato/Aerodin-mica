@@ -1,21 +1,22 @@
 \tituloResumo
 % Máx. 250 palavras: procedimentos + resultados mais relevantes.
 
-\rasc{Neste trabalho estudou-se o perfil Roncz/Marske-7, usado como substituto do
-perfil da raiz da asa do Cirrus SR22, com a teoria dos perfis delgados, o método
-dos painéis e uma simulação CFD 2D em
-OpenFOAM com o modelo de turbulência $k$--$\omega$ SST. No método dos painéis
-escolheram-se $N = 260$ painéis, com um erro de 0,5\,\% no $c_l$ a $5^\circ$
-face a 800 painéis, e no CFD uma malha com cerca de 64 mil células, com uma
-incerteza relativa de 1,3\,\% no $c_l$ entre malhas. Os ângulos de sustentação
+\rasc{Neste trabalho estudou-se o perfil Roncz/Marske-7, substituto do perfil da
+raiz do Cirrus SR22, com a teoria dos perfis delgados, o método
+dos painéis e uma simulação CFD 2D em OpenFOAM com o modelo
+$k$--$\omega$ SST. Os estudos de convergência levaram à escolha de $N = 260$
+painéis e de uma malha com cerca de 64 mil células. Na zona linear, o método dos
+painéis prevê os $c_l$ mais altos, por incluir a espessura, e a teoria dos
+perfis delgados os mais baixos. O CFD acompanha os painéis até $5^\circ$ e fica
+abaixo deles a partir daí, por efeito da viscosidade. Os ângulos de sustentação
 nula previstos pela teoria dos perfis delgados, pelo método dos painéis e pelo
-CFD são $-0{,}13^\circ$, $-0{,}39^\circ$ e $-0{,}67^\circ$, e os declives na zona
-linear são 6,28, 6,78 e 6,26~rad$^{-1}$. O método dos painéis prevê o maior
-declive por incluir a espessura, enquanto no CFD esse efeito é quase anulado
-pela viscosidade. O CFD é linear até cerca de $10^\circ$ e o perfil entra em
-perda entre $15^\circ$ e $20^\circ$, com o escoamento descolado e não
-estacionário a $20^\circ$, o que os métodos potenciais não preveem. As linhas de corrente e as distribuições de $C_p$ dos
-painéis e do CFD são semelhantes a $0^\circ$ e $5^\circ$, mas muito diferentes a
-$20^\circ$. Os métodos potenciais servem para estimativas rápidas na zona
-linear, e o CFD é necessário perto e depois da perda e para o arrasto,
-com um custo muito maior.}
+CFD são $-0{,}13^\circ$, $-0{,}39^\circ$ e $-0{,}67^\circ$, e os declives são
+6,28, 6,78 e 6,26~rad$^{-1}$, com a espessura e a viscosidade a compensarem-se
+quase por completo no CFD. O CFD é linear até cerca de $10^\circ$ e o perfil
+entra em perda por volta dos $15^\circ$, com um $c_l$ máximo de pelo menos
+$1{,}34$ e escoamento descolado e não estacionário a $20^\circ$, o que os
+métodos potenciais não preveem. As linhas de
+corrente e as distribuições de $C_p$ dos painéis e do CFD são semelhantes a
+$0^\circ$ e $5^\circ$, mas muito diferentes a $20^\circ$. Os métodos potenciais
+servem para estimativas rápidas na zona linear, e o CFD é necessário perto e
+depois da perda e para o arrasto, com um custo muito maior.}
