@@ -15,6 +15,7 @@ processor*
 # logfiles
 #log.*
 #*log
+log.pimpleFoam
 
 # paraview/ParaFoam
 #*.foam

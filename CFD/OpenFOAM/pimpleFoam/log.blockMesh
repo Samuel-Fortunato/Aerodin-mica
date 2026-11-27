@@ -1,23 +1,27 @@
 /*---------------------------------------------------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2412                                  |
+|  \\    /   O peration     | Version:  2606                                  |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
-Build  : _b8cf4d35-20260127 OPENFOAM=2412 patch=260127 version=2412
+Build  : _481094f-20260618 OPENFOAM=2606 version=2606
 Arch   : "LSB;label=32;scalar=64"
 Exec   : blockMesh
 Date   : Nov 26 2026
-Time   : 11:15:23
+Time   : 22:11:12
 Host   : nixos
-PID    : 89918
+PID    : 149075
 I/O    : uncollated
-Case   : /home/gonca/CFD/Projeto/2D/aerodinamica-snappy/AERODINAMICA/aerodinamica-pimple/parametric_runs_snappy/case_0001_reference_airfoil_aoa0
+Case   : /home/gonca/Documentos/!LaTeX/UA/Aerodin-mica/CFD/OpenFOAM/pimpleFoam
 nProcs : 1
 trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+memory pool : not available
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 5, maxFileModificationPolls 20)
-allowSystemOperations : Allowing user-supplied system call operations
+
+--> FOAM Warning : allowSystemOperations : Allowing user-supplied system call operations.
+                   This can be a security risk if running untrusted cases
+                   through e.g. 'coded' on-the-fly-compilation functionality.
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 Create time

@@ -18,17 +18,24 @@ Segundo Celik et al.~\cite{mesh_independence}, para um estudo de independência 
   \centering
   \caption{Estudo de independência de malha.}
   \label{tab:malhas}
-  \begin{tabular}{lccc}
-    \toprule
-    $h_\text{cel. exterior}$ & N.º de células & $c_l$ & Variação de $c_l$ [\%] \\
-    \midrule
-    0,14 & \tbd{} & \tbd{} & --- \\
-    0,10 & \tbd{} & \tbd{} & \tbd{} \\
-    0,07 & \tbd{} & \tbd{} & \tbd{} \\
-    0,05 & \tbd{} & \tbd{} & \tbd{} \\
-    \bottomrule
+  \begin{tabular}{lcccccc}
+    \hline
+    $h_\text{cel. ext}$ & N.º de cels. & $c_l$ & Variação de $c_l$ [\%] & MaxNonOrtho & MaxSkewness & LayerCoverage [\%] \\
+    \hline
+    0,14 & 38048  & 0.0151 & 1.7  & 57.0286 & 1.7813 & 99.4\\
+    0,10 & 64179  & 0.0147 & 1.3  & 49.4868 & 1.3741 & 100 \\
+    0,07 & 104314 & 0.0151 & -1.3 & 53.2279 & 1.2897 & 100 \\
+    0,05 & 168258 & 0.0146 & 0.0  & 58.9371 & 1.2458 & 98.5\\
+    \hline
   \end{tabular}
 \end{table}
+
+Para determinar a independência da malha, é importante primeiro determinar o tipo de convergência. Segundo a norma ASME V\&V 20, a convergência pode ser distinguida em três casos: monotónica, oscilatória e divergente. Neste caso, tendo em conta que não há uma tendência clara dos coeficientes para um valor final, encontramo-nos perante uma convergência oscilatória. Com isto, foi usado como parâmetro para averiguar a independência da malha a dispersão dos resultado, em vez do GCI. A dispersão dos resultados foi avaliada através da incerteza relativa, $U_\mathrm{rel}$: 
+\[
+    \bar{\phi} = \frac{\phi_1 + \phi_2 + \phi_3}{3} \qquad U_\mathrm{abs} = \frac{\phi_\mathrm{max} - \phi_\mathrm{min}}{2} \qquad U_\mathrm{rel} = \frac{U_\mathrm{abs}}{|\bar{\phi}|} \cdot 100\%
+\]
+
+Foi obtida uma $U_\mathrm{rel} = 1.572\%$ para o $C_d$ e uma $U_\mathrm{rel} = 1.346\%$ para o $C_l$, pelo que se considerou que se verifica independência de malha.
 
 \begin{figure}[H]
   \centering
@@ -46,9 +53,9 @@ Segundo Celik et al.~\cite{mesh_independence}, para um estudo de independência 
   \label{fig:independencia_cfd}
 \end{figure}
 
-A Figura~\ref{fig:custo_yplus_cfd} apresenta os tempos de geração da malha
-e de simulação, bem como os valores médio, mínimo e máximo de $y^+$ para cada
-configuração de malha.
+%A Figura~\ref{fig:custo_yplus_cfd} apresenta os tempos de geração da malha
+%e de simulação, bem como os valores médio, mínimo e máximo de $y^+$ para cada
+%configuração de malha.
 
 \begin{figure}[H]
   \centering
@@ -66,11 +73,13 @@ configuração de malha.
   \label{fig:custo_yplus_cfd}
 \end{figure}
 
-\tbd{Análise (sem IA): explicar os resultados do estudo de independência,
-identificar o parâmetro de refinamento e justificar a malha escolhida,
-considerando a precisão, o tempo de cálculo e a resolução da camada limite.}
+%\tbd{Análise (sem IA): explicar os resultados do estudo de independência,
+%identificar o parâmetro de refinamento e justificar a malha escolhida,
+%considerando a precisão, o tempo de cálculo e a resolução da camada limite.}
 
-\tbd{A figura \texttt{CFD/graficos-mesh-independence/Figure\_4.png},
-relativa aos indicadores de qualidade da malha, não foi inserida para
-poupar espaço. Avaliar se é necessário incluí-la.}
+%\tbd{A figura \texttt{CFD/graficos-mesh-independence/Figure\_4.png},
+%relativa aos indicadores de qualidade da malha, não foi inserida para
+%poupar espaço. Avaliar se é necessário incluí-la.}
+
+Ao analisar a \cref{fig:independencia_cfd}, percebemos que, segundo o indicador de eficiência computacional, a malha "ideal" e a malha com $h_\mathrm{cel. externa} = 0.14$. No entanto, tendo em conta as falhas ao gerar as \textit{inflation layers} (particularmente no bordo de fuga - zona crítica), que resultam em zonas com $y^+$ superior a 5, e que a malha para $h_\mathrm{cel. externa} = 0.1$ não tem um custo temporal excessivo tendo em conta o volume de simulações a realizar, foi esta última a malha escolhida para as simulações deste estudo.
 
