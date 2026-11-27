@@ -178,8 +178,12 @@ $c_l(\alpha)$ mas não muda a sua inclinação. Os painéis dão 6,78~rad$^{-1}$
 extradorso. 
 
 \paragraph{Tempo de cálculo e recursos.}
-A Tabela~\ref{tab:custo} compara o custo de cada método, num computador com
-\tbd{CPU, RAM}.
+A Tabela~\ref{tab:custo} compara os tempos de cálculo. Em MATLAB,
+o tempo dos perfis delgados é medido com \texttt{timeit} para todos os
+ângulos; nos painéis, somam-se os tempos de resolução individual medidos
+com \texttt{tic/toc}. Não se incluem os estudos de convergência, a geração
+de gráficos nem a exportação dos resultados. Os tempos dos métodos
+potenciais foram medidos num Intel Core i7-13650HX com 32~GB de RAM.
 
 \begin{table}[H]
   \centering
@@ -189,8 +193,10 @@ A Tabela~\ref{tab:custo} compara o custo de cada método, num computador com
     \toprule
     Método & Software & N.º de ângulos & Tempo de cálculo \\
     \midrule
-    Perfis delgados & MATLAB   & 81 & $\approx 0{,}1$~ms (total) \\
-    Painéis         & MATLAB   & 9  & $\approx 1{,}5$~s (total) \\
+    Perfis delgados & MATLAB & \NumAngulosPerfisDelgados &
+    $\approx$ \num[round-mode=places,round-precision=3,output-decimal-marker={,}]{\TempoPerfisDelgadosMs}~ms (total) \\
+    Painéis & MATLAB & \NumAngulosPaineis &
+    $\approx$ \num[round-mode=places,round-precision=2,output-decimal-marker={,}]{\TempoPaineisS}~s (total) \\
     CFD             & OpenFOAM & 5  & \rasc{$\approx 6$~min} por ângulo \tbd{confirmar} \\
     \bottomrule
   \end{tabular}
