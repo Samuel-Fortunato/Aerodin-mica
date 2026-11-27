@@ -1,5 +1,4 @@
-\section*{Resultados}
-% ESTRUTURA PROVISÓRIA. Tudo o que está a vermelho (\tbd, \placeholder) é para
+\section*{Resultados} % ESTRUTURA PROVISÓRIA. Tudo o que está a vermelho (\tbd, \placeholder) é para
 % substituir. Os valores numéricos sem \tbd vêm dos results.csv de cada pasta.
 % Análise de resultados e explicações físicas: escrever SEM IA (regra da UC).
 
@@ -47,7 +46,13 @@ painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
 A Figura~\ref{fig:painelizacao} mostra a painelização final, com
 $N = 260$ painéis e os respetivos pontos de controlo.
 \tbd{decidir se se acrescentam os vetores normais e tangentes à figura}
-\tbd{comentar a distribuição dos painéis junto aos bordos}
+\rasc{Como a interpolação é parametrizada pela distância acumulada ao longo de
+cada superfície, com pontos igualmente espaçados nesse parâmetro, os painéis
+têm todos aproximadamente o mesmo comprimento. Não há, portanto,
+concentração de painéis junto ao bordo de ataque, onde a curvatura da superfície
+e os gradientes de velocidade são maiores, nem junto ao bordo de fuga, onde se
+impõe a condição de Kutta. Por isso, o bordo de ataque só fica bem descrito
+graças ao elevado número de painéis ($N = 260$).}
 
 \begin{figure}[H]
   \centering
@@ -63,10 +68,10 @@ $N = 260$ painéis e os respetivos pontos de controlo.
 \subsection*{Comparação de métodos}
 
 \paragraph{Coeficiente de sustentação.}
-A Figura~\ref{fig:cl_alpha} sobrepõe os $c_l$ previstos pelos três métodos:
-perfis delgados de $-20^\circ$ a $20^\circ$ com passo de $0{,}5^\circ$, painéis
-de $-20^\circ$ a $20^\circ$ com passo de $5^\circ$, e CFD de $0^\circ$ a
-$20^\circ$ com passo de $5^\circ$. A Tabela~\ref{tab:cl} dá os valores nos
+A Figura~\ref{fig:cl_alpha} sobrepõe os $c_l$ previstos pelos três métodos,
+calculados de $-20^\circ$ a $20^\circ$ com passo de $0{,}5^\circ$ nos perfis
+delgados, de $-20^\circ$ a $20^\circ$ com passo de $5^\circ$ nos painéis e de
+$0^\circ$ a $20^\circ$ com passo de $5^\circ$ no CFD. A Tabela~\ref{tab:cl} dá os valores nos
 ângulos comuns.
 
 \begin{figure}[H]
@@ -92,14 +97,44 @@ $20^\circ$ com passo de $5^\circ$. A Tabela~\ref{tab:cl} dá os valores nos
   \end{tabular}
 \end{table}
 
-\tbd{Análise (escrever sem IA): diferenças entre métodos na zona linear e
-porquê (espessura, viscosidade); comportamento do CFD acima de $10^\circ$;
-porque é que os métodos potenciais continuam lineares.}
+Na zona linear ($0^\circ$ a $10^\circ$) os três métodos concordam
+qualitativamente, mas denota-se que o método dos painéis prevê sistematicamente mais
+sustentação do que a teoria dos perfis delgados ($+0{,}08$ a $5^\circ$, $+0{,}12$
+a $10^\circ$). A diferença entre eles devem-se aos fenómenos físicos considerados em cada método, e às simplificacões enraizadas nos mesmos. O método dos painéis e o método dos perfis delgados não consideram viscosidade. A teoria dos perfis delgados
+representa o perfil apenas pela linha média, ignorando a espessura do perfil, enquanto o método dos painéis
+discretiza o contorno real, com 12\,\% de espessura, no qual o escoamento acelera
+no extradorso, aumentando assim o declive da curva de sustentação.
+
+O CFD acompanha o método dos painéis até $5^\circ$, mas a diferença entre
+os dois cresce rapidamente com o ângulo de ataque. É praticamente nula até
+$5^\circ$ e passa para $0{,}07$ a $10^\circ$, $0{,}47$ a $15^\circ$ e $1{,}32$ a
+$20^\circ$. Esta diferença deve-se ao facto de a análise de CFD considerar o
+efeito da viscosidade. Com o aumento do ângulo de ataque, o gradiente adverso
+de pressão no extradorso aumenta e a camada limite torna-se mais espessa. Perto
+do bordo de fuga, o escoamento exterior deixa de acompanhar tão bem a superfície,
+o que reduz a circulação e explica a diferença de $0{,}07$ a $10^\circ$. A partir
+de $10^\circ$ a curva do CFD dobra, porque o gradiente adverso de pressão já é
+forte o suficiente para provocar o descolamento ou separação da camada limite. A
+$15^\circ$ o descolamento começa junto ao bordo de fuga
+\tbd{$x/c$ onde a tensão de corte no extradorso se anula, pedir ao Gonçalo} e o
+$c_l$ fica-se por $1{,}34$. A $20^\circ$ o descolamento começa logo junto ao
+bordo de ataque e ocupa quase todo o extradorso (Figura~\ref{fig:linhas}), pelo
+que o $c_l$ desce para $1{,}05$ e o arrasto sobe para $c_d = 0{,}27$, quase todo
+de pressão. O perfil entra, portanto, em perda entre $15^\circ$ e $20^\circ$.
+\tbd{confirmar se a simulação a $20^\circ$ convergiu ou se o escoamento é não
+estacionário}
+
+Nos métodos potenciais a reta continua até $20^\circ$. Sem viscosidade não
+existe camada limite, logo nada pode descolar, e a condição de Kutta obriga o escoamento a sair
+suavemente pelo bordo de fuga independentemente do ângulo de ataque. Assim, não
+conseguem prever a perda nem o $c_{l,\max}$.
 
 \paragraph{Ângulo de sustentação nula e declive.}
 A Tabela~\ref{tab:alpha0} apresenta o ângulo de sustentação nula e o declive da
-curva $c_l$--$\alpha$ na zona linear, obtidos por regressão linear entre
-\tbd{$0^\circ$ e $10^\circ$} \tbd{confirmar gama usada em \texttt{Comparison/main.m}}.
+curva $c_l(\alpha)$ na zona linear, obtidos por regressão linear entre
+\rasc{$0^\circ$ e $10^\circ$. Esta é a gama em que o declive do CFD entre ângulos
+consecutivos difere menos de 10\,\% do declive entre $0^\circ$ e $5^\circ$. Os
+métodos potenciais são lineares em toda a gama, por isso é o CFD que a limita.}
 
 \begin{table}[H]
   \centering
@@ -117,13 +152,38 @@ curva $c_l$--$\alpha$ na zona linear, obtidos por regressão linear entre
   \end{tabular}
 \end{table}
 
-\tbd{Análise (sem IA): porque é que $\alpha_{L=0}$ é pequeno (reflex) e
-diferente entre métodos; porque é que o declive é maior/menor que $2\pi$. No
-CFD, $\alpha_{L=0}$ é extrapolado (não há ângulos negativos).}
+Em todos os métodos $\alpha_{L=0}$ sai negativo, o que bate certo com a
+Tabela~\ref{tab:cl}, onde o $c_l$ a $0^\circ$ já é positivo. Na teoria dos perfis
+delgados, $\alpha_{L=0}$ só depende da inclinação da linha média ao longo da
+corda~\cite{anderson}, e como a linha média é igual nos três casos, os valores
+ficam todos abaixo de $1^\circ$ em módulo. A expressão de $\alpha_{L=0}$ ajuda a
+perceber porque é que fica tão perto de zero,
+\[
+  \alpha_{L=0} = \frac{1}{\pi}\int_0^{\pi}\frac{dz_c}{dx}\,(1-\cos\theta)\,d\theta ,
+\]
+em que a inclinação da linha média é multiplicada por $1-\cos\theta = 2x/c$.
+Este peso é nulo no bordo de ataque e máximo no bordo de fuga, pelo que é a
+parte de trás da linha média que mais conta. A meio da corda a linha média
+desce, o que torna $\alpha_{L=0}$ negativo, mas perto do bordo de fuga volta a
+subir. Como é aí que o peso é maior, essa subida anula quase
+todo o efeito da descida. Como no CFD só
+foram simulados ângulos positivos, onde $c_l$ é sempre positivo, o seu
+$\alpha_{L=0}$ foi obtido por extrapolação da reta ajustada.
+
+Quanto ao declive, a teoria dos perfis delgados dá $2\pi$ para qualquer perfil.
+O ângulo de ataque só aparece em $A_0 = \alpha - I_0$, enquanto $I_0$ e $A_1$
+dependem apenas da linha média, por isso a curvatura desloca a reta
+$c_l(\alpha)$ mas não muda a sua inclinação. Os painéis dão 6,78~rad$^{-1}$,
+8\,\% acima, porque a espessura de 12\,\% acelera mais o escoamento no
+extradorso. 
 
 \paragraph{Tempo de cálculo e recursos.}
-A Tabela~\ref{tab:custo} compara o custo de cada método, num computador com
-\tbd{CPU, RAM}.
+A Tabela~\ref{tab:custo} compara os tempos de cálculo. Em MATLAB,
+o tempo dos perfis delgados é medido com \texttt{timeit} para todos os
+ângulos; nos painéis, somam-se os tempos de resolução individual medidos
+com \texttt{tic/toc}. Não se incluem os estudos de convergência, a geração
+de gráficos nem a exportação dos resultados. Os tempos dos métodos
+potenciais foram medidos num Intel Core i7-13650HX com 32~GB de RAM.
 
 \begin{table}[H]
   \centering
@@ -133,35 +193,48 @@ A Tabela~\ref{tab:custo} compara o custo de cada método, num computador com
     \toprule
     Método & Software & N.º de ângulos & Tempo de cálculo \\
     \midrule
-    Perfis delgados & MATLAB   & 81 & $\approx 0{,}1$~ms (total) \\
-    Painéis         & MATLAB   & 9  & $\approx 1{,}5$~s (total) \\
-    CFD             & OpenFOAM & 5  & \tbd{} por ângulo \\
+    Perfis delgados & MATLAB & \NumAngulosPerfisDelgados &
+    $\approx$ \num[round-mode=places,round-precision=3,output-decimal-marker={,}]{\TempoPerfisDelgadosMs}~ms (total) \\
+    Painéis & MATLAB & \NumAngulosPaineis &
+    $\approx$ \num[round-mode=places,round-precision=2,output-decimal-marker={,}]{\TempoPaineisS}~s (total) \\
+    CFD             & OpenFOAM & 5  & $\approx 6$~min por ângulo \tbd{confirmar} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\tbd{Comentar também o tempo de preparação: geometria, malha e configuração do
-caso no CFD vs. apenas um script nos métodos potenciais.}
+Pela Tabela~\ref{tab:custo}, a teoria dos perfis delgados é a mais rápida,
+com os 81 ângulos calculados em menos de um milissegundo. A geometria só entra
+em $I_0$ e $A_1$, que se calculam uma vez, e a partir daí cada ângulo é apenas
+uma conta. O método dos painéis demora mais, porque para cada ângulo é preciso
+montar e resolver um sistema de $N+1 = 261$ equações com a influência de todos
+os painéis. Mesmo assim, o custo é baixo e tudo corre num \emph{script} de
+MATLAB. O CFD é, de longe, o mais caro. Cada ângulo demora alguns minutos,
+porque as equações do escoamento e do modelo de turbulência são resolvidas
+iterativamente em cerca de 64 mil células até os resíduos descerem abaixo de
+$10^{-7}$. A isto junta-se a preparação, que nos métodos potenciais se resume a
+ler as coordenadas do perfil, mas no CFD inclui gerar e verificar a malha,
+definir o caso, fazer o estudo de independência de malha e, como se rodou o
+perfil, repetir a malha para cada ângulo.
 
 \paragraph{Vantagens, desvantagens e gama de aplicação.}
-A Tabela~\ref{tab:vantagens} resume as vantagens e desvantagens de cada método
-e a gama de ângulos de ataque em que cada um se deve usar.
+A teoria dos perfis delgados tem solução analítica e praticamente não tem
+custo, bastando conhecer a linha média. Em troca, não considera a espessura nem
+a viscosidade, dá velocidade infinita no bordo de ataque e não consegue prever o
+arrasto nem a perda. Serve para uma primeira estimativa de $c_l$ e de
+$\alpha_{L=0}$ enquanto a curva é linear, até cerca de $10^\circ$.
 
-\begin{table}[H]
-  \centering
-  \caption{Vantagens, desvantagens e gama de aplicação de cada método.}
-  \label{tab:vantagens}
-  \small
-  \begin{tabular}{p{2.4cm}p{4.6cm}p{4.6cm}p{3.6cm}}
-    \toprule
-    Método & Vantagens & Desvantagens & Gama de $\alpha$ / aplicação \\
-    \midrule
-    Perfis delgados & \tbd{} & \tbd{} & \tbd{} \\
-    Painéis         & \tbd{} & \tbd{} & \tbd{} \\
-    CFD             & \tbd{} & \tbd{} & \tbd{} \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+O método dos painéis já usa a forma real do perfil e, com um custo ainda baixo,
+dá a distribuição de $C_p$ e as linhas de corrente, o que o torna útil para
+comparar vários perfis. No entanto, continua sem viscosidade, os resultados
+dependem do número de painéis e também não prevê o arrasto, o descolamento nem a
+perda. É indicado para estudar a distribuição de pressões com o escoamento
+colado, até cerca de $10^\circ$.
+
+O CFD é o único que inclui a viscosidade e a turbulência, e por isso consegue
+prever o arrasto, o descolamento e a perda. O preço é um custo de preparação e
+de cálculo muito maior, e resultados que dependem da malha e do modelo de
+turbulência. É o método a usar perto e depois da perda, acima de cerca de
+$10^\circ$, e sempre que interessa o arrasto.
 
 \paragraph{Linhas de corrente.}
 A Figura~\ref{fig:linhas} apresenta as linhas de corrente previstas pelo método
@@ -208,9 +281,23 @@ $20^\circ$.
   \label{fig:linhas}
 \end{figure}
 
-\tbd{Análise (sem IA): semelhanças a $0^\circ$ e $5^\circ$ (estagnação,
-aceleração no extradorso, saída no bordo de fuga); diferenças a $20^\circ$
-(descolamento, recirculação vs. condição de Kutta).}
+\rasc{A $0^\circ$ e a $5^\circ$ os dois métodos dão escoamentos muito
+semelhantes. O escoamento mantém-se colado em todo o perfil, o ponto de
+estagnação fica junto ao bordo de ataque (nos painéis, em $x/c \approx 0{,}002$
+a $0^\circ$ e $x/c \approx 0{,}005$ no intradorso a $5^\circ$), as linhas de
+corrente aproximam-se no extradorso, onde o escoamento acelera, e saem
+suavemente pelo bordo de fuga. No método dos painéis esta saída é imposta pela
+condição de Kutta, enquanto no CFD resulta naturalmente da viscosidade.
+
+A $20^\circ$ os dois resultados são completamente diferentes. No método dos
+painéis o escoamento continua colado, com o ponto de estagnação no intradorso
+($x/c \approx 0{,}105$) e o escoamento a contornar o bordo de ataque com uma
+aceleração muito elevada ($C_{p,\min} \approx -21{,}8$). Isto não acontece na
+realidade, porque um gradiente adverso de pressão desta ordem faria descolar a
+camada limite. É isso que se vê no CFD, onde a camada limite descola junto ao
+bordo de ataque e se forma uma grande zona de recirculação sobre todo o
+extradorso, com uma esteira larga, o que explica a
+queda de $c_l$ e o aumento de $c_d$.}
 
 \paragraph{Coeficiente de pressão.}
 As Figuras~\ref{fig:cp} e \ref{fig:cp-CFD} apresentam a distribuição de $C_p$ ao longo do
@@ -250,21 +337,28 @@ permitir a comparação direta das curvas dos dois métodos.}
     & \multicolumn{2}{c}{Ponto de estagnação, $x/c$} & \multicolumn{2}{c}{$C_{p,\min}$ ($x/c$)} \\
     $\alpha$ & Painéis & CFD & Painéis & CFD \\
     \midrule
-    $0^\circ$  & \tbd{} & 0.00068 & \tbd{} & -0.74 \\
-    $5^\circ$  & \tbd{} & 0.00191 & \tbd{} & -1.4 \\
-    $20^\circ$ & \tbd{} & 0.02357 & \tbd{} & -7.1 \\
+    $0^\circ$  & \rasc{0,002} & 0,00068 & \rasc{$-0{,}56$ (0,007)} & $-0{,}74$ \\
+    $5^\circ$  & \rasc{0,005} & 0,00191 & \rasc{$-1{,}16$ (0,024)} & $-1{,}4$ \\
+    $20^\circ$ & \rasc{0,105} & 0,02357 & \rasc{$-21{,}8$ (0,001)} & $-7{,}1$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\tbd{Análise (sem IA): deslocamento do ponto de estagnação para o intradorso
+\tbd{Análise: deslocamento do ponto de estagnação para o intradorso
 com $\alpha$; pico de sucção maior nos painéis; patamar de $C_p$ no CFD a
 $20^\circ$ (escoamento descolado).}
 
 \paragraph{Gama linear.}
 Como os métodos potenciais são lineares por construção, a gama linear do perfil
-identifica-se pelo CFD. \tbd{a partir de que ângulo o $c_l$ do CFD se afasta da
-reta, e quanto; gama linear: $0^\circ$ a $\approx\tbd{10}^\circ$.}
+identifica-se pelo CFD. \rasc{Os incrementos de $c_l$ no CFD, por cada
+$5^\circ$, são de $0{,}57$, $0{,}52$, $0{,}18$ e $-0{,}29$. Entre $5^\circ$ e
+$10^\circ$ o declive é 9\,\% inferior ao inicial, ainda dentro da tolerância,
+mas entre $10^\circ$ e $15^\circ$ cai para cerca de um terço, e a partir daí
+$c_l$ diminui. A gama linear vai, portanto, de $0^\circ$ a $\approx 10^\circ$, e $c_{l,\max} \geq 1{,}34$ ocorre entre $10^\circ$ e
+$20^\circ$ (a resolução de $5^\circ$ não permite localizá-lo melhor). Em cruzeiro,
+$c_l \approx 0{,}22$, o que corresponde a $\alpha \approx 1{,}3^\circ$ (CFD) a
+$1{,}9^\circ$ (perfis delgados), pelo que o ponto de funcionamento fica bem dentro da zona
+linear, onde os três métodos diferem no máximo cerca de $0{,}06$ em $c_l$.}
 % Movido da Introdução — ponto de funcionamento em cruzeiro:
 % c_l = W / (1/2 rho V^2 S) = 1633*9,81 / (0,5*1,225*94,4^2*13,46) ≈ 0,22
 % Comparar com a zona linear: a que alpha corresponde em cada método?

@@ -201,6 +201,27 @@ disp(results);
 writetable(results, ...
     fullfile(scriptDir, 'results.csv'));
 
+% Atualizar os valores usados na tabela de tempos do relatorio.
+% As macros guardam os tempos medidos, sem arredondamento de apresentacao.
+assert(all(isfinite(time_s(1:2)) & time_s(1:2) > 0), ...
+    'Tempos de calculo invalidos.');
+configDir = fullfile(rootDir, 'relatorio', 'config');
+timingFile = fullfile(configDir, 'tempos_calculo.tex');
+timingText = sprintf([ ...
+    '%% Gerado automaticamente por Comparison/main.m a partir dos CSV.\n' ...
+    '%% Unidades: perfis delgados em ms; paineis em s.\n' ...
+    '\\newcommand{\\TempoPerfisDelgadosMs}{%.15g}\n' ...
+    '\\newcommand{\\TempoPaineisS}{%.15g}\n' ...
+    '\\newcommand{\\NumAngulosPerfisDelgados}{%d}\n' ...
+    '\\newcommand{\\NumAngulosPaineis}{%d}\n'], ...
+    1000*time_s(1), time_s(2), n_angles(1), n_angles(2));
+
+% Substituicao atomica para evitar leituras incompletas pelo latexmk.
+tmpTimingFile = [tempname(configDir) '.tex'];
+writelines(timingText, tmpTimingFile);
+[ok, msg] = movefile(tmpTimingFile, timingFile, 'f');
+assert(ok, 'Erro ao exportar os tempos para LaTeX: %s', msg);
+
 
 
 %% 9. Estudo de convergencia dos paineis
@@ -291,8 +312,13 @@ filename = fullfile(rootDir, 'airfoil-points.txt');
 [xs, zs, xe, ze, xc, zc] = ...
     panelizationRoncz(filename, N_final, false);
 
-figPanel = figure('Name', 'Painelização', ...
-    'Color', 'w', 'WindowStyle', 'docked');
+% Tamanho fixo (largo e baixo): com axis equal, uma janela alta deixa
+% muito espaco em branco por cima do perfil
+figPanel = figure('Name', 'Painelização', 'Color', 'w', ...
+    'Units', 'centimeters', 'Position', [2 2 18 6]);
+if exist('theme', 'file')   % R2025a+: evita o tema escuro
+    theme(figPanel, 'light');
+end
 
 axPanel = axes(figPanel);
 
@@ -329,7 +355,8 @@ box(axPanel, 'on');
 axPanel.FontSize = 12;
 axPanel.GridAlpha = 0.12;
 
-legend(axPanel, 'Location', 'best', 'Box', 'off');
+legend(axPanel, 'Location', 'northoutside', ...
+    'Orientation', 'horizontal', 'Box', 'off');
 
 hold(axPanel, 'off');
 

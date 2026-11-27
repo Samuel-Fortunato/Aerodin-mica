@@ -128,5 +128,5 @@ scalar,convergence_tol_cl,,0.001,1
 scalar,convergence_tol_alpha_deg,,0.01,deg
 scalar,convergence_error_cl_N,,7.20012052741748e-05,1
 scalar,convergence_error_alpha_N,,0.00065657226078511,deg
-scalar,execution_time_s,,0.000258605,s
+scalar,execution_time_s,,0.000115351,s
 scalar,alpha_count,,81,1

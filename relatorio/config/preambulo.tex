@@ -54,6 +54,11 @@
 \newcommand{\placeholder}[3][0.9\linewidth]{%
   \fcolorbox{red}{red!4}{\parbox[c][#2][c]{#1}{\centering\small\color{red}#3}}}
 
+% Rascunhos de análise a rever: \rasc{texto}. Para passar tudo a preto,
+% trocar "red" por "black" na linha seguinte.
+\colorlet{rascunho}{red}
+\newcommand{\rasc}[1]{{\color{rascunho}#1}}
+
 % Lista compacta para as etapas que acompanham os diagramas de blocos.
 \newlist{etapas}{enumerate}{1}
 \setlist[etapas]{label=\textbf{\arabic*.}, leftmargin=*, labelsep=0.3em,
