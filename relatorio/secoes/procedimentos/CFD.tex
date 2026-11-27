@@ -17,7 +17,7 @@ Figura~\ref{fig:diag_cfd}.
   \draw[seta, dashed] (c5.east) -- ++(0.3,0) |- (c2.east);
   \node[io, left=0.5cm of c1, align=flush right] (k1) {Coordenadas do perfil; dimensões do domínio $x\in[-2;6];\ y\in[-2;2]$};
   \node[io, left=0.5cm of c2, align=flush right] (k2) {Domínio; número de células, $y^+ \approx 1$ pretendido, refinamento junto à parede de nível 6 e 7};
-  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 95$~m/s, $\nu = 1.789\cdot10^{-5}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta 5\%};
+  \node[io, left=0.5cm of c3, align=flush right] (k3) {$V_\infty = 95$~m/s, $\nu = 1{,}789\cdot10^{-5}$~m$^2$/s, $c = 1$~m, $\alpha$; modelo de turbulência e intensidade turbulenta 5\%};
   \node[io, left=0.5cm of c4, align=flush right] (k4) {Caso configurado; esquemas numéricos; critério de paragem dos resíduos de $10^{-7}$};
   \node[io, left=0.5cm of c5, align=flush right] (k5) {Campos $p$ e $\mathbf{U}$; $c$, $V_\infty$; direções de sustentação e arrasto};
   \node[io, left=0.5cm of c6, align=flush right] (k6) {Campos convergidos para $\alpha = 0^\circ, 5^\circ, \dots, 20^\circ$};
@@ -44,17 +44,17 @@ estudo de convergência de malha.}
   \item \textbf{Geometria e domínio.} O perfil é importado a partir das
       coordenadas e envolvido por um domínio 2D retangular, de dimensões $x\in[-2;6];\ y\in[-2;2]$, com o bordo de ataque do perfil centrado na origem $(0,0)$.
 
-  \item \textbf{Malha.} Foi usada uma malha hexaédrica, gerada com o \texttt{snappyHexMesh}, com \approx 65000 células. O primeiro passo foi determinar a altura da primeira \textit{inflation layer}, $h_{FL}$, necessário  para obter $y+\approx1$:
+  \item \textbf{Malha.} Foi usada uma malha hexaédrica, gerada com o \texttt{snappyHexMesh}, com $\approx 64\,000$ células. O primeiro passo foi determinar a altura da primeira \textit{inflation layer}, $h_{FL}$, necessária para obter $y^+\approx1$:
   \begin{equation}
-      \mathrm{Re} = \frac{U_\infty \cdot c}{\nu}; \qquad C_f = \frac{0.027}{\mathrm{Re}^{1/7}}; \qquad u_t = U_\infty \cdot \sqrt{\frac{C_f}{2}}; \qquad h_{FL} = 2 \cdot \frac{y^+ \cdot \nu}{u_t}
+      \mathrm{Re} = \frac{U_\infty \cdot c}{\nu}; \qquad C_f = \frac{0{,}027}{\mathrm{Re}^{1/7}}; \qquad u_t = U_\infty \cdot \sqrt{\frac{C_f}{2}}; \qquad h_{FL} = 2 \cdot \frac{y^+ \cdot \nu}{u_t}
       \label{eq:y+}
   \end{equation}
 
-  Para $c=1$, $U_\infty=\SI{95}{\meter\per\second}$ e $\nu=1.789\cdot10^{-5}\ \unit{\meter^2\per\second}$, foi obtido $h_{FL}\approx 1\cdot10^{-5}$. De forma a obter uma melhor malha junto à camada limite, foi usada uma $h_{FL} = 1.5\cdot10^{-5}$, que resulta num $y^+$ teórico de $1.5$, pelo que ainda satisfaz a condição de $y^+<5$.
+  Para $c=1$, $U_\infty=\SI{95}{\meter\per\second}$ e $\nu=1{,}789\cdot10^{-5}\ \unit{\meter^2\per\second}$, foi obtido $h_{FL}\approx 1\cdot10^{-5}$. De forma a obter uma melhor malha junto à camada limite, foi usada uma $h_{FL} = 1{,}5\cdot10^{-5}$, que resulta num $y^+$ teórico de $1{,}5$, pelo que ainda satisfaz a condição de $y^+<5$.
 
-  Foram utilizadas 20 \textit{inflation layers}, com uma taxa de expansão de 1.2, de forma a assegurar uma transição suave entre as \textit{inflation layers} e o restante domínio.
+  Foram utilizadas 20 \textit{inflation layers}, com uma taxa de expansão de 1,2, de forma a assegurar uma transição suave entre as \textit{inflation layers} e o restante domínio.
 
-  Foi utilizado uma célula exterior do domínio com $\SI{0.1}{\meter}$ de lado, tendo sido usado uma caixa de refinamento de nível 1 em $x\in[-1;5];\ y\in[-1;1]$. Foi também aplicado um refinamento local, junto à superfície do perfil, com nível de refinamento de 6 (ou 7 para zonas mais críticas).
+  Foi utilizada uma célula exterior do domínio com $\SI{0.1}{\meter}$ de lado, tendo sido usada uma caixa de refinamento de nível 1 em $x\in[-1;5];\ y\in[-1;1]$. Foi também aplicado um refinamento local, junto à superfície do perfil, com nível de refinamento de 6 (ou 7 para zonas mais críticas).
 
   A qualidade das malhas foi verificada com o \texttt{checkMesh}.
 
@@ -71,24 +71,23 @@ estudo de convergência de malha.}
   \]
   Este modelo combina as vantagens do $\mathrm{k-}\omega$ junto à camada limite com as vantagens do $\mathrm{k-}\epsilon$ nas regiões distantes da camada limite.
 
-  Foi considerado um $\mathrm{Re}\approx5.31\cdot10^6$, calculado com a \cref{eq:y+}.
+  Foi considerado um $\mathrm{Re}\approx5{,}31\cdot10^6$, calculado com a \cref{eq:y+}.
 
   Foram também calculadas a energia cinética turbulenta, $k$, e a taxa de dissipação específica, $\omega$, de forma a definir as condições de fronteira de turbulência na entrada para o modelo $k-\omega\ SST$:
   \[
-      k = \frac{3}{2}(U_\infty \cdot I)^2; \qquad \omega = \frac{\sqrt{k}}{C_\mu^{0.25} \cdot L}
+      k = \frac{3}{2}(U_\infty \cdot I)^2; \qquad \omega = \frac{\sqrt{k}}{C_\mu^{0{,}25} \cdot L}
   \]
   tendo sido obtidos os valores $k=\SI{33.844}{\meter^2\per\second^2}$ e $\omega=\SI{151.733}{\per\second}$.
 
     
-  \item \textbf{Resolução numérica.} A resolução numérica foi realizada através do solver \texttt{simpleFoam} (\textit{steady-state} e incompressível). Foi utilizado o algoritomo SIMPLEC (\textit{Semi-Inplicit Method for Pressure-Linked Equations - Consistent}) para acoplar os campos de pressão e velocidade, de forma a obter uma solução em regime estacionário.
+  \item \textbf{Resolução numérica.} A resolução numérica foi realizada através do solver \texttt{simpleFoam} (\textit{steady-state} e incompressível). Foi utilizado o algoritmo SIMPLEC (\textit{Semi-Implicit Method for Pressure-Linked Equations - Consistent}) para acoplar os campos de pressão e velocidade, de forma a obter uma solução em regime estacionário.
   
   No \texttt{fvSchemes}, foi definida a utilização de segunda ordem de discretização para a velocidade e termos de primeira ordem para os termos de turbulência ($k$ e $\omega$), algo que se considerou aceitável tendo em conta a natureza difusiva do fenómeno de turbulência.
   
-  Por sua vez, no ficheiro \texttt{fvSolution} foi definido o critério de convergência (todos os resíduos inferiores a $10^{-7}$), os métodos de resolução dos sistemas de equações e respetivas tolerâncias, e os fatores de relaxamento (0.3 para pressão e 0.7 para os restantes - velocidade, $k$ e $\omega$).
+  Por sua vez, no ficheiro \texttt{fvSolution} foi definido o critério de convergência (todos os resíduos inferiores a $10^{-7}$), os métodos de resolução dos sistemas de equações e respetivas tolerâncias, e os fatores de relaxamento (0,3 para pressão e 0,7 para os restantes - velocidade, $k$ e $\omega$).
 
-  A convergência das simulações foi avaliada através da monitorização da estabilização dos coeficientes aerodinâmicos $C_l$ e $C_d$, além da convergência dos resíduos e do critério de convergência definido no \texttt{fvSolution}.
+  \item \textbf{Coeficientes de força.} Os coeficientes $c_l$ e $c_d$ foram obtidos com a função \texttt{forceCoeffs}, e a convergência foi avaliada pela sua estabilização e pelos resíduos.
 
-  
-  \item \textbf{Pós-processamento.} O pós processamento foi realizado com recurso aos ficheiros \texttt{log} produzidos pelas ferramentas do \texttt{OpenFOAM} e com recurso ao Paraview para analisar graficamente os resultados obtidos.
+  \item \textbf{Pós-processamento.} O pós-processamento foi realizado com recurso aos ficheiros \texttt{log} produzidos pelas ferramentas do \texttt{OpenFOAM} e com recurso ao ParaView para analisar graficamente os resultados obtidos.
 \end{etapas}
 

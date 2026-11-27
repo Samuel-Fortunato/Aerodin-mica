@@ -1,10 +1,10 @@
 \subsection*{Estudo de convergência da simulação CFD}
 
-De forma a garantir que os resultados das simulações com recurso a CFD não são afetadas pela resolução da malha, é importante realizar um estudo de independência da malha. Para o efeito, foram realizadas simulações para quatro malhas diferentes, todas para um ângulo de ataque de 5\textdegree.
+De forma a garantir que os resultados das simulações com recurso a CFD não são afetados pela resolução da malha, é importante realizar um estudo de independência da malha. Para o efeito, foram realizadas simulações para quatro malhas diferentes, todas para um ângulo de ataque de 5\textdegree.
 
-Segundo Celik et al.~\cite{mesh_independence}, para um estudo de independência de malha devemos ter uma razão de refinamento, $r = h_\text{coarse} / h_\text{fine}$, superior a 1.3. Foi portanto utilizado $r\approx1.4$.
+Segundo Celik et al.~\cite{mesh_independence}, para um estudo de independência de malha devemos ter uma razão de refinamento, $r = h_\text{coarse} / h_\text{fine}$, superior a 1,3. Foi portanto utilizado $r\approx1{,}4$.
 
-É de destacar o facto de, para as diferentes malhas, a altura da primeira \textit{inflation layer} manteve-se absoluto, ao invés de relativo ao tamanho da célula, de forma a assegurar um $y^+$ constante ao longo dos diversos tamanhos da célula exterior. Isto provoca, no entanto, diferenças na transição entre a \textit{inflation layer} e o restante domínio. As configurações da geração das \textit{inflation layers} foram determinadas com foco principal na malha com célula exterior com $h=0.10$.
+É de destacar o facto de, para as diferentes malhas, a altura da primeira \textit{inflation layer} se ter mantido absoluta, em vez de relativa ao tamanho da célula, de forma a assegurar um $y^+$ constante ao longo dos diversos tamanhos da célula exterior. Isto provoca, no entanto, diferenças na transição entre a \textit{inflation layer} e o restante domínio. As configurações da geração das \textit{inflation layers} foram determinadas com foco principal na malha com célula exterior com $h=0{,}10$.
 
 \begin{table}[H]
   \centering
@@ -14,20 +14,20 @@ Segundo Celik et al.~\cite{mesh_independence}, para um estudo de independência 
     \hline
     $h_\text{cel. ext}$ & N.º de cels. & $c_l$ & Variação de $c_l$ [\%] & MaxNonOrtho & MaxSkewness & LayerCoverage [\%] \\
     \hline
-    0,14 & 38048  & 0.6370 & 1.7  & 57.0286 & 1.7813 & 99.4\\
-    0,10 & 64179  & 0.6345 & 1.3  & 49.4868 & 1.3741 & 100 \\
-    0,07 & 104314 & 0.6177 & -1.3 & 53.2279 & 1.2897 & 100 \\
-    0,05 & 168258 & 0.6262 & 0.0  & 58.9371 & 1.2458 & 98.5\\
+    0,14 & 38048  & 0,6370 & 1,7  & 57,0286 & 1,7813 & 99,4\\
+    0,10 & 64179  & 0,6345 & 1,3  & 49,4868 & 1,3741 & 100 \\
+    0,07 & 104314 & 0,6177 & $-1{,}3$ & 53,2279 & 1,2897 & 100 \\
+    0,05 & 168258 & 0,6262 & 0,0  & 58,9371 & 1,2458 & 98,5\\
     \hline
   \end{tabular}
 \end{table}
 
-Para determinar a independência da malha, é importante primeiro determinar o tipo de convergência. Segundo a norma ASME V\&V 20, a convergência pode ser distinguida em três casos: monotónica, oscilatória e divergente. Neste caso, tendo em conta que não há uma tendência clara dos coeficientes para um valor final, encontramo-nos perante uma convergência oscilatória. Com isto, foi usado como parâmetro para averiguar a independência da malha a dispersão dos resultado, em vez do GCI. A dispersão dos resultados foi avaliada através da incerteza relativa, $U_\mathrm{rel}$: 
+Para determinar a independência da malha, é importante primeiro determinar o tipo de convergência. Segundo Celik et al.~\cite{mesh_independence}, a convergência pode ser distinguida em três casos: monotónica, oscilatória e divergente. Neste caso, tendo em conta que não há uma tendência clara dos coeficientes para um valor final, encontramo-nos perante uma convergência oscilatória. Com isto, foi usado como parâmetro para averiguar a independência da malha a dispersão dos resultados, em vez do GCI. A dispersão dos resultados foi avaliada através da incerteza relativa, $U_\mathrm{rel}$: 
 \[
     \bar{\phi} = \frac{\phi_1 + \phi_2 + \phi_3}{3} \qquad U_\mathrm{abs} = \frac{\phi_\mathrm{max} - \phi_\mathrm{min}}{2} \qquad U_\mathrm{rel} = \frac{U_\mathrm{abs}}{|\bar{\phi}|} \cdot 100\%
 \]
 
-Foi obtida uma $U_\mathrm{rel} = 1.572\%$ para o $C_d$ e uma $U_\mathrm{rel} = 1.346\%$ para o $C_l$, pelo que se considerou que se verifica independência de malha.
+Foi obtida uma $U_\mathrm{rel} = 1{,}572\%$ para o $C_d$ e uma $U_\mathrm{rel} = 1{,}346\%$ para o $C_l$, pelo que se considerou que se verifica independência de malha.
 
 \begin{figure}[H]
   \centering
@@ -61,16 +61,16 @@ Foi obtida uma $U_\mathrm{rel} = 1.572\%$ para o $C_d$ e uma $U_\mathrm{rel} = 1
   \label{fig:custo_yplus_cfd}
 \end{figure}
 
-Ao analisar a Figura~\ref{fig:independencia_cfd}, percebemos que, segundo o indicador de eficiência computacional, a malha "ideal" e a malha com $h_\mathrm{cel. externa} = 0.14$. No entanto, analisando a Figura~\ref{fig:custo_yplus_cfd} e tendo em conta as falhas ao gerar as \textit{inflation layers} (particularmente no bordo de fuga - zona crítica), presentes na Tabela~\ref{tab:malhas}, que resultam em zonas com $y^+$ superior a 5, e que a malha para $h_\mathrm{cel. externa} = 0.1$ não tem um custo temporal excessivo tendo em conta o volume de simulações a realizar, foi esta última a malha escolhida para as simulações deste estudo.
+Ao analisar a Figura~\ref{fig:independencia_cfd}, percebemos que, segundo o indicador de eficiência computacional, a malha ``ideal'' é a malha com $h_\mathrm{cel. externa} = 0{,}14$. No entanto, analisando a Figura~\ref{fig:custo_yplus_cfd} e tendo em conta as falhas ao gerar as \textit{inflation layers} (particularmente no bordo de fuga - zona crítica), presentes na Tabela~\ref{tab:malhas}, que resultam em zonas com $y^+$ superior a 5, e que a malha para $h_\mathrm{cel. externa} = 0{,}1$ não tem um custo temporal excessivo tendo em conta o volume de simulações a realizar, foi esta última a malha escolhida para as simulações deste estudo.
 
 A Figura~\ref{fig:residuos} mostra a evolução dos resíduos e dos
-coeficientes aerodinâmicos para 0\textdegree e 15\textdegree. A $0^\circ$ e a $15^\circ$ os resíduos descem de
+coeficientes aerodinâmicos para $0^\circ$ e $15^\circ$. A $0^\circ$ e a $15^\circ$ os resíduos descem de
 forma contínua e $c_l$ e $c_d$ estabilizam, pelo que a solução em regime estacionário
 converge. A $20^\circ$ os resíduos estabilizam em cerca de $10^{-2}$ e o $c_l$
 oscila entre cerca de $0{,}95$ e $1{,}1$, sinal de que a solução em regime estacionário não convergiu.
 Repetiu-se, por isso, a simulação em regime transiente
 (\texttt{pimpleFoam}), onde o $c_l$ varia entre cerca de $0{,}5$ e $2{,}2$ ao
-longo do tempo, o que confirma que o escoamento aerodinâmico para 20\textdegree de ângulo de ataque não é estacionário, devido à forte separação de ar, pelo que será de se esperar que a solução para regime estacionário não consiga convergir num valor único.
+longo do tempo, o que confirma que o escoamento aerodinâmico para $20^\circ$ de ângulo de ataque não é estacionário, devido à forte separação do escoamento, pelo que será de se esperar que a solução para regime estacionário não consiga convergir num valor único.
 
 \begin{figure}[H]
   \centering
