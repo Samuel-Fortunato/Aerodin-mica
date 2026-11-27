@@ -13,14 +13,14 @@ $c_l$, ângulo de sustentação nula, declive, custo, linhas de corrente e $C_p$
 % Dados: N entre 20 e 800 a alpha = 5°; N = 260 dá erro < 0,5 % face a N = 800.
 
 A Figura~\ref{fig:convergencia_paineis} apresenta a evolução do coeficiente de sustentação em função do número de painéis, para $\alpha=5^\circ$. Para a discretização de referência, constituída por
-800 painéis, obteve-se $c_l=0{,}64329$. Com 230 painéis,
-o erro relativo foi de $0{,}593\%$, enquanto com 260
-painéis foi de $0{,}468\%$, obtendo-se $c_l=0{,}64028$.
+\NRefPaineis{} painéis, obteve-se $c_l=\Resultado[5]{\ClRefPaineis}$. Com \NAnteriorPaineis{} painéis,
+o erro relativo foi de $\Resultado[3]{\ErroAnteriorPaineis}\%$, enquanto com \NPaineis{}
+painéis foi de $\Resultado[3]{\ErroConvergenciaPaineis}\%$, obtendo-se $c_l=\Resultado[5]{\ClConvergenciaPaineis}$.
 
-A discretização de 260 painéis foi a menor, entre as
+A discretização de \NPaineis{} painéis foi a menor, entre as
 avaliadas, a satisfazer a tolerância estabelecida de
 $0{,}5\%$, permitindo uma redução do tempo de cálculo
-de aproximadamente $89{,}3\%$ relativamente à
+de aproximadamente $\Resultado[1]{\ReducaoTempoPaineis}\%$ relativamente à
 discretização de referência.
 
 
@@ -51,7 +51,7 @@ discretização de referência.
 
 
 A Figura~\ref{fig:painelizacao} apresenta a painelização
-final, constituída por 260 painéis, distribuídos
+final, constituída por \NPaineis{} painéis, distribuídos
 igualmente entre o extradorso e o intradorso, e os
 respetivos pontos de controlo.
 
@@ -70,7 +70,7 @@ nomeadamente do coeficiente de pressão.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\linewidth]{../Comparison/figures/panelization.pdf}
-  \caption{Painelização final do perfil Roncz/Marske-7 com $N=260$ painéis
+  \caption{Painelização final do perfil Roncz/Marske-7 com $N=\NPaineis$ painéis
   e respetivos pontos de controlo.}
   \label{fig:painelizacao}
 \end{figure}
@@ -103,36 +103,36 @@ $0^\circ$ a $20^\circ$ com passo de $5^\circ$ no CFD. A Tabela~\ref{tab:cl} dá 
     \toprule
     Método & $0^\circ$ & $5^\circ$ & $10^\circ$ & $15^\circ$ & $20^\circ$ \\
     \midrule
-    Perfis delgados & 0,01 & 0,56 & 1,11 & 1,66 & 2,21 \\
-    Painéis         & 0,05 & 0,64 & 1,23 & 1,81 & 2,37 \\
-    CFD             & 0,06 & 0,64 & 1,16 & 1,34 & 1,05 \\
+    Perfis delgados & \Resultado{\ClDelgadosZero} & \Resultado{\ClDelgadosCinco} & \Resultado{\ClDelgadosDez} & \Resultado{\ClDelgadosQuinze} & \Resultado{\ClDelgadosVinte} \\
+    Painéis         & \Resultado{\ClPaineisZero} & \Resultado{\ClPaineisCinco} & \Resultado{\ClPaineisDez} & \Resultado{\ClPaineisQuinze} & \Resultado{\ClPaineisVinte} \\
+    CFD             & \Resultado{\ClCFDZero} & \Resultado{\ClCFDCinco} & \Resultado{\ClCFDDez} & \Resultado{\ClCFDQuinze} & \Resultado{\ClCFDVinte} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 Na zona linear ($0^\circ$ a $10^\circ$) os três métodos concordam
 qualitativamente, mas denota-se que o método dos painéis prevê sistematicamente mais
-sustentação do que a teoria dos perfis delgados ($+0{,}08$ a $5^\circ$, $+0{,}12$
+sustentação do que a teoria dos perfis delgados ($+\Resultado{\DifClPaineisDelgadosCinco}$ a $5^\circ$, $+\Resultado{\DifClPaineisDelgadosDez}$
 a $10^\circ$). A diferença entre eles devem-se aos fenómenos físicos considerados em cada método, e às simplificacões enraizadas nos mesmos. O método dos painéis e o método dos perfis delgados não consideram viscosidade. A teoria dos perfis delgados
 representa o perfil apenas pela linha média, ignorando a espessura do perfil, enquanto o método dos painéis
-discretiza o contorno real, com 12\,\% de espessura, no qual o escoamento acelera
+discretiza o contorno real, com \Resultado[0]{\EspessuraPct}\,\% de espessura, no qual o escoamento acelera
 no extradorso, aumentando assim o declive da curva de sustentação.
 
 O CFD acompanha o método dos painéis até $5^\circ$, mas a diferença entre
 os dois cresce rapidamente com o ângulo de ataque. É praticamente nula até
-$5^\circ$ e passa para $0{,}07$ a $10^\circ$, $0{,}47$ a $15^\circ$ e $1{,}32$ a
+$5^\circ$ e passa para $\Resultado{\DifClPaineisCFDDez}$ a $10^\circ$, $\Resultado{\DifClPaineisCFDQuinze}$ a $15^\circ$ e $\Resultado{\DifClPaineisCFDVinte}$ a
 $20^\circ$. Esta diferença deve-se ao facto de a análise de CFD considerar o
 efeito da viscosidade. Com o aumento do ângulo de ataque, o gradiente adverso
 de pressão no extradorso aumenta e a camada limite torna-se mais espessa. Perto
 do bordo de fuga, o escoamento exterior deixa de acompanhar tão bem a superfície,
-o que reduz a circulação e explica a diferença de $0{,}07$ a $10^\circ$. A partir
+o que reduz a circulação e explica a diferença de $\Resultado{\DifClPaineisCFDDez}$ a $10^\circ$. A partir
 de $10^\circ$ a curva do CFD dobra, porque o gradiente adverso de pressão já é
 forte o suficiente para provocar o descolamento ou separação da camada limite. A
 $15^\circ$ o descolamento começa junto ao bordo de fuga
 \tbd{$x/c$ onde a tensão de corte no extradorso se anula, pedir ao Gonçalo} e o
-$c_l$ fica-se por $1{,}34$. A $20^\circ$ o descolamento começa logo junto ao
+$c_l$ fica-se por $\Resultado{\ClCFDQuinze}$. A $20^\circ$ o descolamento começa logo junto ao
 bordo de ataque e ocupa quase todo o extradorso (Figura~\ref{fig:linhas}), pelo
-que o $c_l$ desce para $1{,}05$ e o arrasto sobe para $c_d = 0{,}27$, quase todo
+que o $c_l$ desce para $\Resultado{\ClCFDVinte}$ e o arrasto sobe para $c_d = \Resultado{\CdCFDVinte}$, quase todo
 de pressão. O perfil entra, portanto, em perda entre $15^\circ$ e $20^\circ$.
 \tbd{confirmar se a simulação a $20^\circ$ convergiu ou se o escoamento é não
 estacionário}
@@ -158,9 +158,9 @@ métodos potenciais são lineares em toda a gama, por isso é o CFD que a limita
     \toprule
     Método & $\alpha_{L=0}$ [$^\circ$] & $dc_l/d\alpha$ [rad$^{-1}$] \\
     \midrule
-    Perfis delgados & $-0{,}13$ & 6,28 \\
-    Painéis         & $-0{,}39$ & 6,78 \\
-    CFD             & $-0{,}67$ & 6,26 \\
+    Perfis delgados & \Resultado{\AlphaZeroDelgados} & \Resultado{\DecliveDelgados} \\
+    Painéis         & \Resultado{\AlphaZeroPaineis} & \Resultado{\DeclivePaineis} \\
+    CFD             & \Resultado{\AlphaZeroCFD} & \Resultado{\DecliveCFD} \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -186,8 +186,8 @@ $\alpha_{L=0}$ foi obtido por extrapolação da reta ajustada.
 Quanto ao declive, a teoria dos perfis delgados dá $2\pi$ para qualquer perfil.
 O ângulo de ataque só aparece em $A_0 = \alpha - I_0$, enquanto $I_0$ e $A_1$
 dependem apenas da linha média, por isso a curvatura desloca a reta
-$c_l(\alpha)$ mas não muda a sua inclinação. Os painéis dão 6,78~rad$^{-1}$,
-8\,\% acima, porque a espessura de 12\,\% acelera mais o escoamento no
+$c_l(\alpha)$ mas não muda a sua inclinação. Os painéis dão \Resultado{\DeclivePaineis}~rad$^{-1}$,
+\Resultado[0]{\DifDeclivePct}\,\% acima, porque a espessura de \Resultado[0]{\EspessuraPct}\,\% acelera mais o escoamento no
 extradorso. 
 
 \paragraph{Tempo de cálculo e recursos.}
@@ -210,16 +210,16 @@ potenciais foram medidos num Intel Core i7-13650HX com 32~GB de RAM.
     $\approx$ \num[round-mode=places,round-precision=3,output-decimal-marker={,}]{\TempoPerfisDelgadosMs}~ms (total) \\
     Painéis & MATLAB & \NumAngulosPaineis &
     $\approx$ \num[round-mode=places,round-precision=2,output-decimal-marker={,}]{\TempoPaineisS}~s (total) \\
-    CFD             & OpenFOAM & 5  & $\approx 6$~min por ângulo \tbd{confirmar} \\
+    CFD             & OpenFOAM & \NumAngulosCFD & $\approx 6$~min por ângulo \tbd{confirmar} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 Pela Tabela~\ref{tab:custo}, a teoria dos perfis delgados é a mais rápida,
-com os 81 ângulos calculados em menos de um milissegundo. A geometria só entra
+com os \NumAngulosPerfisDelgados{} ângulos calculados em menos de um milissegundo. A geometria só entra
 em $I_0$ e $A_1$, que se calculam uma vez, e a partir daí cada ângulo é apenas
 uma conta. O método dos painéis demora mais, porque para cada ângulo é preciso
-montar e resolver um sistema de $N+1 = 261$ equações com a influência de todos
+montar e resolver um sistema de $N+1 = \NIncognitasPaineis$ equações com a influência de todos
 os painéis. Mesmo assim, o custo é baixo e tudo corre num \emph{script} de
 MATLAB. O CFD é, de longe, o mais caro. Cada ângulo demora alguns minutos,
 porque as equações do escoamento e do modelo de turbulência são resolvidas
@@ -296,16 +296,16 @@ $20^\circ$.
 
 A $0^\circ$ e a $5^\circ$ os dois métodos dão escoamentos muito
 semelhantes. O escoamento mantém-se colado em todo o perfil, o ponto de
-estagnação fica junto ao bordo de ataque (nos painéis, em $x/c \approx 0{,}002$
-a $0^\circ$ e $x/c \approx 0{,}005$ no intradorso a $5^\circ$), as linhas de
+estagnação fica junto ao bordo de ataque (nos painéis, em $x/c \approx \Resultado[3]{\EstagnacaoPaineisZero}$
+a $0^\circ$ e $x/c \approx \Resultado[3]{\EstagnacaoPaineisCinco}$ no intradorso a $5^\circ$), as linhas de
 corrente aproximam-se no extradorso, onde o escoamento acelera, e saem
 suavemente pelo bordo de fuga. No método dos painéis esta saída é imposta pela
 condição de Kutta, enquanto no CFD resulta naturalmente da viscosidade.
 
 A $20^\circ$ os dois resultados são completamente diferentes. No método dos
 painéis o escoamento continua colado, com o ponto de estagnação no intradorso
-($x/c \approx 0{,}105$) e o escoamento a contornar o bordo de ataque com uma
-aceleração muito elevada ($C_{p,\min} \approx -21{,}8$). Isto não acontece na
+($x/c \approx \Resultado[3]{\EstagnacaoPaineisVinte}$) e o escoamento a contornar o bordo de ataque com uma
+aceleração muito elevada ($C_{p,\min} \approx \Resultado[1]{\CpMinPaineisVinte}$). Isto não acontece na
 realidade, porque um gradiente adverso de pressão desta ordem faria descolar a
 camada limite. É isso que se vê no CFD, onde a camada limite descola junto ao
 bordo de ataque e se forma uma grande zona de recirculação sobre todo o
@@ -350,9 +350,9 @@ permitir a comparação direta das curvas dos dois métodos.}
     & \multicolumn{2}{c}{Ponto de estagnação, $x/c$} & \multicolumn{2}{c}{$C_{p,\min}$ ($x/c$)} \\
     $\alpha$ & Painéis & CFD & Painéis & CFD \\
     \midrule
-    $0^\circ$  & 0,002 & 0,00068 & $-0{,}56$ (0,007) & $-0{,}74$ (0,00798) \\
-    $5^\circ$  & 0,005 & 0,00191 & $-1{,}16$ (0,024) & $-1{,}4$ (0.01452)\\
-    $20^\circ$ & 0,105 & 0,02357 & $-21{,}8$ (0,001) & $-7{,}1$ (0.00002) \\
+    $0^\circ$  & \Resultado[3]{\EstagnacaoPaineisZero} & 0,00068 & \Resultado{\CpMinPaineisZero} (\Resultado[3]{\XCpMinPaineisZero}) & $-0{,}74$ (0,00798) \\
+    $5^\circ$  & \Resultado[3]{\EstagnacaoPaineisCinco} & 0,00191 & \Resultado{\CpMinPaineisCinco} (\Resultado[3]{\XCpMinPaineisCinco}) & $-1{,}4$ (0.01452)\\
+    $20^\circ$ & \Resultado[3]{\EstagnacaoPaineisVinte} & 0,02357 & \Resultado[1]{\CpMinPaineisVinte} (\Resultado[3]{\XCpMinPaineisVinte}) & $-7{,}1$ (0.00002) \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -364,10 +364,10 @@ $20^\circ$ (escoamento descolado).}
 \paragraph{Gama linear.}
 Como os métodos potenciais são lineares por construção, a gama linear do perfil
 identifica-se pelo CFD. \rasc{Os incrementos de $c_l$ no CFD, por cada
-$5^\circ$, são de $0{,}57$, $0{,}52$, $0{,}18$ e $-0{,}29$. Entre $5^\circ$ e
-$10^\circ$ o declive é 9\,\% inferior ao inicial, ainda dentro da tolerância,
+$5^\circ$, são de $\Resultado{\IncrementoClCFDCinco}$, $\Resultado{\IncrementoClCFDDez}$, $\Resultado{\IncrementoClCFDQuinze}$ e $\Resultado{\IncrementoClCFDVinte}$. Entre $5^\circ$ e
+$10^\circ$ o declive é \Resultado[0]{\ReducaoDecliveCFD}\,\% inferior ao inicial, ainda dentro da tolerância,
 mas entre $10^\circ$ e $15^\circ$ cai para cerca de um terço, e a partir daí
-$c_l$ diminui. A gama linear vai, portanto, de $0^\circ$ a $\approx 10^\circ$, e $c_{l,\max} \geq 1{,}34$ ocorre entre $10^\circ$ e
+$c_l$ diminui. A gama linear vai, portanto, de $0^\circ$ a $\approx 10^\circ$, e $c_{l,\max} \geq \Resultado{\ClMaxCFD}$ ocorre entre $10^\circ$ e
 $20^\circ$ (a resolução de $5^\circ$ não permite localizá-lo melhor). Em cruzeiro,
 $c_l \approx 0{,}22$, o que corresponde a $\alpha \approx 1{,}3^\circ$ (CFD) a
 $1{,}9^\circ$ (perfis delgados), pelo que o ponto de funcionamento fica bem dentro da zona

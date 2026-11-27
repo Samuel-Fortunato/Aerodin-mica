@@ -7,6 +7,10 @@
 \input{config/preambulo}
 \input{config/metadados}
 \input{config/tempos_calculo}
+\input{config/resultados_calculo}
+% Formatação dos valores exportados: precisão definida no local de utilização.
+\newcommand{\Resultado}[2][2]{\num[round-mode=places,round-precision=#1,output-decimal-marker={,}]{#2}}
+\newcommand{\ResultadoCientifico}[1]{\num[exponent-mode=scientific,round-mode=figures,round-precision=2,output-decimal-marker={,}]{#1}}
 
 \begin{document}
 \input{secoes/00_identificacao}
